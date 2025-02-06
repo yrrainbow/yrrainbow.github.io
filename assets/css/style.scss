@@ -1,0 +1,267 @@
+/* 重置默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 导航栏样式 */
+.navbar {
+    background: linear-gradient(to bottom, #e3dffd, #c9c1f9); 
+    box-shadow: 0 0 5px 2px #c9c1f9; 
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    backdrop-filter: blur(5px);  /* 背景模糊效果 */
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    font-family: 'Kirang Haerang', cursive;
+    transition: color 0.3s ease;
+}
+
+.logo a:hover {
+    color: #000;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold; 
+    font-family: 'Kirang Haerang', cursive;
+    font-size: large;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+/* 主要内容区样式 */
+.hero {
+    background: linear-gradient(to bottom, #ded8ff, #fdfcff, );  /* 从上到下的渐变 */
+    min-height: 100vh;  /* 确保至少占满整个视窗高度 */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding-top: 60px;  /* 为导航栏留出空间 */
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+
+/* 页脚样式 */
+footer {
+    background: #ded8ff;
+    color: black;
+    font-family: 'Kirang Haerang', cursive;
+    text-align: center;
+    border-radius: 10px;
+    padding: 1rem 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .about .content {
+        flex-direction: column;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
+
+/* 团队成员页面样式 */
+.team-section {
+    padding: 120px 0 60px;
+    background: #f4f4f4;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.member-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+}
+
+.member-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.member-card h3 {
+    padding: 1rem;
+    margin: 0;
+    color: #333;
+}
+
+.member-card p {
+    padding: 0 1rem 1rem;
+    color: #666;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .team-section {
+        padding: 100px 0 40px;
+    }
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 修改悬浮菜单格式 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    z-index: 1001;
+    white-space: nowrap;
+    border-radius: 25px;
+}
+
+/* 特别处理最右边的悬浮菜单 */
+.nav-links > li:last-child .dropdown-content {
+    left: auto;
+    right: 0;
+    transform: translateY(-10px);
+}
+
+.nav-links > li:last-child:hover .dropdown-content {
+    transform: translateY(0);
+}
+
+/* 下拉菜单项样式 */
+.dropdown-content li {
+    display: inline-block;
+    position: relative;
+}
+
+/* 分隔线样式 */
+.dropdown-content li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 15px;
+    width: 1px;
+    background-color: #ddd;
+}
+
+/* 链接样式 */
+.dropdown-content a {
+    color: #000;
+    display: inline-block;
+    padding: 8px 12px;
+    text-decoration: none;
+    font-family: 'Kirang Haerang', cursive;
+}
+
+.nav-links a:hover{
+    color: #797373;
+}
+.dropdown-content a:hover {
+    color: #797373;
+}
+
+/* 鼠标悬浮时显示悬浮菜单 */
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    visibility: visible;
+}
+
+/* 添加过渡动画 */
+.dropdown-content {
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    visibility: hidden;
+}
+
+/* 响应式设计调整 */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .dropdown-content {
+        position: static;
+        transform: none;
+        background: #444;
+        box-shadow: none;
+        text-align: center;
+    }
+    
+    .dropdown:hover .dropdown-content {
+        transform: none;
+    }
+}
+
+
