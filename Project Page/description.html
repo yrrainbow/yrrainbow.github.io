@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- 添加 Do Hyeon 字体 -->
     <link href="https://fonts.font.im/css?family=Do+Hyeon" rel="stylesheet">
+    <!-- 添加 Shadows Into Light 字体 -->
+    <link href="https://fonts.font.im/css?family=Shadows+Into+Light" rel="stylesheet">
     <!-- 确保 jQuery 在其他脚本之前加载 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
@@ -23,7 +25,7 @@
             max-width: 100%;
             margin: 0 auto;
             padding: 0 20px;
-            background: linear-gradient(to bottom, #c9c1f9, #fdfcff);
+            background: linear-gradient(to bottom, #c9c1f9, #b29ebc, #f8d6e5,  #fdfcff);
         }
 
         /* page-name 容器样式 */
@@ -174,7 +176,7 @@
             line-height: 1.5;
         }
         .content-section {
-            min-height: 200px;
+            min-height: 50px;
             margin-bottom: 10px;
             margin-left: 10px;
             padding: 20px;
@@ -250,8 +252,8 @@
             background-color: rgb(247, 241, 229);
             border: 2px solid #ddd;
             padding: 20px;
-            width: 23%;
-            height: 260px;
+            width: 45%;
+            height: 310px;
             text-align: center;
             font-size: 16px;
             font-family: 'Montserrat', sans-serif;
@@ -261,8 +263,8 @@
 
         .box:hover {
             background-color: rgb(250, 235, 205);
-            width: 25%;
-            height: 270px;
+            width: 47%;
+            height: 320px;
             transition: all 0.3s ease;  /* 添加过渡效果 */
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         }
@@ -275,7 +277,7 @@
             <div class="logo">
                 <a href="../index.html">
                     <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
-                    M-D-U-S-A
+                    M-E-D-U-S-A
                 </a>
             </div>
             <ul class="nav-links">
@@ -301,31 +303,31 @@
                     <a href="#">WET LAB</a>
                     <ul class="dropdown-content">
                         <li><a href="../Wetlab Page/results.html">Results</a></li>
-                        <li><a href="../Wetlab Page/proof.html">Proof</a></li>
+                        <!-- <li><a href="../Wetlab Page/proof.html">Proof</a></li>
                         <li><a href="../Wetlab Page/part.html">Part</a></li>
                         <li><a href="../Wetlab Page/protocol.html">Protocol</a></li>
                         <li><a href="../Wetlab Page/engineering.html">Engineering</a></li>
                         <li><a href="../Wetlab Page/measurement.html">Measurement</a></li>
-                        <li><a href="../Wetlab Page/notebook.html">Notebook</a></li>
+                        <li><a href="../Wetlab Page/notebook.html">Notebook</a></li> -->
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">DRY LAB</a>
                     <ul class="dropdown-content">
                         <li><a href="../Drylab Page/model.html">Model</a></li>
-                        <li><a href="../Drylab Page/software.html">Software</a></li>
-                        <li><a href="../Drylab Page/hardware.html">Hardware</a></li>
+                        <!-- <li><a href="../Drylab Page/software.html">Software</a></li>
+                        <li><a href="../Drylab Page/hardware.html">Hardware</a></li> -->
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">HUMAN PRACTICE</a>
                     <ul class="dropdown-content">
                         <li><a href="../HP Page/ec.html">Education & Communication</a></li>
-                        <li><a href="../HP Page/cp.html">Collaboration & Partnership</a></li>
+                        <!-- <li><a href="../HP Page/cp.html">Collaboration & Partnership</a></li>
                         <li><a href="../HP Page/cp.html">Intergrated Human Practices</a></li>
                         <li><a href="../HP Page/entrepreneurship.html">Entrepreneurship</a></li>
                         <li><a href="../HP Page/bp.html">Bigger Picture</a></li>
-                        <li><a href="../HP Page/inclusivity.html">Inclusivity</a></li>
+                        <li><a href="../HP Page/inclusivity.html">Inclusivity</a></li> -->
                     </ul>
                 </li>
             </ul>
@@ -396,6 +398,12 @@
         </div>
         
         <div class="content-area">
+            <section class="content-section" style="background-image: url('../assets/img/dp_0_2.png'); background-size: cover; background-position: center;">
+                <p style="font-family: Shadows Into Light; font-size: x-large;">GUYS! Tired of finding more hair in your comb than on your head?</p>
+                <p style="font-family: Shadows Into Light; font-size: x-large;">Or maybe just having started to feel like your shower drain is collecting a hair museum?</p> 
+                <p style="font-family: Shadows Into Light; font-size: x-large;">If so, you've landed on the RIGHHHHT page! Our GODDESS of HAIR is here to turn your hair - loss woes into a thing of the past. Let's get started on this hair - saving adventure together!</p>
+            </section>
+            <img src="../assets/img/dp_0_3.png" alt="example picture" style="margin-left: 60%; height: auto; width: 100px;">
             <section id="background" class="content-section">
                 <h1>Background</h1>
                 <section id="what-happens">
@@ -406,7 +414,7 @@
                         <img src="../assets/img/dp_1.png" alt="example picture">
                         </div>
                         <p style="color:#deac56; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 1: Dermal papilla cells (DPCs) in the hair follicle.</p>
-                        <p>Patients with alopecia areata present with suddenly appearing round or oval hair loss patches with clear boundaries, which can expand rapidly in a short period of time, bringing great mental stress to patients. Telogen effluvium is usually related to factors such as endocrine disorders, malnutrition, and mental stress. Patients experience a phenomenon where a large amount of hair simultaneously enters the telogen phase and falls out.</p>
+                        <p>Patients with alopecia areata present with suddenly appearing round or oval hair loss patches with clear boundaries, which can expand rapidly in a short period of time, bringing <span style="font-weight: bold;">great mental stress</span> to patients. Telogen effluvium is usually related to factors such as <span style="font-weight: bold;">endocrine disorders</span>, <span style="font-weight: bold;">malnutrition</span>, and <span style="font-weight: bold;">mental stress</span>. Patients experience a phenomenon where a large amount of hair simultaneously enters the telogen phase and falls out.</p>
                         
                         <div class="img-container">
                         <img src="../assets/img/dp_2.png" alt="bold_hair_loss_1" style="max-width: 40%;">
@@ -416,7 +424,7 @@
                 </section>
                 <section id="conventional">
                     <h2>Conventional Hair Loss Treatment</h2>
-                    <p>At present, the hair loss treatment methods on the market are mainly divided into drug therapy, surgical treatment, and physical therapy, etc.</p>
+                    <p>At present, the hair loss treatment methods on the market are mainly divided into <span style="font-weight: bold;">drug therapy, surgical treatment, and physical therapy, etc.</p>
                     <div>
                         <div class="collapse-container">
                             <div class="collapse-item">
@@ -426,10 +434,12 @@
                                 class="svg-icon" id="drug-therapy-icon" 
                                 onmouseover="changeIcon(this, '../assets/svg/dp1_2.svg')" 
                                 onmouseout="changeIcon(this, '../assets/svg/dp1_1.svg')">    
-                                <span>Drug Therapy</span>
+                                <span style="font-weight: bold;">Drug Therapy</span>
                                 </div>
                                 <div class="collapse-content">
-                                <p>In terms of <span style="font-weight: bold;">drug therapy</span>, topical medications such as minoxidil and oral medications such as finasteride are commonly used treatment means. However, these drugs have certain limitations. Minoxidil needs to be used for a long time to maintain the effect, and some patients may experience adverse reactions such as scalp itching and redness. Although finasteride has a certain effect on seborrheic alopecia, it may cause side effects such as sexual dysfunction, which limits its widespread application.</p>
+                                <p>In drug therapy, <span style="font-weight: bold;">minoxidil (topical)</span> and <span style="font-weight: bold;">finasteride (oral)</span> are common.</p>
+                                <p><span style="font-weight: bold;">Minoxidil</span>, originally an antihypertensive drug, was found to stimulate hair growth during trials. Applied to the scalp, it likely dilates scalp blood vessels, boosting blood flow to follicles for more nutrients and oxygen, and may extend the hair growth phase. But it requires long - term use, often months or years, which is a challenge for patients. Also, some patients experience scalp itching and redness.</p>
+                                <p><span style="font-weight: bold;">Finasteride</span> inhibits 5 - alpha - reductase, reducing the conversion of testosterone to DHT, a hormone linked to seborrheic alopecia. It can slow or reverse hair loss. However, sexual dysfunction, like decreased libido and erectile problems, is a well - known side effect. This makes many patients hesitant to use it, limiting its wide application.</p>
                                 </div>
                             </div>
                         
@@ -440,10 +450,12 @@
                                 class="svg-icon" id="surgical-treatment-icon" 
                                 onmouseover="changeIcon(this, '../assets/svg/dp2_2.svg')" 
                                 onmouseout="changeIcon(this, '../assets/svg/dp2_1.svg')" style="height: 20px; width: auto;">    
-                                <span>Surgical treatment</span>
+                                <span style="font-weight: bold;">Surgical treatment</span>
                                 </div>
                                 <div class="collapse-content">
-                                <p><span style="font-weight: bold;">Surgical treatment</span> mainly refers to hair transplantation. By transplanting healthy hair follicles from the occipital area to the hair loss area, the appearance can be improved. However, hair transplantation surgery is costly and has certain risks, such as infection and low hair follicle survival rate. </p>
+                                <p>Surgical treatment mainly means <span style="font-weight: bold;">hair transplantation</span>, which improves appearance by moving healthy hair follicles from the occipital area to the balding part.</p>
+                                <p>The process starts with assessing the patient's scalp and hair. The donor area (usually the back of the head) is chosen as its follicles resist hair - loss hormones. There are two main extraction techniques: <span style="font-weight: bold;">FUT (removing a skin strip with follicles and dissecting it later) and FUE (extracting individual follicles with a punch tool).</span> Then, the follicles are implanted in the recipient area, mimicking natural hair growth.</p>
+                                <p>However, hair transplantation is <span style="font-weight: bold;">costly</span>, with full - scale procedures ranging from thousands to tens of thousands of dollars, unaffordable for many. It also has risks like infection due to scalp incisions if sterile techniques aren't maintained or post - op care isn't followed. And low follicle survival rates can occur if follicles aren't handled well during extraction, transport, or implantation.</p>
                                 </div>
                             </div>
                         
@@ -454,10 +466,12 @@
                                 class="svg-icon" id="physical-therapies-icon" 
                                 onmouseover="changeIcon(this, '../assets/svg/dp3_2.svg')" 
                                 onmouseout="changeIcon(this, '../assets/svg/dp3_1.svg')" style="height: 20px; width: auto;">  
-                                <span>Physical therapies</span>
+                                <span style="font-weight: bold;">Physical therapies</span>
                                 </div>
                                 <div class="collapse-content">
-                                <p><span style="font-weight: bold;">Physical therapies</span> such as laser therapy and massage have relatively limited effects and can only play an auxiliary role in treatment.</p>
+                                <p>Physical therapies like <span style="font-weight: bold;">laser therapy and massage</span> have limited effects and are mainly auxiliary.</p>
+                                <p><span style="font-weight: bold;">Laser therapy (LLLT)</span> for hair loss uses low - level laser light to penetrate the scalp, stimulating follicle cells, increasing metabolic activity, and potentially promoting ATP production and blood circulation. But its effects are mild and slow, needing multiple sessions over months for visible results, and they may not be as good as more invasive treatments.</p>
+                                <p><span style="font-weight: bold;">Massage, a simple non - invasive method,</span> increases blood flow to follicles by dilating scalp blood vessels when the scalp is massaged. It also relaxes scalp muscles, reducing stress - related hair loss a bit. But its effects are short - lived, and improvement from massage alone is minimal. It's best combined with other treatments.</p>
                                 </div>
                             </div>
                             </div>
@@ -467,48 +481,50 @@
                 <section id="unsolved">
                     <h2>What's left to be solved?</h2>
                     <div class="box-container">
-                        <div class="box">Develop a safe, effective treatment method with fewer side effects.</div>
-                        <div class="box">Enhance the pertinence of treatment and formulate effective treatment plans for certain type of hair loss.</div>
-                        <div class="box">Reduce the treatment cost so that more patients can afford it.</div>
-                        <div class="box">Improve the convenience of treatment and reduce the treatment pain and time cost for patients.</div>
+                        <div class="box">Develop a safe, effective treatment method with fewer side effects by thoroughly researching the <span style="font-weight: bold;">biological mechanisms</span> of hair growth, screening <span style="font-weight: bold;">natural and synthetic compounds</span>, and conducting extensive <span style="font-weight: bold;">pre - clinical and clinical trials</span> to ensure its reliability and minimize any potential adverse reactions.</div>
+                        <div class="box">Enhance the <span style="font-weight: bold;">pertinence of treatment</span> and formulate effective treatment plans for certain types of hair loss by <span style="font-weight: bold;">accurately diagnosing the root cause</span> through advanced genetic and scalp analysis techniques, and then tailoring <span style="font-weight: bold;">personalized treatment strategies</span> that target the specific physiological and genetic factors involved in each case.</div>
+                    </div>
+                    <div class="box-container">
+                        <div class="box"><span style="font-weight: bold;">Reduce the treatment cost</span> so that more patients can afford it by streamlining the production process of treatment products, seeking <span style="font-weight: bold;">cost - effective raw materials</span>, and <span style="font-weight: bold;">promoting competition in the market</span> through government regulations and incentives for innovative and affordable hair loss treatments.</div>
+                        <div class="box"><span style="font-weight: bold;">Improve the convenience</span> of treatment and <span style="font-weight: bold;">reduce the treatment pain</span>                               and time cost for patients by developing at - home treatment options like easy - to - use topical devices or self - administered medications, and optimizing the treatment regimens to require fewer and shorter treatment sessions with minimal discomfort.</div>
                     </div>
                 </section>
             </section>
             
             <section id="key-goals" class="content-section">
                 <h1>Key Goals</h1>
-                <p style="font-size: 1.1rem;">(1) <span style="font-weight: bold;">Precision Therapy for seborrheic alopecia:</span> to achieve a long - acting and targeted drug - targeting treatment for seborrheic alopecia.</p>
-                <p style="font-size: 1.1rem;">(2) <span style="font-weight: bold;">Cell - engineered mass production of drugs:</span> Achieve the design of gene pathways and the design of industrial mass - production models based on cell - free systems and Escherichia coli.</p>
-                <p style="font-size: 1.1rem;">(3) <span style="font-weight: bold;">Dissolvable microneedles:</span> Achieve specific treatment for alopecia diseases at fixed points and in fixed areas of the scalp, relieve patients' pain and economic burden, and enhance the therapeutic effect of drug delivery.</p>
+                <p style="font-size: 1.1rem; margin-bottom: 15px;"><span style="font-weight: bold;">Precision Therapy for seborrheic alopecia:</span> to achieve a long - acting and targeted drug - targeting treatment for seborrheic alopecia.</p>
+                <p style="font-size: 1.1rem; margin-bottom: 15px;"><span style="font-weight: bold;">Cell - engineered mass production of drugs:</span> Achieve the design of gene pathways and the design of industrial mass - production models based on cell - free systems and Escherichia coli.</p>
+                <p style="font-size: 1.1rem; margin-bottom: 15px;"><span style="font-weight: bold;">Dissolvable microneedles:</span> Achieve specific treatment for alopecia diseases at fixed points and in fixed areas of the scalp, relieve patients' pain and economic burden, and enhance the therapeutic effect of drug delivery.</p>
             </section>
 
             <section id="inspirations" class="content-section">
                 <h1>Inspirations</h1>
                 <section id="igem-projects">
-                    <h2>(1) iGEM Projects</h2>
+                    <h2>iGEM Projects</h2>
                     <p>In 2013, <span style="font-weight: bold;">Taxi.coli: Smart Drug Delivery</span> by EPF Lausanne was launched. The team developed a concept of biosynthetic drug delivery which engineered Escherichia coli capable of secreting gelatinase. This enabled the E. coli to bind to gelatin nanoparticles through biotin - streptavidin interactions and release them at the corresponding sites, thus achieving drug delivery.</p>
                     <div class="img-container">
                     <img src="../assets/img/dp_4.png" alt="heart">
                     </div>
-                    <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 3: Many people suffer from hair loss.</p>
+                    <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 3: 2013-EPF Lausanne-Taxi.coli</p>
 
                     <p>In 2024, the HainanU - China team from Hainan University carried out the project <span style="font-weight: bold;"> GHK - Cu: Hair Expecto Patronum</span> The team efficiently expressed copper peptides, which have the effect of repairing hair follicles and treating hair loss, in engineered bacteria through tandem repeat expression. They also constructed a bacterial community ecosystem with controllable population size using quorum sensing to improve production efficiency. Moreover, they utilized microfluidic technology to form microemulsions encapsulating copper peptides for product presentation.</p>
                     <div class="img-container">
                     <img src="../assets/img/dp_5.png" alt="students">
                     </div>
-                    <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 4: "The woonderful use of copper peptides"</p>
+                    <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 4: 2024-HainanU-GHK-Cu: Hair Expecto Patronum</p>
 
                     <p>In 2024, the <span style="font-weight: bold;">BioTarget</span> project from the JLU - NBBMS team from Jilin University combined RNAi technology, bacterial therapy, and nanomedicine. By using modified attenuated Salmonella, the team precisely knocked down drug - resistant genes through trans - kingdom RNAi technology. A large amount of RGD peptides were expressed on the surface of the bacteria to enhance its tumor - targeting ability. Meanwhile, MPEG - PLG - PLL nanoparticles were prepared to encapsulate chemotherapeutic drugs, which were then linked to the cell wall of the engineered bacteria to assist in drug delivery.</p>
                     <div class="img-container">
                     <img src="../assets/img/dp_6.png" alt="biotarget">
                     </div>
-                    <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;">Figure 5: BioTarget poster.</p>
+                    <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;">Figure 5: 2024-JLU-NBBMS-Biotarget</p>
                 </section>
                 <section id="work-outside-igem">
-                    <h2>(2) Work Outside iGEM</h2>
+                    <h2>Work Outside iGEM</h2>
                     <p><span style="font-weight: bold;">Microneedles</span> are tiny, painless needles that can penetrate the skin's outer layer to deliver drugs directly into the underlying tissues. This technology has revolutionized the way drugs are administered, especially for topical and transdermal applications. The ability of microneedles to bypass the skin's natural barriers and deliver drugs in a controlled manner has been a major inspiration for our project. We saw the potential of using soluble microneedles to deliver the peptides and RNA produced by our engineered bacteria directly to the hair follicles, increasing their bioavailability and effectiveness.</p>
                     <div class="img-container">
-                    <img src="../assets/img/dp_7.png" alt="microneedle1" style="max-width: 40%;">
+                    <img src="../assets/img/dp_7.png" alt="microneedle1" style="max-width: 50%;">
                     <img src="../assets/img/dp_8.png" alt="microneedle2" style="max-width: 40%;">
                     <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 6: What a microneedle looks like and how work.</p>
                     </div>
@@ -523,25 +539,25 @@
             <section id="overview" class="content-section">
                 <h1>Project Overview</h1>
                 <section id="our-solutions">
-                    <h2>(1) Our Solutions</h2>
+                    <h2>Our Solutions</h2>
                     <p>In order to treat seborrheic alopecia, we have developed a drug delivery system based on microneedles. We load AbTAC and keratinocyte growth factor - 2 (KGF - 2) onto the tips of the microneedles, and then deliver the drugs near the hair follicle cells through the microneedles, enabling them to exert their effects. This achieves targeted treatment of hair follicle cells and serves the purpose of treating hair loss.</p>
                     
-                    <h3>· Cure Module</h3>
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">· Cure Module</h3>
                     <p>AbTAC is a recombinant bispecific antibody that can recruit E3 ligases to promote the ubiquitination and degradation of target proteins. Its structure consists of an E3 ligase ligand, a target protein ligand, and a linker. In this project, AbTAC targets type Ⅱ 5α - reductase, which is only present in the prostate, skin, and hair follicles, offering high targeting specificity. We selected RNF43 as the E3 ligase (it has a transmembrane structure and the RNF family is commonly used). When AbTAC is released near hair follicle cells, the target protein ligand of AbTAC binds to type Ⅱ 5α - reductase on the membrane, and the E3 ligase ligand binds to RNF43, leading to the ubiquitination of type Ⅱ 5α - reductase. After endocytosis, it fuses with lysosomes and is finally degraded.</p>
                     <div class="img-container">
-                    <img src="../assets/img/dp_10.png" alt="AbTAC1" style="max-width: 40%;">
+                    <img src="../assets/img/dp_10.png" alt="AbTAC1" style="max-width: 43%;">
                     <img src="../assets/img/dp_11.png" alt="AbTAC2" style="max-width: 40%;">
                     <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 8: AbTAC's working mechanism.</p>
                     </div>
 
-                    <h3>· Growth Module</h3>
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">· Growth Module</h3>
                     <p>Keratinocyte growth factor (KGF, also known as FGF - 7) belongs to the fibroblast growth factor family. It is produced by stromal cells, and its receptor KGFR is mainly distributed in epithelial tissues. It can stimulate the growth of epidermal units in the skin, such as hair follicles, sebaceous glands, and sweat glands. KGF promotes the keratinization of squamous cells and hair growth, and stimulates the proliferation and differentiation of hair follicle stem cells and hair matrix cells, as well as hair follicle development. Studies have found that hair follicles contain KGF receptors. KGF can protect hair follicles in the anagen and telogen phases from X - ray damage, increasing the survival rate of hair follicles by 14%. It can also protect hair follicle keratinocytes from damage caused by some chemotherapeutic drugs.</p>
                     <div class="img-container">
                     <img src="../assets/img/dp_12.png" alt="ROS">
                     </div>
                     <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 9: KGF(FGF-7)'s working mechanism.</p>
                     
-                    <h3>· Microneedle Module</h3>
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">· Microneedle Module</h3>
                     <p>Adopt the soluble microneedle technology as a drug delivery system. The soluble microneedles are made of biodegradable materials, and their surfaces are coated with drugs and nanovsicles produced by the engineered bacteria. The microneedles can painlessly penetrate the skin's stratum corneum and directly deliver the drugs to the tissues around the hair follicles, improving the bioavailability of the drugs.</p>
                     <div class="img-container">
                     <img src="../assets/img/dp_13.png" alt="dissolvable_microneedle">
@@ -549,7 +565,7 @@
                     <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 10: Soluble microneedle demonstration.</p>
                 </section>
                 <section id="our-products">
-                    <h2>(2) Our Products</h2>
+                    <h2>Our Products</h2>
                     <div class="img-container">
                     <img src="../assets/img/dp_14.png" alt="our_products" style="max-width: 50%;">
                     </div>
@@ -564,11 +580,11 @@
                 </div>
                 <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 12: China's anti-hair loss market with great potential.</p>
                 <section id="treatment-prospects">
-                    <h2>(1) Treatment Prospects</h2>
+                    <h2>Treatment Prospects</h2>
                     <p>Our anti - hair - loss treatment project holds broad prospects. The drugs and growth factors produced by engineered bacteria, combined with the soluble microneedle delivery system, are expected to offer a safe, effective and convenient treatment approach for individuals suffering from hair loss. This method can not only address common hair - loss types like seborrheic alopecia, but also be customized according to the specific conditions of different patients. This customization enhances the treatment's pertinence and effectiveness. As the project progresses further and clinical research unfolds, we are confident that this treatment method will bring new hope to those with hair - loss problems.</p>
                 </section>
                 <section id="generalizability">
-                    <h2>(2) Generalizability</h2>
+                    <h2>Generalizability</h2>
                     <p>The engineered bacteria and soluble microneedle technology designed in this project possess excellent generalizability. Engineered bacteria, functioning as a bioreactor, can express diverse bioactive molecules via gene - editing technology. These molecules can be used for treating other diseases or developing other biological products. The soluble microneedle technology, as a novel drug - delivery system, is not limited to hair - loss treatment. It can also be applied in treating other skin diseases, vaccine administration and other fields. Through further optimization and improvement of these design elements, their application scope can be expanded, providing support for research and development in a wider range of fields.</p>
                 </section>
             </section>
@@ -576,16 +592,16 @@
             <section id="challenge" class="content-section">
                 <h1>Challenge</h1>
                 <section>
-                    <section id="technical-defects">
-                        <h3>(1) Technical Defects</h3>
+                    <section id="technical-defects" style="margin: 10px 0;">
+                        <h3>Technical Defects</h3>
                         <p> How to achieve <span style="font-weight: bold;">large - scale and stable production</span> is a challenge. The preparation process of <span style="font-weight: bold;">soluble microneedles</span> also needs to be further optimized to improve the quality of microneedles and their drug - loading capacity.</p>
                     </section>
-                    <section id="es-defects">
-                        <h3>(2) Ethical and Safety Defects</h3>
+                    <section id="es-defects" style="margin: 10px 0;">
+                        <h3>Ethical and Safety Defects</h3>
                         <p> It is necessary to ensure that <span style="font-weight: bold;">engineered bacteria do not cause harm to humans and the environment, and the use of bioactive molecules complies with ethical norms. </span></p>
                     </section>
-                    <section id="defects-in-cp">
-                        <h3>(3) Defects in Commercial Promotion</h3>
+                    <section id="defects-in-cp" style="margin: 10px 0;">
+                        <h3>Defects in Commercial Promotion</h3>
                         <p>In terms of commercial promotion, the project faces challenges of market competition and consumer awareness. <span style="font-weight: bold;">There are already a variety of anti - hair - loss products on the market.</span> How to highlight the advantages of our products and attract consumers' attention and trust is a key issue.</p>
                     </section>
                 </section>
@@ -603,19 +619,19 @@
 
             <section id="references" class="content-section">
                 <h1>References</h1>
-                <div class="references-container" style="color:#ddb266; font-weight: semi-bold;">
-                <p>[1] Zhang KY. The pathogenesis and clinical treatment progress of androgenetic alopecia[J]. The Journal of Medical Theory and Practice, 2024, 37(20): 3454-3456.</p>
-                <p>[2] Zhou C, Fan WX, Fang H, et al. Chinese guideline for diagnosis and treatment of adrogenetic alopecia(2023)[J]. Journal of Clinical Dermatology, 2024, 53(12): 752-758.</p>
-                <p>[3] Spradlin, J. N., Zhang, E., & Nomura, D. K. (2021). Reimagining Druggability Using Chemoproteomic Platforms. Accounts of chemical research, 54(7), 1801-1813. </p>
-                <p>[4]Cotton, A. D., Nguyen, D. P., Gramespacher, J. A., Seiple, I. B., & Wells, J. A. (2021). Development of Antibody-Based PROTACs for the Degradation of the Cell-Surface Immune Checkpoint Protein PD-L1. Journal of the American Chemical Society, 143(2), 593-598.</p>
-                <p>[5]Yang XQ. Common causes of hair loss - clinical manifestations, trichoscopy and therapy[J]. Journal of the European Academy of Dermatology and Venereology, 2021, 35(3): 629-640.</p>
-                <p>[6] Lai JJ, Chang P, Lai KP, et al. The role of androgen and androgen receptor in skin-related disorders[J]. Archives of Dermatological Research, 2012, 304(7): 499-510.</p>
-                <p>[7] Song YJ ,Hu WG ,Sun ZY. Research progress on non-surgical treatment of androgenetic alopecia[J]. China Medical Cosmetology, 2024, 14(07): 113-118.</p>
-                <p>[8] Jimenez F, Alam M, Vogel JE, et al. Hair transplantation:Basic overview[J]. Journal of the American Academy of Dermatology, 2021, 85(4): 803-814.</p>
-                <p>[9] Alhattab MK, AL Abdullah MJ, Al-Janabi MH,et al.The effect of 1540-nm fractional erbium-glass laser in the treatment of androgenic alopecia[J]. Journal of  Cosmetic Dermatology, 2020, 19(4): 878-883.</p>
+                <div class="references-container" style="color: black; font-weight: semi-bold; font-style: italic;">
+                <p style="margin-bottom: 10px;">[1] Zhang KY. The pathogenesis and clinical treatment progress of androgenetic alopecia[J]. The Journal of Medical Theory and Practice, 2024, 37(20): 3454-3456.</p>
+                <p style="margin-bottom: 10px;">[2] Zhou C, Fan WX, Fang H, et al. Chinese guideline for diagnosis and treatment of adrogenetic alopecia(2023)[J]. Journal of Clinical Dermatology, 2024, 53(12): 752-758.</p>
+                <p style="margin-bottom: 10px;">[3] Spradlin, J. N., Zhang, E., & Nomura, D. K. (2021). Reimagining Druggability Using Chemoproteomic Platforms. Accounts of chemical research, 54(7), 1801-1813. </p>
+                <p style="margin-bottom: 10px;">[4]Cotton, A. D., Nguyen, D. P., Gramespacher, J. A., Seiple, I. B., & Wells, J. A. (2021). Development of Antibody-Based PROTACs for the Degradation of the Cell-Surface Immune Checkpoint Protein PD-L1. Journal of the American Chemical Society, 143(2), 593-598.</p>
+                <p style="margin-bottom: 10px;">[5]Yang XQ. Common causes of hair loss - clinical manifestations, trichoscopy and therapy[J]. Journal of the European Academy of Dermatology and Venereology, 2021, 35(3): 629-640.</p>
+                <p style="margin-bottom: 10px;">[6] Lai JJ, Chang P, Lai KP, et al. The role of androgen and androgen receptor in skin-related disorders[J]. Archives of Dermatological Research, 2012, 304(7): 499-510.</p>
+                <p style="margin-bottom: 10px;">[7] Song YJ ,Hu WG ,Sun ZY. Research progress on non-surgical treatment of androgenetic alopecia[J]. China Medical Cosmetology, 2024, 14(07): 113-118.</p>
+                <p style="margin-bottom: 10px;">[8] Jimenez F, Alam M, Vogel JE, et al. Hair transplantation:Basic overview[J]. Journal of the American Academy of Dermatology, 2021, 85(4): 803-814.</p>
+                <p style="margin-bottom: 10px;">[9] Alhattab MK, AL Abdullah MJ, Al-Janabi MH,et al.The effect of 1540-nm fractional erbium-glass laser in the treatment of androgenic alopecia[J]. Journal of  Cosmetic Dermatology, 2020, 19(4): 878-883.</p>
                 </div>
             </section>
-        </div>
+        </div?>
         </div>
     </main>
 
