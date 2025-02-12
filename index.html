@@ -3,23 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的网站</title>
+    <title>ZJU-China | 2025 iGEM Winter Project</title>
     <!-- 添加 Kirang Haerang 字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/svg/font_4824682_7secvzmrqew/iconfont.css">
+
+    <style>
+        .index-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .img-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            left: 0;
+            }
+
+        .img-container img {
+        display: inline-block;  /* 将图片设置为块级元素 */
+        }
+
+        .home-img {
+            width: 60%;
+            height: auto;
+            margin-top: 100px;
+            margin-bottom: 0;
+            z-index: 1;
+            position: relative;  /* 确保它有定位 */
+        }
+
+        .home1-img {
+            position: absolute;   /* 使用绝对定位 */
+            width: 60%;
+            height: auto;
+            margin-left: 12%;    /* 保持水平位置 */
+            margin-top: 100px;     /* 使 `home1-img` 位于 `home-img` 的下方，并调整两者之间的间距 */
+            margin-bottom: 0;
+            z-index: 0;            /* 确保 `home1-img` 在 `home-img` 下方 */
+            opacity: 0.5;          /* 设置透明度 */
+            transition: transform 0.1s ease-out;  /* 平滑过渡 */
+        }
+
+
+        .home-content {
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%); /* 使内容居中 */
+            text-align: center;
+        }
+
+        .image-pv-2 {
+            width: 75%;
+            height: auto;
+            position: relative;
+            z-index: 2; /* 设置PV_2的z-index */
+        }
+
+        .image-pv-1 {
+            width: 75%;
+            height: auto;
+            margin-top: -40px; /* 调整该值来控制两张图片的重叠程度 */
+            position: relative;
+            z-index: 1; /* 设置PV_1的z-index，确保它在PV_2之上 */
+        }
+
+
+        /* 第二张图片（覆盖在第一张图片上） */
+        .hair1-img {
+            position: absolute;
+            /* top: 24%;
+            left: 32%;
+            width: 34%; */
+            top: 13%;
+            left: auto;
+            right: 32%;
+            width: 70%;
+            height: auto;
+            transition: transform 0.3s ease; /* 设置平滑的旋转过渡 */
+            transform-origin: top right;
+            z-index: 2;
+        }
+
+        .hair2-img {
+            position: absolute;
+            /* top: 32%;
+            left: 32%;
+            width: 32%; */
+            top: 29%;
+            left: auto;
+            right: 34%;
+            width: 67%;
+            transition: transform 0.3s ease; /* 设置平滑的旋转过渡 */
+            transform-origin: top right;
+            z-index: 2;
+        }
+
+        .hair3-img {
+            position: absolute;
+            top: 55%;
+            left: auto;
+            right: 39%;
+            width: 62%;
+            transition: transform 0.3s ease; /* 设置平滑的旋转过渡 */
+            transform-origin: top right;
+            z-index: 2;
+        }
+        
+        /* 悬浮时旋转效果 */
+        .hair1-img:hover,
+        .hair2-img:hover,
+        .hair3-img:hover {
+            transform: scale(1.1) rotate(5deg); /* 放大1.1倍，旋转5度 */
+        }
+
+        
+    </style>
 </head>
 <body>
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <a href="index.html">ZJU-CHINA</a>
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
+                    M-E-D-U-S-A
+                </a>
             </div>
             <ul class="nav-links">
                 <li class="dropdown">
                     <a href="#">TEAM</a>
                     <ul class="dropdown-content">
-                        <li><a href="Team Page/member.html">Member</a></li>
+                        <li><a href="Team Page/member.html">Members</a></li>
                         <li><a href="Team Page/attributions.html">Attributions</a></li>
                     </ul>
                 </li>
@@ -28,28 +151,23 @@
                     <ul class="dropdown-content">
                         <li><a href="Project Page/description.html">Description</a></li>
                         <li><a href="Project Page/design.html">Design</a></li>
-                        <li><a href="Project Page/implementation.html">Implementation</a></li>
-                        <li><a href="Project Page/plant.html">Plant</a></li>
-                        <li><a href="Project Page/contribution.html">Contribution</a></li>
-                        <li><a href="Project Page/safety.html">Safety</a></li>
+                        <li><a href="Project Page/safety.html">Biosafety</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">WET LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="Wetlab Page/results.html">Results</a></li>
-                        <li><a href="Wetlab Page/proof.html">Proof</a></li>
-                        <li><a href="Wetlab Page/part.html">Part</a></li>
+                        <li><a href="Wetlab Page/proof.html">Proof of Concept</a></li>
+                        <li><a href="Wetlab Page/part.html">Parts</a></li>
                         <li><a href="Wetlab Page/protocol.html">Protocol</a></li>
                         <li><a href="Wetlab Page/engineering.html">Engineering</a></li>
                         <li><a href="Wetlab Page/measurement.html">Measurement</a></li>
-                        <li><a href="Wetlab Page/notebook.html">Notebook</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">DRY LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="Drylab Page/model.html">Model</a></li>
+                        <li><a href="Drylab Page/model.html">Model & Software</a></li>
                         <li><a href="Drylab Page/software.html">Software</a></li>
                         <li><a href="Drylab Page/hardware.html">Hardware</a></li>
                     </ul>
@@ -57,12 +175,14 @@
                 <li class="dropdown">
                     <a href="#">HUMAN PRACTICE</a>
                     <ul class="dropdown-content">
-                        <li><a href="HP Page/ec.html">Education & Communication</a></li>
-                        <li><a href="HP Page/cp.html">Collaboration & Partnership</a></li>
-                        <li><a href="HP Page/cp.html">Intergrated Human Practices</a></li>
-                        <li><a href="HP Page/entrepreneurship.html">Entrepreneurship</a></li>
-                        <li><a href="HP Page/bp.html">Bigger Picture</a></li>
+                        <li><a href="HP Page/overview.html"> Overview</a></li>
+                        <li><a href="HP Page/ihp.html">Intergrated Human Practices</a></li>
+                        <li><a href="HP Page/education.html">Education & Communication</a></li>
+                        <li><a href="HP Page/ca.html">Communication & Availability</a></li>
                         <li><a href="HP Page/inclusivity.html">Inclusivity</a></li>
+                        <li><a href="HP Page/entrepreneurship.html">Entrepreneurship</a></li>
+                        <li><a href="HP Page/SDG.html">SDG</a></li>
+                        <li><a href="HP Page/bp.html">Bigger Picture</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,22 +191,102 @@
 
     <!-- 主要内容区 -->
     <main>
-        <!-- 首页banner -->
-        <section id="home" class="hero">
-            <div class="container">
-                <h1>欢迎访问该网站</h1>
-                <p>这是一个简单的前端演示页面</p>
+        <!-- 加载动画 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-content">
+                <img src="../assets/img/spinner.png" class="loading-spinner" alt="Loading" style="width: 30%; height: auto;">
+                <p style="font-family: 'Kirang Haerang', cursive; font-size: 3rem; color: #333;">Loading...</p>
             </div>
-        </section>
+        </div>
+
+        <!-- 首页banner -->
+        <div id="mainContainer" class="main-container">
+            <div class="index-container" >
+                <div class="img-container">
+                    <img src="assets/img/home_1.png" alt="home1-img" class="home1-img">
+                    <img src="assets/img/home_0.png" alt="home-img" class="home-img">
+                    <!-- 第二张图片（hair.png），重叠在第一张图片上 -->
+                    <img src="assets/img/hair_1.png" alt="hair1-img" class="hair1-img">
+                    <img src="assets/img/hair_2.png" alt="hair2-img" class="hair2-img">
+                    <img src="assets/img/hair_3.png" alt="hair3-img" class="hair3-img">
+            </div>
+
+                <div class="img-container">
+                    <img src="assets/img/PV_2.png" alt="PV_2" class="image-pv-2">
+                    <img src="assets/img/PV_1.png" alt="PV_1" class="image-pv-1">
+                </div>
+                
+            </div>
+        </div>
     </main>
 
     <!-- 页脚 -->
     <footer>
-        <div class="container">
+        <div class="foot-container">
             <p>© 2023 - iGEM ZJU-China</p>
+                <div class="svg-container">
+                    <!-- 微信图标 -->
+                    <a href="https://mp.weixin.qq.com/s/lcJz3KJJbaOuCu7xwRZ8uw" class="icon-link">
+                        <span class="icon">&#xe600;</span>
+                    </a>
+                    <!-- Bilibili图标 -->
+                    <a href="https://space.bilibili.com/700401359?spm_id_from=333.337.search-card.all.click" class="icon-link">
+                        <span class="icon">&#xea95;</span>
+                    </a>
+                    <!-- Twitter (X) 图标 -->
+                    <a href="https://x.com/ZjuChina?mx=2" class="icon-link">
+                        
+                    </a>
+                </div>
         </div>
     </footer>
 
     <script src="assets/js/script.js"></script>
+    <script>
+        // 模拟加载延迟
+        window.onload = function() {
+                document.getElementById('mainContainer').style.display = 'none';
+                setTimeout(function() {
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                }, 2000); // 设置3秒钟后隐藏加载器
+            };
+
+        // 获取 home1-img 元素
+        const home1Img = document.querySelector('.home1-img');
+
+        // 定义鼠标移动处理函数
+        function handleMouseMove(event) {
+            // 获取鼠标的位置，相对于窗口
+            const mouseX = event.clientX;
+
+            // 获取窗口的宽度
+            const windowWidth = window.innerWidth;
+
+            // 计算鼠标位置相对于窗口宽度的百分比
+            const movePercentage = (mouseX / windowWidth) * 100;
+
+            // 根据鼠标位置动态调整 home1-img 的水平偏移
+            let translateX = (movePercentage - 50) * 1.5; // 控制滑动幅度
+
+            // 限制偏移量在 -150% 和 150% 之间
+            translateX = Math.max(-10, Math.min(10, translateX));
+
+            // 应用 transform 属性，控制图片左右滑动
+            home1Img.style.transform = `translateX(${translateX}%)`;
+        }
+
+        // 监听鼠标悬浮事件
+        home1Img.addEventListener('mouseenter', () => {
+            document.addEventListener('mousemove', handleMouseMove);
+        });
+
+        // 监听鼠标离开事件，移除鼠标移动监听
+        home1Img.addEventListener('mouseleave', () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            home1Img.style.transform = 'translateX(0%)'; // 鼠标移出时恢复原位
+        });
+    </script>
+
 </body>
 </html>

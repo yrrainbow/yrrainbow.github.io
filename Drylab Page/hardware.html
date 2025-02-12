@@ -3,23 +3,455 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的网站</title>
+    <title>Hardware | iGEM 2025 Project</title>
     <!-- 添加 Kirang Haerang 字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
+    <!-- 添加 Ranga 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ranga:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 添加 Montserrat 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 添加 Do Hyeon 字体 -->
+    <link href="https://fonts.font.im/css?family=Do+Hyeon" rel="stylesheet">
+    <!-- 引入 Playfair Display 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!-- 添加 Shadows Into Light 字体 -->
+    <link href="https://fonts.font.im/css?family=Shadows+Into+Light" rel="stylesheet">
+    <!-- 确保 jQuery 在其他脚本之前加载 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- 添加新的样式 -->
+    <style>
+        /* page-name 容器样式 */
+        .page-name {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;  /* 为导航栏留出空间 */
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;  /* 防止气泡超出容器 */
+        }
+
+        .page-name h1 {
+            margin-top: 5%;
+            font-family: 'Ranga', cursive;
+            font-size: 5em;
+            font-weight: 700;
+            color: #333;
+            z-index: 2; /* 确保 h1 在图片上方 */
+            position: relative; /* 让 h1 作为相对定位，图片可以在其下方 */
+            -webkit-text-stroke: 2px #c0b4e2; /* 黑色的 1px 描边 */
+        }
+
+        .page-name h2 {
+            margin-top: 5px;
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            z-index: 99;
+            /* -webkit-text-stroke: 0.1px #ffd58d; */
+        }
+
+        .page-name img {
+            position: absolute;  /* 绝对定位 */
+            top: 30%;  /* 使图片位于 h1 的下方 */
+            left: 50%;  /* 居中图片 */
+            transform: translate(-50%, -30%);  /* 水平居中，同时微调上下位置 */
+            width: 39%;  /* 控制图片宽度 */
+            z-index: 100;  /* 确保图片在 h1 下面 */
+        }
+
+        /* 目录样式 */
+        .content-nav {
+            width: 200px;
+            position: absolute;  /* 初始状态为absolute */
+            left: 100px;
+            font-weight: bold;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            z-index: 100;  /* 保证目录始终在最上层 */
+        }
+        
+        /* 固定定位的样式 */
+        .content-nav.fixed {
+            position: fixed;
+            top: 125px;  /* 与导航栏高度相同 */
+            left: 100px;  /* 保持与初始位置相同的左偏移 */
+        }
+        
+        .content-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .content-nav li {
+            margin-bottom: 5px;
+        }
+        
+        /* 主菜单项样式 */
+        .has-submenu > a {
+            display: block;
+            padding: 5px 8px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* 主菜单项的悬浮和激活效果 */
+        .content-nav ul li.has-submenu > a:hover,
+        .content-nav ul li.has-submenu.active > a {
+            background: #9383e4;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        /* 子菜单默认隐藏 */
+        .submenu {
+            display: none;  /* 默认隐藏子菜单 */
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        /* 当父菜单激活或鼠标悬浮时显示子菜单 */
+        .has-submenu.active > .submenu,
+        .has-submenu:hover > .submenu {
+            display: block;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        /* 子菜单样式 */
+        .submenu {
+            display: none;  /* 默认隐藏 */
+            margin-left: 20px;  /* 缩进 */
+            padding-left: 10px;
+        }
+        
+        /* 子菜单项样式 */
+        .submenu a {
+            padding: 0px 0px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-size: 0.9rem;
+        }
+
+        /* 子菜单项的悬浮和激活效果 */
+        .submenu a:hover {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+        
+        .submenu li.active a {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+
+        /* 当父菜单激活时显示子菜单 */
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        /* 内容区样式 */
+        .content-area {
+            width: 60%;
+            margin-left: 350px;
+            margin-bottom: 5%;
+            padding: 20px;
+            background-color: #fbf2f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0px #ffd58d; 
+        }
+
+        .content-area h1 {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 3rem;
+            color: whitesmoke;
+            -webkit-text-stroke: 0.5px #9383e4;  /* 给文字添加边框 */
+            text-shadow: #9383e4 1px 2px 2px;
+        }
+        .content-area h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:#ff8b71;
+            margin-top: 10px;
+        }
+        .content-area h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .content-area h4 {
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area p,li {   
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .saying {
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 95%;
+            margin: 0 auto;
+            border-left: 5px solid #c9c1f9;  /* 添加左侧竖线 */
+        }
+
+        .saying:hover {
+            transform: scale(1.01);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        .saying p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .content-section {
+            min-height: 50px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .img-container {
+            text-align: center;
+        }
+        
+        .gif-container{
+            text-align: center;
+        }
+
+        .content-section img {
+        display: inline-block;  /* 将图片设置为块级元素 */
+        margin: 20px auto;  /* 上下间距20px，左右自动居中 */
+        max-width: 80%;  /* 确保图片不会超出容器宽度 */
+        height: auto;  /* 保持图片比例 */
+        vertical-align: middle; /* 保持垂直对齐 */
+        margin-right: 10px; /* 设置两张图片之间的间距 */
+        border-radius: 20px;
+        }
+
+        .collapse-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .collapse-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .collapse-title {
+            padding: 10px;
+            background-color: #f8e7c8;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: semi-bold;
+            cursor: pointer;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            }
+            
+        .collapse-title:hover {
+            background-color: #f5d1a6;
+        }
+        .collapse-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            }
+        
+            /* 调整 SVG 图片样式 */
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 0px;
+            color: #000;
+            transition: all 0.3s ease; /* 加��过渡效果 */
+            margin-right: 10px; /* 添加右间距，使文本与图标之间有空隙 */
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            background-color: rgb(247, 241, 229);
+            border: 2px solid #ddd;
+            padding: 20px;
+            width: 45%;
+            height: 310px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .box:hover {
+            background-color: rgb(250, 235, 205);
+            width: 47%;
+            height: 320px;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .medusa-container {
+            position: fixed;
+            width: 200px;
+            height: auto;
+            left: 95%;           /* 调整位置，放到视口中央 */
+            top: 85%;            /* 调整位置 */
+            transform: translate(-50%, -50%);  /* 使容器在位置上完全居中 */
+            
+            z-index: 999;
+        }
+
+        .medusa-container img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+            transition: all 1s ease;  /* 添加过渡效果 */
+            opacity: 0.9;
+        }
+
+        /* 箭头图片样式（默认隐藏） */
+        #arrow-img {
+            position: absolute;
+            top: 66%;  /* 设置箭头位置 */
+            left: 35%;
+            transform: translate(-50%, -50%);
+            width: 25px; /* 设定箭头图片大小 */
+            height: auto;
+            opacity: 0; /* 默认隐藏 */
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        /* 当鼠标悬浮在图片上时显示箭头 */
+        .medusa-container:hover #arrow-img {
+            opacity: 0.8;
+        }
+
+        .circle-container {
+            display: flex;
+            gap: 20px;
+        }
+        .circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: #f3bc0d; /* 初始背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000; /* 初始标题颜色为黑色 */
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 初始阴影效果 */
+        }
+        .circle .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            font-weight: normal;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .circle:hover .content {
+            opacity: 1;
+        }
+        .circle:hover {
+            background-color: #fbf2f1; /* 鼠标悬浮时的背景色 */
+            border: 2px solid #fbf2f1; /* 鼠标悬浮时的边缘颜色 */
+            box-shadow: 0 0 20px 5px #f3bc0d; /* 发光效果 */
+        }
+        .circle:hover {
+            color: transparent; /* 鼠标悬浮时标题不可见 */
+        }
+        .image-text-container {
+            display: flex;
+            align-items: center; /* Vertically aligns the text with the image */
+            gap: 15px; /* Adds space between the image and the text */
+        }
+
+        .image {
+            width: 28%;
+            height: auto; /* Keeps the aspect ratio intact */
+        }
+
+        .text {
+            flex: 1; /* Allows the text to take up the remaining space */
+        }
+</style>
 </head>
 <body>
+    <!-- 进度条容器 -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <a href="../index.html">ZJU-CHINA</a>
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
+                    M-E-D-U-S-A
+                </a>
             </div>
             <ul class="nav-links">
                 <li class="dropdown">
                     <a href="#">TEAM</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Team Page/member.html">Member</a></li>
+                        <li><a href="../Team Page/member.html">Members</a></li>
                         <li><a href="../Team Page/attributions.html">Attributions</a></li>
                     </ul>
                 </li>
@@ -28,41 +460,37 @@
                     <ul class="dropdown-content">
                         <li><a href="../Project Page/description.html">Description</a></li>
                         <li><a href="../Project Page/design.html">Design</a></li>
-                        <li><a href="../Project Page/implementation.html">Implementation</a></li>
-                        <li><a href="../Project Page/plant.html">Plant</a></li>
-                        <li><a href="../Project Page/contribution.html">Contribution</a></li>
-                        <li><a href="../Project Page/safety.html">Safety</a></li>
+                        <li><a href="../Project Page/safety.html">Biosafety</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">WET LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Wetlab Page/results.html">Results</a></li>
-                        <li><a href="../Wetlab Page/proof.html">Proof</a></li>
-                        <li><a href="../Wetlab Page/part.html">Part</a></li>
+                        <li><a href="../Wetlab Page/proof.html">Proof of Concept</a></li>
+                        <li><a href="../Wetlab Page/part.html">Parts</a></li>
                         <li><a href="../Wetlab Page/protocol.html">Protocol</a></li>
                         <li><a href="../Wetlab Page/engineering.html">Engineering</a></li>
                         <li><a href="../Wetlab Page/measurement.html">Measurement</a></li>
-                        <li><a href="../Wetlab Page/notebook.html">Notebook</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">DRY LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="model.html">Model</a></li>
-                        <li><a href="software.html">Software</a></li>
+                        <li><a href="model.html">Model & Software</a></li>
                         <li><a href="hardware.html">Hardware</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">HUMAN PRACTICE</a>
                     <ul class="dropdown-content">
-                        <li><a href="../HP Page/ec.html">Education & Communication</a></li>
-                        <li><a href="../HP Page/cp.html">Collaboration & Partnership</a></li>
-                        <li><a href="../HP Page/cp.html">Intergrated Human Practices</a></li>
+                        <li><a href="../HP Page/overview.html"> Overview</a></li>
+                        <li><a href="../HP Page/ihp.html">Intergrated Human Practices</a></li>
                         <li><a href="../HP Page/entrepreneurship.html">Entrepreneurship</a></li>
-                        <li><a href="../HP Page/bp.html">Bigger Picture</a></li>
+                        <li><a href="../HP Page/education.html">Education & Communication</a></li>
                         <li><a href="../HP Page/inclusivity.html">Inclusivity</a></li>
+                        <li><a href="../HP Page/elc.html">Ethnic & Lega Considerations</a></li>
+                        <li><a href="../HP Page/SDG.html">SDG</a></li>
+                        <li><a href="../HP Page/bp.html">Bigger Picture</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,21 +499,451 @@
 
     <!-- 主要内容区 -->
     <main>
-        <!-- 首页banner -->
-        <section id="home" class="hero">
-            <div class="container">
-                <h1>hardware page</h1>
+        <!-- 加载动画 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-content">
+                <img src="../assets/img/spinner.png" class="loading-spinner" alt="Loading" style="width: 30%; height: auto;">
+                <p style="font-family: 'Kirang Haerang', cursive; font-size: 3rem; color: #333;">Loading...</p>
             </div>
-        </section>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="main-container" id="mainContainer">
+        <div class="page-name">
+            <!-- 左侧的气泡 -->
+            <div class="bubble bubble-left-1"></div>
+            <div class="bubble bubble-left-2"></div>
+
+            <img src="../assets/img/snake.png" alt="snake">
+            <!-- <img src="../assets/img/dp_0_0.png" alt="example picture" style="width: 650px; height: auto; margin-top: 10px; margin-bottom: 0px;"> -->
+            <h1>Hardware</h1>
+
+            <!-- 右侧的气泡 -->
+            <div class="bubble bubble-right-1"></div>
+            <div class="bubble bubble-right-2"></div>
+        </div>
+
+        <div class="content-nav">
+            <ul>
+                <li class="has-submenu">
+                    <a href="#background">Background</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#design">Design Overview</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#detail">Technical Details</a>
+                    <ul class="submenu">
+                        <li><a href="#matrix">Matrix material selection</a></li>
+                        <li><a href="#production">Production method</a></li>
+                        <li><a href="#delivery">Delivery method</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#future">Future Work</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#references">References</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="content-area" style="margin-top: 50px; margin-bottom: 0px;">
+
+            <section id="background" class="content-section">
+                <h1>Background</h1>
+                <p>Our project has developed a novel combination drug, <strong>ABTAC</strong> and keratinocyte growth factor, for treating seborrheic alopecia. To enhance its delivery, we are exploring transdermal methods, particularly <strong>microneedle (MN) technology</strong>. MNs create microchannels in the stratum corneum, boosting drug absorption while reducing systemic distribution and side effects. In hair loss treatment, MNs not only improve drug penetration but also physically stimulate hair follicle stem cells, promoting growth. They are also easy to use, cause minimal pain, and are well-tolerated by patients.</p>
+                <p>Among MN types, <strong>dissolvable microneedles (DMNs)</strong> are particularly advantageous. Unlike solid or coated MNs, DMNs incorporate drugs directly into the needle matrix, offering higher drug loading and efficient delivery. Made from biocompatible materials, DMNs dissolve completely in the skin, preventing irritation or allergic reactions. By adjusting their material composition and structure, drug release rates can be precisely controlled for sustained or controlled delivery.</p>
+                <p>Thus, we aim to develop a DMN system for transdermal delivery of ABTAC and keratinocyte growth factor.</p>
+            </section>
+
+            <section id="design" class="content-section">
+                <h1>Design Overview</h1>
+                <p>The design of soluble microneedles can be divided into three parts: </p>
+                <ul style="padding-left: 50px;">
+                    <li><strong>The selection of matrix materials</strong></li>
+                    <li><strong>The design of production methods</strong></li>
+                    <li><strong>The design of delivery methods</strong></li>
+                </ul>
+
+                <p>In the second and third part, we developed two kinds of hardware:</p>
+                
+            </section>
+
+            <section id="detail" class="content-section">
+                <h1>Technical Details</h1>
+                <section id="matrix">
+                    <h2>Matrix material selection</h2>
+                    <p>Considering many factors like biocompatibility, drug loading capacity, and mechanical strength, we finally chose <strong>hyaluronic acid (HA)</strong> as matrix material. We also used <strong>gelatin</strong> as a crosslinking agent, which can enhance the stability of HA and realize the slow release of the drug.</p>
+                </section>
+
+                <section id="production">
+                    <h2>Production method</h2>
+                        <h3>the principle</h3>
+                        <p>In order to improve the performance of the micro needle puncture of the skin and enhance the physical interlock between the micro needle and skin, we choose to use the centrifugal lithography (CL) method of production organization interlock micro needle (TI - DMN).</p>
+                        <p>Centrifugal lithography works by shaping a liquid polymer solution into a desired microstructure under centrifugal force. Centrifugal force is able to uniformly stretch and distribute the polymer solution, forming microneedle structures with precise size and shape.</p>
+                        <div class="img-container">
+                            <img src="../assets/img/hardware_1.png" alt="example picture" style="width: 60%;">
+                        </div>
+
+                        <h3>A fixed box</h3>
+                        <p>Taking the microplate centrifuge as the basic device for centrifugation, we developed a microneedle molding fixation box that can be placed in a universal microplate centrifuge based on the specifications of the 96-well plate.</p>
+                        <table border="1" style="margin-top: 30px; margin-left: auto; margin-right: auto;background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                            <thead>
+                                <tr>
+                                    <th><strong>Component</strong></th>
+                                    <th><strong>Material</strong></th>
+                                    <th><strong>Main size (mm)</strong></th>
+                                    <th><strong>Subsize (mm)</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Bottom box</strong></td>
+                                    <td><strong>PMMA</strong></td>
+                                    <td><strong>128×86×13</strong></td>
+                                    <td><strong>88×50×2 (groove)<br>117×76×2 (bump)</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Lid</strong></td>
+                                    <td><strong>PMMA</strong></td>
+                                    <td><strong>128×86×2</strong></td>
+                                    <td><strong>118×77×2 (groove)<br>88×50×0.75 (bump)</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hole Plate</strong></td>
+                                    <td><strong>PMMA</strong></td>
+                                    <td><strong>88×50×0.25</strong></td>
+                                    <td><strong>50×4×0.2 (hole)</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Flexible Plate</strong></td>
+                                    <td><strong>PVP-K90</strong></td>
+                                    <td><strong>10×10×0.25</strong></td>
+                                    <td>/</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Nonstick Plate</strong></td>
+                                    <td><strong>PDMS</strong></td>
+                                    <td><strong>88×50×0.8</strong></td>
+                                    <td>/</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="img-container">
+                            <img src="../assets/img/hardware_2.png" alt="example picture" style="width: 40%;">
+                            <img src="../assets/img/hardware_3.png" alt="example picture" style="width: 40%;">
+                        </div>
+                        <p>From top to bottom, the lid, the non-stick plate, the hole plate, and the bottom box are shown. 10% of PVP-K90 solution drip into the orifice plate, flexible forms after solidification. Then 60% HA mixed with drugs was dropped into each area in 5×5 arrays using an automated desktop dispenser and covered with a non-stick plate, which was 200 μm away from the flexible plate. Centrifugal force (300 g) was applied for 1 min to form a "wine cup" primary layer of the polymer solution. An additional drop of HA polymer solution was added to the primary layer. Centrifugal force (400 g) was applied again for 1 min to form TI-DMN structures with narrow neck, wide body, and sharp tip. Using this method can quickly make a large number of soluble micro needle patch, and because the base material and the substrate material is different, they can be well separated  after the needle inserted into the skin.</p>
+                
+                        <h3>analogue simulation</h3>
+                        <p>Since there are few literatures describing centrifugal lithography, the relevant data of centrifugal force may not be applicable, so we used COMSOL to simulate the process of droplet centrifugal molding to assist the design of microneedles. The centrifugal force is simulated by adding a volume force F=ρ×ω2×r in the direction of the x axis.</p>
+                        <p>The first layer:</p>
+                        <div class="gif-container">
+                            <img src="../assets/gif/1.1.gif" alt="GIF 动画" width="30%">
+                            <img src="../assets/gif/1.2.gif" alt="GIF 动画" width="30%">
+                            <img src="../assets/gif/1.3.gif" alt="GIF 动画" width="30%">
+                        </div>
+                        <p>The second layer:</p>
+                        <div class="gif-container">
+                            <img src="../assets/gif/2.1.gif" alt="GIF 动画" width="30%">
+                            <img src="../assets/gif/2.2.gif" alt="GIF 动画" width="30%">
+                            <img src="../assets/gif/2.3.gif" alt="GIF 动画" width="30%">
+                        </div>
+                </section>
+
+                <section id="delivery">
+                    <h2>Delivery method </h2>
+                    <p>The produced microneedle is in the form of patch. Considering the phenomenon of incomplete and uneven patch in manual patch, we designed a microneedle pen to solve these problems. </p>
+                    <p>The microneedle pen has two main functions. One is to puncture the skin more completely and evenly; the other is to bring in the red light irradiation function, which can activate the hair follicle cells, improve the blood circulation of the scalp, and further promote hair growth.</p>
+                    
+                    <h3>Mechanical part </h3>
+
+                    <h3>Circuit part</h3>
+                    <ul style="padding-left: 50px;">
+                        <li><strong>Hardware connection:</strong></li>
+                            <p>The small volume R130 STC89C52 is used to control the R130 motor and a red LED light, and controls the speed of the motor and the red LED light through the PWM (pulse width modulation) signal.</p>
+                            <div class="img-container">
+                                <img src="../assets/img/hardware_4.png" alt="example picture" style="width: 60%;">
+                            </div>
+                        <li><strong>Software codes:</strong></li>
+                        <pre><code>
+                            <span class="comment">// Code for controlling a motor and light system</span>
+                            <span class="highlight">#include</span> <span class="variable">&lt;reg52.h&gt;</span>  
+                            <span class="highlight">sbit</span> Motor_IN1 = P1^0;  
+                            <span class="highlight">sbit</span> Motor_IN2 = P1^1;  
+                            <span class="highlight">sbit</span> Motor_PWM = P2^0;  
+                            <span class="highlight">sbit</span> Light = P2^1;      
+                            <span class="highlight">sbit</span> Speed_Switch = P3^0;  
+                            <span class="highlight">sbit</span> Light_Switch = P3^1;  
+                            <span class="variable">unsigned</span> <span class="variable">char</span> speed_level = 0;  
+                            <span class="variable">bit</span> light_state = 0;          
+                            
+                            <span class="comment">// Time-lapse function</span>
+                            <span class="highlight">void</span> Delay(<span class="variable">unsigned</span> <span class="variable">int</span> t) {
+                                <span class="highlight">while</span> (t--) {
+                                    <span class="variable">unsigned</span> <span class="variable">char</span> i;
+                                    <span class="highlight">for</span> (i = 0; i < 1275; i++);
+                                }
+                            }
+                            
+                            <span class="comment">// Main function</span>
+                            <span class="highlight">void</span> main() {
+                                Motor_IN1 = 1;  <span class="comment">// Set the motor to turn forward</span>
+                                Motor_IN2 = 0;
+                            
+                                <span class="highlight">while</span> (1) {
+                                    <span class="comment">// Read the motor speed control switch status</span>
+                                    <span class="highlight">if</span> (Speed_Switch == 0) {  
+                                        Delay(20);  
+                                        <span class="highlight">if</span> (Speed_Switch == 0) {  
+                                            speed_level++;  
+                                            <span class="highlight">while</span> (Speed_Switch == 0);  
+                                            Delay(20);  
+                                        }
+                                    }
+                            
+                                    <span class="comment">// Set the motor speed according to the speed level</span>
+                                    <span class="highlight">switch</span> (speed_level) {
+                                        <span class="highlight">case</span> 0:
+                                            Motor_PWM = 0; 
+                                            <span class="highlight">break</span>;
+                                        <span class="highlight">case</span> 1:
+                                            Motor_PWM = 50;  
+                                            <span class="highlight">break</span>;
+                                        <span class="highlight">case</span> 2:
+                                            Motor_PWM = 100;  
+                                            <span class="highlight">break</span>;
+                                        <span class="highlight">case</span> 3:
+                                            Motor_PWM = 200;  
+                                            <span class="highlight">break</span>;
+                                        <span class="highlight">default</span>:
+                                            speed_level = 0;  
+                                            <span class="highlight">break</span>;
+                                    }
+                            
+                                    <span class="comment">// Read the red light control switch status</span>
+                                    <span class="highlight">if</span> (Light_Switch == 0) {  
+                                        Delay(20);  
+                                        <span class="highlight">if</span> (Light_Switch == 0) {  
+                                            light_state = !light_state;  
+                                            <span class="highlight">while</span> (Light_Switch == 0);  
+                                            Delay(20);  
+                                        }
+                                    }
+                            
+                                    <span class="comment">// Control the red light according to the red light status</span>
+                                    Light = light_state;
+                                    Delay(100);  
+                                }
+                            }
+                            </code></pre>
+                    </ul>
+                    <p>Through this circuit design, one switch controls the red light on and off, and the other switch can adjust the vibration frequency of the vibration head to meet the individual needs of different users.</p>
+                </section>
+            </section>
+
+            <section id="future" class="content-section">
+                <h1>Future Work</h1>
+                <p>In the future, the microneedle molding simulation can be combined with the microneedle puncture and drug diffusion simulation to customize the microneedle parameter scheme and production scheme for different people and drugs. Comsol The built-in app development system also helps us to further share the model with more people. </p>
+                <p>In addition, the shape and material of the vibrating head can be optimized in the design of the microneedling pen to make it more suitable for the scalp and achieve uniform drug delivery in depth. The specific band of red light can also be optimized through experiments, and the light intensity can be adjusted. Furthermore, we also have plans to incorporate tiny sensors into microneedles to aid diagnosis and further treatment by minimally sampling tiny amounts of blood and interstitial fluid.</p>
+            </section>
+
+            <section id="references" class="content-section">
+                <h1>References</h1>
+                <div class="references-container">
+                    <p>[1] H. Yang, S. Kim, G. Kang, S. F. Lahiji, M. Jang, Y. M. Kim, J.-M. Kim, S.-N. Cho, H. Jung, <i>Adv. Healthcare Mater.</i> 2017, 6, 1700326. <a href="https://doi.org/10.1002/adhm.201700326" target="_blank">https://doi.org/10.1002/adhm.201700326</a>.</p>
+                    <p>[2] Fakhraei Lahiji, S., Kim, Y., Kang, G. et al. Tissue Interlocking Dissolving Microneedles for Accurate and Efficient Transdermal Delivery of Biomolecules. <i>Sci Rep</i> 9, 7886 (2019). <a href="https://doi.org/10.1038/s41598-019-44418-6" target="_blank">https://doi.org/10.1038/s41598-019-44418-6</a>.</p>
+                    <p>[3] Darwin, E., Heyes, A., Hirt, P.A. et al. Low-level laser therapy for the treatment of androgenic alopecia: a review. <i>Lasers Med Sci</i> 33, 425–434 (2018). <a href="https://doi.org/10.1007/s10103-017-2385-5" target="_blank">https://doi.org/10.1007/s10103-017-2385-5</a>.</p>
+                    <p>[4] Can Hong, Guoliang Zhang, Wei Zhang, Jiaqi Liu, Jiao Zhang, Yutong Chen, Haichuan Peng, Yukai Cheng, Xingwei Ding, Hongbo Xin, Xiaolei Wang, Hair grows hair: Dual-effective hair regrowth through a hair enhanced dissolvable microneedle patch cooperated with the pure yellow light irradiation, <i>Applied Materials Today</i>, 25, 101188, (2021). <a href="https://doi.org/10.1016/j.apmt.2021.101188" target="_blank">https://doi.org/10.1016/j.apmt.2021.101188</a>.</p>
+                </div>
+            
+            </section>
+        </div?>
+        </div>
+        
+        <!-- 背景图 -->
+        <div id="img-modal" class="medusa-container">
+            <img src="../assets/img/medusa_1.png" alt="medusa_1" class="medusa-img" id="medusa-img">
+            <!-- 箭头图片 -->
+            <img src="../assets/img/arrow.png" alt="arrow" id="arrow-img">
+            <!-- <img src="../assets/img/medusa_2.png" alt="medusa_2" class="medusa-img">
+            <img src="../assets/img/medusa_3.png" alt="medusa_3" class="medusa-img"> -->
+        </div>
+
+        </div>
     </main>
 
     <!-- 页脚 -->
     <footer>
-        <div class="container">
-            <p>© 2023 - iGEM ZJU-China</p>
+        <div class="foot-container">
+            <div class="foot-content">
+                <p>© 2025 - iGEM ZJU-China</p>
+            </div>
         </div>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            var nav = $('.content-nav');
+            var navTop = nav.offset().top;  // 获取目录原始位置
+            var headerHeight = 60;  // 导航栏高度
+
+            // 添加调试信息
+            console.log('Initial nav top position:', navTop);
+            console.log('Header height:', headerHeight);
+
+            // 页面加载时先检查一次位置
+            checkPosition();
+
+            // 滚动时检查位置
+            $(window).scroll(function() {
+                checkPosition();
+                checkActiveSection();
+            });
+
+            // 检查位置的函数
+            function checkPosition() {
+                var scrollTop = $(window).scrollTop();
+                console.log('Scroll position:', scrollTop); // 调试用
+                
+                if (scrollTop + headerHeight + 75 > navTop) {
+                    console.log('Adding fixed class'); // 调试用
+                    nav.addClass('fixed');
+                } else {
+                    console.log('Removing fixed class'); // 调试用
+                    nav.removeClass('fixed');
+                }
+            }
+
+            // 检查激活章节的函数
+            function checkActiveSection() {
+                let scrollPosition = $(window).scrollTop();
+                
+                // 检查主要章节位置
+                $('.content-section').each(function() {
+                    let sectionTop = $(this).offset().top - 100;
+                    let sectionBottom = sectionTop + $(this).outerHeight();
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                        let id = $(this).attr('id');
+                        // 移除所有激活状态
+                        $('.content-nav li').removeClass('active');
+                        $('.submenu li').removeClass('active');
+                        
+                        // 激活当前主菜单项
+                        let currentMainItem = $('.content-nav a[href="#' + id + '"]').parent();
+                        currentMainItem.addClass('active');
+                    }
+                });
+                
+                // 检查子章节位置
+                $('section[id] h2').each(function() {
+                    let subSectionTop = $(this).offset().top - 100;
+                    let subSectionBottom = subSectionTop + $(this).parent().outerHeight();
+                    
+                    if (scrollPosition >= subSectionTop && scrollPosition <= subSectionBottom) {
+                        let id = $(this).parent().attr('id');
+                        // 移除所有子菜单项的激活状态
+                        $('.submenu li').removeClass('active');
+                        // 激活当前子菜单项
+                        $('.submenu a[href="#' + id + '"]').parent().addClass('active');
+                        // 确保父菜单保持激活状态
+                        $('.submenu a[href="#' + id + '"]').parents('.has-submenu').addClass('active');
+                    }
+                });
+            }
+            
+            // 点击目录链接时平滑滚动
+            $('.content-nav a').click(function(e) {
+                e.preventDefault();
+                let target = $($(this).attr('href'));
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            });
+
+            // Toggle the collapse content when clicking on the title
+        $(".collapse-title").click(function() {
+            var content = $(this).next(".collapse-content");
+            // Slide toggle the content
+            content.slideToggle();
+            // Optionally, collapse other sections when one is opened (accordion behavior)
+            $(".collapse-content").not(content).slideUp();
+            });
+
+            const arrowImg = $("#arrow-img");
+
+            // 点击箭头图片返回顶部
+            arrowImg.click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+        });
+
+        // 定义图片路径数组
+    const images = [
+        "../assets/img/medusa_1.png", 
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_3.png",
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_1.png",
+    ];
+
+    // 初始化当前图片索引
+    let currentImageIndex = 0;
+
+    // 获取图片元素
+    const imgElement = document.getElementById('medusa-img');
+    
+    // 监听滚动事件
+    $(window).scroll(function() {
+        // 获取当前的滚动位置
+        var scrollTop = $(window).scrollTop();
+        console.log('Scroll position:', scrollTop); // 打印当前的滚动位置
+
+        // 每1000px滚动时切换一次图片
+        if (scrollTop >= 1000) {
+            // 计算应该切换的图片索引
+            currentImageIndex = Math.floor(scrollTop / 1000) % 5;
+
+            // 根据当前图片索引切换图片
+            imgElement.src = images[currentImageIndex];
+
+            // 可选：重置滚动位置，避免频繁触发
+            // $(window).scrollTop(0); // 可选：如果你希望在达到1000px时重置滚动位置，可以取消注释此行
+        }
+    });
+
+        
+        // 模拟加载延迟
+        window.onload = function() {
+                document.getElementById('mainContainer').style.display = 'none';
+                setTimeout(function() {
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                }, 2000); // 设置3秒钟后隐藏加载器
+            };
+
+        function changeIcon(element, newSrc) {
+        element.src = newSrc;
+        }
+
+        window.onscroll = function() {
+            // 获取文档的总高度和当前滚动的高度
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrollPosition = window.scrollY;
+
+            // 计算滚动进度百分比
+            var scrollPercentage = (scrollPosition / docHeight) * 100;
+
+            // 更新进度条的宽度
+            document.getElementById("progress-bar").style.width = scrollPercentage + "%";
+        }
+    </script>
 </body>
 </html>

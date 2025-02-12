@@ -20,7 +20,7 @@ body {
 /* 导航栏样式 */
 .navbar {
     background: linear-gradient(to bottom, #e3dffd, #c9c1f9); 
-    box-shadow: 0 0 5px 2px #c9c1f9; 
+    box-shadow: 0 0 10px 10px #c9c1f9;
     padding: 1rem 0;
     position: fixed;
     width: 100%;
@@ -67,32 +67,6 @@ body {
     font-size: large;
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
-}
-
-/* 主要内容区样式 */
-.hero {
-    background: linear-gradient(to bottom, #ded8ff, #fdfcff, );  /* 从上到下的渐变 */
-    min-height: 100vh;  /* 确保至少占满整个视窗高度 */
-    display: flex;
-    align-items: center;
-    text-align: center;
-    padding-top: 60px;  /* 为导航栏留出空间 */
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-
-/* 页脚样式 */
-footer {
-    background: #ded8ff;
-    color: black;
-    font-family: 'Kirang Haerang', cursive;
-    text-align: center;
-    border-radius: 10px;
-    padding: 1rem 0;
 }
 
 /* 响应式设计 */
@@ -264,4 +238,205 @@ footer {
     }
 }
 
+/* 从description搬过来的 */
+/* 定义旋转动画 */
+@keyframes spin {
+    frodescripm { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
+@-webkit-keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 应用动画到图片 */
+.loading-spinner {
+    animation: spin 2s linear infinite;
+    -webkit-animation: spin 2s linear infinite;
+    width: 50px;
+    height: 50px;
+}
+
+/* 居中显示 */
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #c9c1f9, #b29ebc);
+    /* z-index: 9999; 保证加载层在最上面 */
+}
+.loading-content {
+    text-align: center
+}
+
+/* main 容器样式 */
+.main-container {
+    min-height: 100vh;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    background: linear-gradient(to bottom, #c9c1f9, #b29ebc, #f8d6e5, #f6e8ee);
+    /* display: none;  默认隐藏 */
+}
+
+/* 气泡样式 */
+.bubble {
+    position: absolute;
+    bottom: -50px; /* 从容器底部开始 */
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 1;
+    animation: floatUp 5s ease-in infinite;
+    box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.6), /* 内部高光 */
+                0 0 15px #c9c1f9; /* 外部光晕 */
+    filter: brightness(1.2); /* 提升亮度增强光感 */
+}
+
+/* 气泡的浮动动画 */
+@keyframes floatUp {
+    0% {
+        bottom: -50px;
+        opacity: 0.8;
+        transform: scale(1) translateX(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) translateX(50px); /* 气泡放大并稍微偏移 */
+    }
+    100% {
+        bottom: 100%; /* 气泡浮出容器 */
+        opacity: 0;
+        transform: scale(0.8) translateX(-50px); /* 气泡逐渐消失并有些偏移 */
+    }
+}
+
+/* 左侧气泡样式 */
+.bubble-left-1 {
+    left: 15%; /* 左侧 */
+    animation-duration: 4s;
+    animation-delay: 0s;
+}
+
+.bubble-left-2 {
+    left: 15%; /* 左侧 */
+    animation-duration: 5s;
+    animation-delay: 2s;
+}
+
+/* 右侧气泡样式 */
+.bubble-right-1 {
+    right: 15%; /* 右侧 */
+    animation-duration: 4s;
+    animation-delay: 1s;
+}
+
+.bubble-right-2 {
+    right: 15%; /* 右侧 */
+    animation-duration: 6s;
+    animation-delay: 3s;
+}
+
+/* 页脚样式 */
+footer {
+    background: #f6e8ee;
+    color: #fff;
+    font-family: 'Kirang Haerang', cursive;
+    text-align: center;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+/* 页脚 */
+.foot-container{
+    width: 85%;
+    background: #c9c1f9;
+    font-family: 'Kirang Haerang', cursive;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1rem 0;
+    border-radius: 5px;
+}
+
+.svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+/* 容器样式 */
+.svg-container {
+    padding: 20px;
+}
+
+/* 图标样式 */
+.icon-link {
+    display: inline-block;
+    transition: transform 0.3s ease-in-out; /* 平滑过渡 */
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    fill: #ffffff; /* 设置图标的颜色 */
+}
+
+/* 鼠标悬浮时旋转效果 */
+.icon-link:hover .icon {
+    transform: rotateZ(360deg); /* Z 轴旋转 */
+}
+
+
+/* 进度条容器 */
+#progress-bar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px; /* 进度条的高度 */
+    background-color: #ded8ff;
+    z-index: 9999;
+}
+
+/* 进度条 */
+#progress-bar {
+    height: 100%;
+    background-color: #333; /* 进度条颜色 */
+    width: 0%; /* 初始宽度为 0% */
+    transition: width 0.1s ease-out;
+}
+
+pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 0px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 16px;
+    line-height: 1.6;
+}
+code {
+    display: block;
+}
+.highlight {
+    color: #f92672; /* Pink color for keywords */
+}
+.comment {
+    color: #75715e; /* Grey color for comments */
+}
+.variable {
+    color: #f8f8f2; /* White for general text */
+}
+
+.member-container {
+    display: flex;
+}

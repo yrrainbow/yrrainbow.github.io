@@ -69,22 +69,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* 主要内容区样式 */
-.hero {
-    background: linear-gradient(to bottom, #ded8ff, #fdfcff, );  /* 从上到下的渐变 */
-    min-height: 100vh;  /* 确保至少占满整个视窗高度 */
-    display: flex;
-    align-items: center;
-    text-align: center;
-    padding-top: 60px;  /* 为导航栏留出空间 */
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-
 /* 页脚样式 */
 footer {
     background: #ded8ff;
@@ -263,5 +247,6 @@ footer {
         transform: none;
     }
 }
+
 
 

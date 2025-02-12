@@ -3,23 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的网站</title>
+    <title>Integrated Human Pratice| iGEM 2025 Project</title>
     <!-- 添加 Kirang Haerang 字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
+    <!-- 添加 Ranga 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ranga:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 添加 Montserrat 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 添加 Do Hyeon 字体 -->
+    <link href="https://fonts.font.im/css?family=Do+Hyeon" rel="stylesheet">
+    <!-- 引入 Playfair Display 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!-- 添加 Shadows Into Light 字体 -->
+    <link href="https://fonts.font.im/css?family=Shadows+Into+Light" rel="stylesheet">
+    <!-- 确保 jQuery 在其他脚本之前加载 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- 添加新的样式 -->
+    <style>
+        /* page-name 容器样式 */
+        .page-name {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;  /* 为导航栏留出空间 */
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;  /* 防止气泡超出容器 */
+        }
+
+        .page-name h1 {
+            margin-top: 5%;
+            font-family: 'Ranga', cursive;
+            font-size: 5em;
+            font-weight: 700;
+            color: #333;
+            z-index: 2; /* 确保 h1 在图片上方 */
+            position: relative; /* 让 h1 作为相对定位，图片可以在其下方 */
+            -webkit-text-stroke: 2px #c0b4e2; /* 黑色的 1px 描边 */
+        }
+
+        .page-name h2 {
+            margin-top: 5px;
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            z-index: 99;
+            /* -webkit-text-stroke: 0.1px #ffd58d; */
+        }
+
+        .page-name img {
+            position: absolute;  /* 绝对定位 */
+            top: 30%;  /* 使图片位于 h1 的下方 */
+            left: 50%;  /* 居中图片 */
+            transform: translate(-50%, -30%);  /* 水平居中，同时微调上下位置 */
+            width: 39%;  /* 控制图片宽度 */
+            z-index: 100;  /* 确保图片在 h1 下面 */
+        }
+
+        /* 目录样式 */
+        .content-nav {
+            width: 200px;
+            position: absolute;  /* 初始状态为absolute */
+            left: 100px;
+            font-weight: bold;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            z-index: 100;  /* 保证目录始终在最上层 */
+        }
+        
+        /* 固定定位的样式 */
+        .content-nav.fixed {
+            position: fixed;
+            top: 125px;  /* 与导航栏高度相同 */
+            left: 100px;  /* 保持与初始位置相同的左偏移 */
+        }
+        
+        .content-nav ul {
+            list-style: none;
+        }
+        
+        .content-nav li {
+            margin-bottom: 2px;
+        }
+        
+        /* 主菜单项样式 */
+        .has-submenu > a {
+            display: block;
+            padding: 3px 3px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* 主菜单项的悬浮和激活效果 */
+        .content-nav ul li.has-submenu > a:hover,
+        .content-nav ul li.has-submenu.active > a {
+            background: #9383e4;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        /* 子菜单默认隐藏 */
+        .submenu {
+            display: none;  /* 默认隐藏子菜单 */
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        /* 当父菜单激活或鼠标悬浮时显示子菜单 */
+        .has-submenu.active > .submenu,
+        .has-submenu:hover > .submenu {
+            display: block;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        /* 子菜单样式 */
+        .submenu {
+            display: none;  /* 默认隐藏 */
+            margin-left: 20px;  /* 缩进 */
+            padding-left: 10px;
+        }
+        
+        /* 子菜单项样式 */
+        .submenu a {
+            padding: 0px 0px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-size: 0.9rem;
+        }
+
+        /* 子菜单项的悬浮和激活效果 */
+        .submenu a:hover {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+        
+        .submenu li.active a {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+
+        /* 当父菜单激活时显示子菜单 */
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        /* 内容区样式 */
+        .content-area {
+            width: 60%;
+            margin-left: 350px;
+            margin-bottom: 5%;
+            padding: 20px;
+            background-color: #fbf2f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0px #ffd58d; 
+        }
+
+        .content-area h1 {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 3rem;
+            color: whitesmoke;
+            -webkit-text-stroke: 0.5px #9383e4;  /* 给文字添加边框 */
+            text-shadow: #9383e4 1px 2px 2px;
+        }
+        .content-area h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:#ff8b71;
+            margin-top: 10px;
+        }
+        .content-area h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .content-area h4 {
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area p {   
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .saying {
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 95%;
+            margin: 0 auto;
+            border-left: 5px solid #c9c1f9;  /* 添加左侧竖线 */
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .saying:hover {
+            transform: scale(1.01);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        .saying p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .content-section {
+            min-height: 50px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .img-container {
+            text-align: center;
+        }
+        
+
+        .content-section img {
+        display: inline-block;  /* 将图片设置为块级元素 */
+        margin: 20px auto;  /* 上下间距20px，左右自动居中 */
+        max-width: 80%;  /* 确保图片不会超出容器宽度 */
+        height: auto;  /* 保持图片比例 */
+        vertical-align: middle; /* 保持垂直对齐 */
+        margin-right: 10px; /* 设置两张图片之间的间距 */
+        border-radius: 20px;
+        }
+
+        .collapse-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .collapse-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .collapse-title {
+            padding: 10px;
+            background-color: #f8e7c8;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: semi-bold;
+            cursor: pointer;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            }
+            
+        .collapse-title:hover {
+            background-color: #f5d1a6;
+        }
+        .collapse-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            }
+        
+            /* 调整 SVG 图片样式 */
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 0px;
+            color: #000;
+            transition: all 0.3s ease; /* 加��过渡效果 */
+            margin-right: 10px; /* 添加右间距，使文本与图标之间有空隙 */
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            background-color: rgb(247, 241, 229);
+            border: 2px solid #ddd;
+            padding: 20px;
+            width: 45%;
+            height: 310px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .box:hover {
+            background-color: rgb(250, 235, 205);
+            width: 47%;
+            height: 320px;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .medusa-container {
+            position: fixed;
+            width: 200px;
+            height: auto;
+            left: 95%;           /* 调整位置，放到视口中央 */
+            top: 85%;            /* 调整位置 */
+            transform: translate(-50%, -50%);  /* 使容器在位置上完全居中 */
+            
+            z-index: 999;
+        }
+
+        .medusa-container img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+            transition: all 1s ease;  /* 添加过渡效果 */
+            opacity: 0.9;
+        }
+
+        /* 箭头图片样式（默认隐藏） */
+        #arrow-img {
+            position: absolute;
+            top: 66%;  /* 设置箭头位置 */
+            left: 35%;
+            transform: translate(-50%, -50%);
+            width: 25px; /* 设定箭头图片大小 */
+            height: auto;
+            opacity: 0; /* 默认隐藏 */
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        /* 当鼠标悬浮在图片上时显示箭头 */
+        .medusa-container:hover #arrow-img {
+            opacity: 0.8;
+        }
+
+        .text-container {
+            position: relative;
+            background-color: antiquewhite;
+            border-radius: 10px;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+            margin-top: 20px;
+            border: 2px solid #5c5b5b;
+        }
+
+        .text-container:hover {
+            transform: scale(1.02);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+</style>
 </head>
 <body>
+    <!-- 进度条容器 -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <a href="../index.html">ZJU-CHINA</a>
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
+                    M-E-D-U-S-A
+                </a>
             </div>
             <ul class="nav-links">
                 <li class="dropdown">
                     <a href="#">TEAM</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Team Page/member.html">Member</a></li>
+                        <li><a href="../Team Page/member.html">Members</a></li>
                         <li><a href="../Team Page/attributions.html">Attributions</a></li>
                     </ul>
                 </li>
@@ -28,41 +409,37 @@
                     <ul class="dropdown-content">
                         <li><a href="../Project Page/description.html">Description</a></li>
                         <li><a href="../Project Page/design.html">Design</a></li>
-                        <li><a href="../Project Page/implementation.html">Implementation</a></li>
-                        <li><a href="../Project Page/plant.html">Plant</a></li>
-                        <li><a href="../Project Page/contribution.html">Contribution</a></li>
-                        <li><a href="../Project Page/safety.html">Safety</a></li>
+                        <li><a href="../Project Page/safety.html">Biosafety</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">WET LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Wetlab Page/results.html">Results</a></li>
-                        <li><a href="../Wetlab Page/proof.html">Proof</a></li>
-                        <li><a href="../Wetlab Page/part.html">Part</a></li>
+                        <li><a href="../Wetlab Page/proof.html">Proof of Concept</a></li>
+                        <li><a href="../Wetlab Page/part.html">Parts</a></li>
                         <li><a href="../Wetlab Page/protocol.html">Protocol</a></li>
                         <li><a href="../Wetlab Page/engineering.html">Engineering</a></li>
                         <li><a href="../Wetlab Page/measurement.html">Measurement</a></li>
-                        <li><a href="../Wetlab Page/notebook.html">Notebook</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">DRY LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Drylab Page/model.html">Model</a></li>
-                        <li><a href="../Drylab Page/software.html">Software</a></li>
+                        <li><a href="../Drylab Page/model.html">Model & Software</a></li>
                         <li><a href="../Drylab Page/hardware.html">Hardware</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">HUMAN PRACTICE</a>
                     <ul class="dropdown-content">
-                        <li><a href="ec.html">Education & Communication</a></li>
-                        <li><a href="cp.html">Collaboration & Partnership</a></li>
+                        <li><a href="overview.html"> Overview</a></li>
                         <li><a href="ihp.html">Intergrated Human Practices</a></li>
                         <li><a href="entrepreneurship.html">Entrepreneurship</a></li>
-                        <li><a href="bp.html">Bigger Picture</a></li>
+                        <li><a href="education.html">Education & Communication</a></li>
                         <li><a href="inclusivity.html">Inclusivity</a></li>
+                        <li><a href="elc.html">Ethnic & Lega Considerations</a></li>
+                        <li><a href="SDG.html">SDG</a></li>
+                        <li><a href="bp.html">Bigger Picture</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,21 +448,704 @@
 
     <!-- 主要内容区 -->
     <main>
-        <!-- 首页banner -->
-        <section id="home" class="hero">
-            <div class="container">
-                <h1>Intergrated Human Practices page</h1>
+        <!-- 加载动画 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-content">
+                <img src="../assets/img/spinner.png" class="loading-spinner" alt="Loading" style="width: 30%; height: auto;">
+                <p style="font-family: 'Kirang Haerang', cursive; font-size: 3rem; color: #333;">Loading...</p>
             </div>
-        </section>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="main-container" id="mainContainer">
+        <div class="page-name">
+            <!-- 左侧的气泡 -->
+            <div class="bubble bubble-left-1"></div>
+            <div class="bubble bubble-left-2"></div>
+
+            <img src="../assets/img/snake.png" alt="snake">
+            <!-- <img src="../assets/img/dp_0_0.png" alt="example picture" style="width: 650px; height: auto; margin-top: 10px; margin-bottom: 0px;"> -->
+            <h1>Unleash the Power of Locks with a Magical Touch!</h1>
+            <h2>Practice and interaction are the very keys, for they unlock the door to prosperity and accomplishment.</h2>
+
+            <!-- 右侧的气泡 -->
+            <div class="bubble bubble-right-1"></div>
+            <div class="bubble bubble-right-2"></div>
+        </div>
+
+        <div class="content-nav">
+            <ul>
+                <li class="has-submenu">
+                    <a href="#overview">Overall Pipeline</a>
+                    <ul class="submenu">
+                        <li><a href="#workflow">Workflow</a></li>
+                        <li><a href="#pipeline">Pipeline</a></li>
+                        <li><a href="#sketch">Sketch</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#creation">Creation of MEDUSA</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#principles">IHP Guiding Principles</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#problem">Problem Overview</a>
+                    <ul class="submenu">
+                        <li><a href="#tune">Tune in to the world</a></li>
+                        <li><a href="#development">Development of Hair Loss Treatment</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#RTI">Recognition of those Involved</a>
+                    <ul class="submenu">
+                        <li><a href="#recognition">Stakeholders Recognition</a></li>
+                        <li><a href="#analysis">Stakeholders Analysis</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#expertise">Expertise in the Process</a>
+                    <ul class="submenu">
+                        <li><a href="#person">Person to meet (Example) </a></li>
+                        <li><a href="#people">People to meet (Example) </a></li>
+                        <li><a href="#done">WORK HAVE DONE</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#concerns">Ethical Concerns</a>
+                    <ul class="submenu">
+                        <li><a href="#animal">Animal Testing Ethics </a></li>
+                        <li><a href="#human">Human Subject Protection </a></li>
+                        <li><a href="#products">Ethical Concerns for Products</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#patients">Patients Friendly</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#brief">Brief on Entrepreneurship</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#close">Close the Loop</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="content-area" style="margin-top: 50px; margin-bottom: 0px;">
+            <section class="content-section" style="background-image: url('../assets/img/talk_1.png'); background-size: cover; background-position: center;">
+                <p style="font-family: Shadows Into Light; font-size: x-large;">Weary souls plagued by the woes of hair loss! In my realm, hair is not just a mere adornment; it's a symbol of power, allure, and confidence.</p>
+                <p style="font-family: Shadows Into Light; font-size: x-large;">Now, we're diving into the world of cutting - edge anti - hair loss adventure, where science meets magic and mind meets mind. It's a world where we'll shatter the chains of hair loss and rewrite the rules of beauty. Join me as we explore how our groundbreaking research is not just changing lives but also challenging societal norms, empowering communities, and redefining what it means to embrace one's natural beauty. Let the transformation begin!</p>
+            </section>
+            <img src="../assets/img/home_0.png" alt="example picture" style="margin-left: 62%; height: auto; width: 100px;">
+
+
+            <section id=overview class="content-section">
+                <h1>Overall Pipeline</h1>
+                <section id="workflow">
+                    <h2>Workflow</h2>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_0.png" alt="example picture">
+                    </div>
+                </section>
+
+                <section id="pipeline">
+                    <h2>Pipeline</h2>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_01.png" alt="example picture">
+                    </div>
+                </section>
+
+                <section id="sketch">
+                    <h2>Sketch</h2>
+                        <p>This winter, our Integrated Human Practices (IHP) embarked on an exploration in the challenging field of anti - hair loss solutions through the MEDUSA project.</p>
+                    
+                    <div class="text-container">
+                        <p>In the <span style="font-weight: bold;">problem identification</span> stage, we surveyed a large number of individuals suffering from hair loss, as well as consulted dermatologists and trichologists. Their insights and real - world experiences highlighted the urgent need for a more effective, non - invasive anti - hair loss treatment. This led us to focus on the potential of soluble microneedle - based drug delivery systems for scalp therapy.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p>For <span style="font-weight: bold;">concept generation</span>, we delved into scientific literature and emerging technologies. We explored the latest research on hair follicle biology, drug delivery mechanisms, and biomaterials. Ideas such as using natural polymers to enhance the biocompatibility of microneedles and encapsulating growth factors for targeted hair growth stimulation emerged.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p><span style="font-weight: bold;">Ethical considerations</span> were at the forefront throughout the project. We consulted ethicists and legal experts to ensure that all aspects of our research, from animal testing (if any) to potential human trials, adhered to strict ethical guidelines. We also engaged with patient advocacy groups to understand their concerns and ensure that our project respected the rights and well - being of those affected by hair loss.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p>In the <span style="font-weight: bold;">initial design</span> phase, we collaborated with bioengineers and material scientists. We designed the structure of the soluble microneedles, considering factors like needle length, diameter, and drug - loading capacity. The goal was to create a system that could efficiently deliver anti - hair loss drugs to the scalp while minimizing discomfort.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p>During the <span style="font-weight: bold;">refinement stage</span>, we held in - depth discussions with pharmaceutical and medical experts. Based on their feedback, we optimized the drug formulation and the release kinetics of the microneedles. We also considered different manufacturing processes to improve the scalability and cost - effectiveness of the product.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p>For <span style="font-weight: bold;">experimental consultancy</span>, we worked closely with researchers experienced in in vitro and in vivo testing. They provided valuable advice on setting up experiments to test the efficacy of our soluble microneedle - drug delivery system, such as which cell lines and animal models to use, and how to measure hair growth parameters accurately.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p>The <span style="font-weight: bold;">final design</span> incorporated all the learnings from previous stages. We finalized the microneedle design, drug composition, and delivery protocol. We also focused on the packaging and storage requirements to ensure the stability and shelf - life of the product.</p>
+                        <p>Product manufacturing was planned with an eye on quality control and large - scale production. We explored partnerships with manufacturing companies that specialized in medical devices and pharmaceutical products. We aimed to develop a manufacturing process that could meet the high - volume demands of the market while maintaining strict quality standards.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p><span style="font-weight: bold;">Sustainability analysis</span> was a crucial part of our project. We evaluated the environmental impact of our product, from the sourcing of raw materials to the disposal of used microneedles. We explored biodegradable materials and eco - friendly manufacturing processes to minimize our carbon footprint.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p>In the <span style="font-weight: bold;">entrepreneurship design stage</span>, we developed a business model. We identified potential market segments, such as individuals with androgenetic alopecia, alopecia areata patients, and those seeking preventive hair loss treatments. We also planned marketing strategies, considering how to reach our target customers through various channels, including dermatology clinics, online platforms, and hair salons.</p>
+                    </div>
+
+                    <div class="text-container">
+                        <p>Finally, we achieved <span style="font-weight: bold;">the closed loop</span> through extensive interaction with all stakeholders. We received feedback from potential consumers, healthcare providers, and future industry partners, which we used to further improve our product. This continuous improvement cycle not only demonstrated our commitment to IHP but also laid a solid foundation for a successful and sustainable future in the anti - hair loss market.</p>
+                    </div>
+                </section>
+            </section>
+            
+            <section id="creation" class="content-section">
+                <h1> Creation of MEDUSA: From brainstorm to products</h1>
+                <div class="img-container">
+                    <img src="../assets/img/ihp_1.png" alt="example picture">
+                </div>
+                <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 1: a compact flow of how our ideas progressed through time</p>
+                
+                <section id="saying" class="saying">
+                    <p>“If you can renovate yourself one day, do so from day to day. Yea, let there be daily renovation.”</p>
+                    <p style="margin-left: 60%;">-- <span style="text-decoration: line-through; text-decoration-color: rgb(219, 4, 4);">The Book of Rites</span>  Medusa </p>
+                </section>
+
+                <p>Our very first brainstorming direction was <strong>Chitosan materials.</strong> We wanted to explore its potential uses in various fields such as biomedicine, food packaging, and environmental protection. After researching chitosan materials, we noticed its antibacterial and adhesive properties could be potentially beneficial in oral health. This led us to the second idea, <strong>Chewing gum for treating dental caries.</strong> We thought about incorporating chitosan into chewing gum. The chitosan in the gum could help prevent the growth of bacteria that cause dental caries, and its adhesive nature might enable it to adhere to the teeth surface for a longer-lasting effect. We discussed different formulas for the chewing gum, considering factors like the optimal concentration of chitosan, flavorings to make it appealing to consumers, and the texture of the gum base.</p>
+
+                <div class="img-container">
+                    <img src="../assets/img/ihp_2.png" alt="example picture">
+                </div>
+                <p>Then, we turned our attention to <strong>Anti - aging cell therapy.</strong> We studied the latest research on stem cells, senescent cells, and cell - based rejuvenation techniques. We learned about how certain types of stem cells could potentially replace damaged or aging cells in the body, and the methods to target and eliminate senescent cells. This research on anti - aging cell therapy inspired our fourth brainstorming direction, <strong>Microneedle treatment for hair loss.</strong> We realized that the concept of using a minimally - invasive delivery system, similar to the cell - delivery methods in anti - aging therapies, could be applied to hair loss treatment. Microneedles could create tiny channels in the scalp, allowing for more efficient delivery of drugs or growth factors that promote hair growth. We discussed the design of the microneedles, the choice of drugs to be delivered, and the frequency of treatment sessions.</p>
+            
+                <div class="img-container">
+                    <img src="../assets/img/ihp_3.png" alt="example picture">
+                </div>
+                <p>Our initial goal was to develop a product that could completely reverse hair loss in a short period. However, as we delved deeper into the research and development process, we realized that the complexity of hair follicle biology made this an overly ambitious target. We adjusted our goal to focus on significant hair regrowth and improved hair density over a reasonable time frame. This adjustment was based on the scientific evidence we gathered during our studies and the practical limitations of the technology.</p>
+            </section>
+
+            <section id="principles" class="content-section">
+                <h1>IHP Guiding Principles</h1>
+                <div class="img-container">
+                    <img src="../assets/img/ihp_4.png" alt="example picture">
+                </div>
+                
+                <h3 style="margin-top: 10px; margin-bottom: 10px;">Patients</h3>
+                <p>We place ourselves in the shoes of those affected by hair loss. This means actively listening to their stories, struggles, and aspirations. By truly empathizing, we can develop solutions that not only address the physical aspects of hair loss but also the emotional toll it takes. For example, we conduct in - depth interviews and hand out questionnaires with individuals who have experienced hair loss due to various causes like genetics, stress, or medical treatments. These personal accounts help us understand the complex impact on self - esteem, social interactions, and daily life, guiding every step of our project.</p>
+
+                <h3 style="margin-top: 10px; margin-bottom: 10px;">Products</h3>
+                <p>We ensure that our project considers the diverse needs of all individuals with hair loss, regardless of age, gender, ethnicity, or socioeconomic background. Different populations may experience hair loss differently, and our solutions should be accessible and effective for everyone. This involves collaborating with diverse communities, consulting with experts from various fields, and conducting research that represents a wide range of demographics. For instance, when developing our soluble microneedle - based treatment, we test its efficacy and safety on different skin types and hair textures, which are often associated with different ethnic groups.</p>
+
+                <h3 style="margin-top: 10px; margin-bottom: 10px;">Process</h3>
+                <p>Our goal is to create anti - hair loss solutions that are not only effective in the short - term but also sustainable in the long - run. This includes using environmentally friendly materials in the production of our microneedles and considering the full life - cycle of our product, from raw material extraction to disposal. We also adhere to strict ethical guidelines in all aspects of our research and development, ensuring that no harm is caused to animals during testing and that our practices are transparent and accountable.</p>
+            
+            </section>
+            
+            <section id="problem" class="content-section">
+                <h1>Problem</h1>
+
+                <section id="tune">
+                    <h2>Tune in to the world</h2>
+                    <p>Microneedle treatment for hair loss has become a popular option in recent years. The main approach involves using a device with tiny needles, like a derma roller or dermapen, to create micro - punctures on the scalp. This process stimulates blood circulation in the scalp, promotes the production of collagen, and enhances the penetration of topical hair - growth products, such as minoxidil.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_5.png" alt="example picture">
+                    </div>
+                    <p>In terms of cost, the price varies depending on whether it is a professional treatment or at - home use. Professional microneedle treatments in clinics usually range from a few hundred to several thousand dollars per session, and multiple sessions are often required. At - home derma rollers are relatively affordable, with prices typically ranging to <strong>$100</strong>, but they may <strong>NOT</strong> be as effective as professional treatments. The market for microneedle treatment for hair loss is expanding due to the increasing awareness of hair loss issues. It is popular among both men and women suffering from androgenetic alopecia, which is the most common form of hair loss. As for treatment results, studies have shown that when combined with other therapies like minoxidil or platelet - rich plasma (PRP) injections, microneedling can improve hair growth in many cases. However, it also has limitations. Microneedling may not work for everyone, especially those with severe hair loss or hair loss caused by certain medications like chemotherapy drugs. Additionally, improper use, especially in at - home treatments, can lead to risks such as infection and skin damage. The hair loss market is gradually expanding, and the number of people in need is also increasing.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_6.png" alt="example picture">
+                    </div>
+                    <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 2: hair loss market</p>
+                </section>
+                
+                <section id="development">
+                    <h2>Development of Hair Loss Treatment</h2>
+                    <p>Over the years, hair loss treatments have evolved from simple topical solutions like minoxidil to more complex surgical procedures such as hair transplants. However, each of these methods has its limitations. Topical treatments often require long - term use and may have limited effectiveness for some individuals. Surgical procedures are invasive, expensive, and carry risks. Our project aims to bridge this gap by developing a novel soluble microneedle delivery system. This technology allows for the targeted delivery of therapeutic agents directly to the scalp, enhancing the effectiveness of the treatment while minimizing side - effects. We studied the existing literature on microneedle technology, hair follicle biology, and drug delivery mechanisms to design a system that could revolutionize hair loss treatment. By combining the latest advancements in materials science and pharmacology, we hope to create a treatment that is more efficient, convenient, and accessible than current options.</p> 
+                </section>
+            </section>
+
+            <section id="RTI" class="content-section">
+                <h1>Recognition of those Involved</h1>
+
+                <section id="recognition">
+                    <h2>Stakeholders Recognition</h2>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_7.png" alt="example picture">
+                    </div>
+                    <p>At the same time, we conducted a detailed classification of stakeholders involved in the project. Drawing inspiration from the Mendelow's Matrix, we analyzed stakeholders based on their influence and interest in the project, and outlined key actions for engaging with them in Intergrated Human Practices, Education and Entrepreneurship effectively.</p>
+                </section>
+                
+                <section id="analysis">
+                    <h2>Stakeholders Analysis</h2>
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">Patients and Public</h3>
+                    <p>We recognize the central role of patients in our project. Their experiences and feedback are invaluable. We establish patient advisory groups where individuals with hair loss can share their concerns, expectations, and suggestions directly with our research team.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_8.png" alt="example picture">
+                    </div>
+
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">Experts and Trichologists</h3>
+                    <p>These medical professionals provide crucial clinical insights. They help us understand the underlying causes of hair loss, evaluate the effectiveness of our treatment, and offer guidance on patient care. We collaborate with them in clinical trials and seek their input on the design of our treatment protocol.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_9.png" alt="example picture">
+                    </div>
+
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">Investors and Authorities</h3>
+                    <p>Our investors provide the financial resources necessary for the project's success. We keep them informed about the project's progress, share research updates, and involve them in strategic decision - making processes.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_10.png" alt="example picture">
+                    </div>
+                </section>
+            </section>
+
+            <section id="expertise" class="content-section">
+                <h1>Expertise in the Process</h1>
+
+                <section id="person">
+                    <h2>Person to meet (Example) </h2>
+                    <table border="1" style="margin-top: 30px; background-color: #ffffff; border-color: #333; border-style: solid;  border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                        <thead>
+                        <tr>
+                            <th>Module & Parts</th>
+                            <th>Types of Experts to Consult</th>
+                            <th>Cooperation Goals</th>
+                            <th>Stakeholders</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2">Cell - free System for AbTAC Production (Cure Module)</td>
+                                <td>Protein chemists</td>
+                                <td>Optimize the cell - free production process of AbTAC for higher yield and purity.</td>
+                                <td>Pharmaceutical companies interested in cell - free production technologies</td>
+                            </tr>
+                            <tr>
+                                <td>Biochemists</td>
+                                <td>Study the biochemical properties of AbTAC produced in the cell - free system to ensure its biological activity.</td>
+                                <td>Academic research institutions focused on protein production</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="2">E. coli - based KGF Production (Growth  Module)</td>
+                                <td>Microbiologists</td>
+                                <td>Improve the E. coli strain for more efficient KGF production, such as optimizing gene expression.</td>
+                                <td>Biotech startups working on microbial - based protein production</td>
+                            </tr>
+                            <tr>
+                                <td>Genetic engineers</td>
+                                <td>Modify the genetic circuit in E. coli to enhance the stability and consistency of KGF production.</td>
+                                <td>Seed and culture suppliers for E. coli</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="2">Soluble Microneedle Design Module</td>
+                                <td>Biomaterial scientists</td>
+                                <td>Select and develop suitable materials for soluble microneedles with good biocompatibility and drug - release characteristics.</td>
+                                <td>Microneedle manufacturing companies</td>
+                            </tr>
+                            <tr>
+                                <td>Mechanical engineers</td>
+                                <td>Design the physical structure of soluble microneedles, including needle shape, length, and density for optimal drug delivery.</td>
+                                <td>Equipment manufacturers for microneedle production</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="2">Patient Group Care Parts</td>
+                                <td>Dermatologists and trichologists</td>
+                                <td>Provide professional medical advice on hair loss treatment and patient care, and help understand the medical needs of patients.</td>
+                                <td>Hair loss patient support groups</td>
+                            </tr>
+                            <tr>
+                                <td>Psychologists</td>
+                                <td>Offer insights into the psychological impact of hair loss on patients and suggest ways to address patient concerns.</td>
+                                <td>Patient advocacy organizations</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="3">Commercialization Parts</td>
+                                <td>Market researchers</td>
+                                <td>Conduct in - depth market research to identify market size, trends, and target customer groups.</td>
+                                <td>Potential investors</td>
+                            </tr>
+                            <tr>
+                                <td>Business strategists</td>
+                                <td>Develop a comprehensive business strategy, including pricing, distribution, and marketing plans.</td>
+                                <td>Pharmaceutical distributors and retailers</td>
+                            </tr>
+                            <tr>
+                                <td>Intellectual property lawyers</td>
+                                <td>Assist in patent applications and intellectual property protection to ensure the commercial competitiveness of the product.</td>
+                                <td>Patent agencies</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                     
+                <section id="people">
+                    <h2>People to meet (Example) </h2>
+                    <table border="1" style="margin-top: 30px; background-color: #ffffff; border-color: #333; border-style: solid;  border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                        <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Cooperative Organizations/Teams</th>
+                            <th>Academic Forums/Conferences/Summits</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td rowspan="1">Cell - free System for AbTAC Production (Cure Module)</td>
+                                <td>Other iGEM teams focusing on cell - free protein production - Protein engineering research teams in renowned universities like MIT's protein engineering lab</td>
+                                <td>Protein Production and Engineering Summit - International Conference on Cell - free Systems</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">E. coli - based KGF Production (Growth  Module)</td>
+                                <td>Synthetic biology research groups in institutions such as Harvard's Wyss Institute - Industrial biotechnology teams in biotech companies</td>
+                                <td>Synthetic Biology China Congress - Microbial Biotechnology Conference</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Soluble Microneedle Design Module</td>
+                                <td>Biomaterials research groups at Tsinghua University - Microneedle R & D teams in medical device companies like 3M's medical R & D departmen</td>
+                                <td><p>- World Biomaterials Congress</p> <p>- Microneedle Technology and Application Summit</p></td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Patient Group Care Module</td>
+                                <td>Hair loss patient support associations like the American Hair Loss Association - Dermatology research teams in hospitals such as Mayo Clinic's dermatology department</td>
+                                <td>World Congress of Dermatology - International Hair Restoration Surgery Symposium</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Cell - free System for AbTAC Production (Cure Module)</td>
+                                <td>Business incubation centers in high - tech parks - Market research firms specialized in the medical field like IQVIA</td>
+                                <td>Healthcare Business and Investment Conference - Medical Device Commercialization Summit</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="done">
+                    <h2>WORK HAVE DONE</h2>
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">Safety Concerns</h3>
+                    <p>Expert we contacted: Prof. Sir Walter Bodmer</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_11.png" alt="example picture" style="width: 40%;">
+                    </div>
+                    <p><strong>Head of the Cancer and Immunogenetics Laboratory, MRC WIMM</strong></p>
+                    <p><strong>Research Interest: Oncology; Aging; Cell biology</strong></p>
+                    <p><strong>What we want to know:</strong></p>
+                    <p><strong>Will excessive stimulation of growth factors lead to cancer in hair follicle cells?</strong></p>
+                    <p><strong>Response</strong></p>
+                    <p>Growth factors play a crucial role in regulating cell growth, proliferation, and differentiation. In the context of hair follicle cells, while they are essential for normal hair growth, excessive stimulation can potentially disrupt the normal regulatory mechanisms. There is a risk that uncontrolled activation of certain signaling pathways associated with growth factors could lead to genetic mutations and an increased likelihood of cancer development. However, it is important to note that the relationship is complex and depends on multiple factors such as the type of growth factor, the duration and intensity of stimulation, and the genetic background of the cells.</p>
+                    <p><strong>What we learnt:</strong></p>
+                    <p>We need to be extremely cautious when formulating our anti-hair loss treatment that involves growth factors. Precise control over the dosage and delivery of growth factors is essential to avoid over-stimulating hair follicle cells and potentially triggering cancerous changes. We should also conduct in-depth pre-clinical studies to better understand the safety profile of our product in relation to this concern.</p>
+
+
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">Design Process</h3>
+                    <p>Expert we contacted: Prof. Danniel O'Connor</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_12.png" alt="example picture" style="width: 40%;">
+                    </div>
+                    <p><strong>Associate Professor and Head of Bioinformatics at the Oxford Vaccine Group, University of Oxford, with expertise in both wet-laboratory techniques and bioinformatics.</strong></p>
+                    <p><strong>Research Interest: Quantitative Biology; Immunology</strong></p>
+                    <p><strong>What we want to know:</strong></p>
+                    <p><strong>How can we use bioinformatics tools to analyze the gene expression patterns in hair follicle cells during the hair growth cycle and identify potential targets for our anti-hair loss treatment?</strong></p>
+                    <p><strong>Response</strong></p>
+                    <p>Bioinformatics offers a powerful set of tools for analyzing large-scale genomic data. By comparing the gene expression profiles of healthy and hair-loss affected hair follicle cells, we can identify genes that are differentially expressed. These genes can potentially be targets for our treatment. For example, we can use algorithms to mine through RNA-seq data to find genes that are involved in key biological processes such as cell proliferation, differentiation, and angiogenesis in hair follicles. Additionally, network analysis can help us understand the interactions between different genes and proteins, which can provide insights into the underlying molecular mechanisms of hair loss.</p>
+                    <p><strong>What we learnt:</strong></p>
+                    <p>What are the most promising nanotechnology-based drug delivery systems for our anti-hair loss product, and how can we optimize them for efficient delivery of growth factors and other active ingredients to hair follicle cells?</p>
+
+
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">Design Process</h3>
+                    <p>Expert we contacted: Prof. Danniel O'Connor</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_13.png" alt="example picture" style="width: 40%;">
+                    </div>
+                    <p><strong>Professor in Biomedical Engineering at the University of Oxford and also the Director of the MSc in Nanotechnology for Medicine and Healthcare and the Associate Director of the Synthetic Biology CDT.</strong></p>
+                    <p><strong>Research Interest: Drug Delivery</strong></p>
+                    <p><strong>What we want to know:</strong></p>
+                    <p><strong>What are the most promising nanotechnology-based drug delivery systems for our anti-hair loss product, and how can we optimize them for efficient delivery of growth factors and other active ingredients to hair follicle cells?</strong></p>
+                    <p><strong>Response</strong></p>
+                    <p>There are several nanotechnology-based drug delivery systems with potential for hair loss treatment. Liposomes, for example, can encapsulate growth factors and protect them from degradation while facilitating their targeted delivery to hair follicle cells. Nanoparticles can also be engineered to have specific surface properties for enhanced cell uptake. To optimize these systems, we need to consider factors such as particle size, surface charge, and the choice of materials. For instance, smaller particles may have better penetration into the skin and hair follicles, while the surface charge can affect their interaction with cell membranes.</p>
+                    <p><strong>What we learnt:</strong></p>
+                    <p>Nanotechnology-based drug delivery systems offer great potential for our anti-hair loss product. We should conduct further research on different types of delivery systems and optimize their design parameters to ensure efficient and targeted delivery of our active ingredients. This will improve the efficacy of our treatment and reduce potential side effects.</p>
+
+
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">Entrepreneurship</h3>
+                    <p>Expert we contacted: Dr Julian F. Dye</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_14.png" alt="example picture" style="width: 40%;">
+                    </div>
+                    <p><strong>Dr. Dye initiated the ProMatrix project from the University of Oxford, UK, and focuses on advancing wound treatment in deep skin loss injuries by regenerative synthetic skin solutions. Julian founded Oxartis in September 2020, to build a platform technology of tissue regenerative products.</strong></p>
+                    <p><strong>Research Interest: Wound Treatment; Synthetic Material</strong></p>
+                    <p><strong>What we want to know:</strong></p>
+                    <p><strong>What are the key considerations and challenges in commercializing an anti-hair loss product, especially in terms of market entry, intellectual property protection, and building a sustainable business model?</strong></p>
+                    <p><strong>Response</strong></p>
+                    <p>Market entry requires a deep understanding of the target market, including the size, growth potential, and competitive landscape. Intellectual property protection is crucial to safeguard the uniqueness of our product. This involves filing for patents on novel technologies, formulations, or delivery systems. Building a sustainable business model requires careful consideration of cost-effectiveness, pricing strategies, and partnerships. For example, collaborating with established pharmaceutical or beauty companies can help in manufacturing, marketing, and distribution. However, it is also important to maintain control over key aspects of the product development and quality.</p>
+                    <p><strong>What we learnt:</strong></p>
+                    <p>Commercializing our anti-hair loss product is a complex process. We need to invest time and resources in market research, intellectual property management, and business model development. Strategic partnerships can be a valuable asset in the commercialization journey, but we must also be vigilant in protecting our interests.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_15.png" alt="example picture" >
+                    </div>
+
+
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;">Ethical Concerns</h3>
+                    <p>Expert we contacted: Dr Ling Dong</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ihp_16.png" alt="example picture" style="width: 40%;">
+                    </div>
+                    <p><strong>Career Interest: Genetics; Microflow</strong></p>
+                    <p><strong>What we want to know:</strong></p>
+                    <p><strong>How does the company interact with its main customers (third-party technology service providers, scientific research institutions, and pharmaceutical companies) throughout the product life cycle, from design to after-sales service? And what measures does the company take to ensure product optimization based on customer feedback?</strong></p>
+                    <p><strong>Response</strong></p>
+                    <p>Currently, the company's customers mainly include third-party technology service providers, scientific research institutions, and pharmaceutical companies. At the beginning of product design, we will have in-depth exchanges with customers, hoping to accurately grasp their understanding of the market. In the subsequent sales and after-sales service links, we maintain close communication with our cooperative customers, focusing on product usage and feedback. We strive to answer customers' questions in a timely manner during daily training, and at the same time, take the usage feedback as an important reference for the next-step product optimization.</p>
+                    <p><strong>What we learnt:</strong></p>
+                    <p>This customer-centric model is crucial for the company's long-term success in the market, as it ensures that the products remain relevant and competitive by adapting to the evolving needs of different customer segments.</p>
+                </section>
+                <embed src="../assets/Potential Stakeholders.pdf" width="100%" height="600px"/>
+                </section>
+
+
+                <section id="concerns" class="content-section">
+                    <h1>Ethical Concerns</h1>
+                    <section id="animal">
+                        <div class="img-container">
+                            <img src="../assets/img/ihp_17.png" alt="example picture">
+                        </div>
+                        <p>When conducting <strong>pre-clinical studies</strong>, we adhere to strict <strong>ethical guidelines</strong> regarding <strong>animal testing</strong>. We minimize the number of animals used, ensure their <strong>humane treatment</strong>, and explore alternative testing methods whenever possible. For example, we use <strong>in-vitro models</strong> and <strong>computer simulations</strong> to reduce the reliance on <strong>animal experiments</strong>.</p>
+                    </section>
+
+                    <section id="human">
+                        <div class="img-container">
+                            <img src="../assets/img/ihp_18.png" alt="example picture">
+                        </div>
+                        <p>In <strong>clinical trials</strong> involving <strong>human subjects</strong>, we obtain <strong>informed consent</strong> from all participants. We clearly explain the <strong>treatment process</strong>, potential <strong>risks</strong>, and <strong>benefits</strong>. We also protect the <strong>privacy</strong> and <strong>confidentiality</strong> of <strong>patient data</strong>, ensuring that it is stored securely and only used for <strong>research purposes</strong>.</p>
+                    </section>
+
+                    <section id="products">
+                        <div class="img-container">
+                            <img src="../assets/img/ihp_19.png" alt="example picture">
+                        </div>
+                        <p>We are dedicated to addressing multiple <strong>ethical concerns</strong> related to our <strong>anti-hair loss product</strong>. In terms of <strong>accessibility</strong> and <strong>equity</strong>, we aim to make it available to all in need by exploring <strong>cost-effective manufacturing</strong> and <strong>pricing</strong>, and considering <strong>global distribution</strong>, including collaborations with <strong>local entities</strong> in underprivileged areas. Regarding <strong>long-term impact</strong>, we closely monitor individual <strong>health</strong> for potential late-emerging <strong>side effects</strong> and ensure <strong>environmental sustainability</strong> through the use of <strong>biodegradable</strong> or <strong>recyclable materials</strong> while also considering <strong>energy</strong> and <strong>carbon footprint</strong>. On the <strong>societal front</strong>, we strive to promote a positive and <strong>inclusive view</strong> of hair loss, avoiding stigmatizing marketing and focusing on <strong>educating the public</strong> to foster <strong>confidence</strong> and <strong>self-acceptance</strong> among those affected.</p>
+                    </section>
+
+                    <p>For more information, click <a href="elc.html">here</a> to find out more.</p>
+                </section>
+
+
+                <section id="patients" class="content-section">
+                    <h1>Patients Friendly</h1>
+                    <p>In the <strong>design phase</strong>, we had to prioritize different needs and values. We placed a high priority on the <strong>safety</strong> and <strong>efficacy</strong> of the product. This meant conducting extensive <strong>pre-clinical</strong> and <strong>clinical trials</strong>, which were <strong>time-consuming</strong> and <strong>costly</strong>. However, ensuring the <strong>well-being</strong> of the users was <strong>non-negotiable</strong>.</p>
+                    <p>We also prioritized the <strong>affordability</strong> and <strong>accessibility</strong> of the treatment. To achieve this, we had to make some compromises in terms of the choice of <strong>materials</strong> and <strong>manufacturing processes</strong>. For example, we selected <strong>cost-effective</strong> yet <strong>biocompatible materials</strong> for the <strong>microneedles</strong>, even though they may not have been the most <strong>cutting-edge</strong> options available.</p>
+                    
+                    <p>For more information, click <a href="inclusivity.html">here</a> to find out more.</p>
+                </section>
+
+                
+                <section id="brief" class="content-section">
+                    <h1>Brief on Entrepreneurship</h1>
+                    <p>Compared to traditional <strong>hair loss treatments</strong> such as <strong>minoxidil</strong> and <strong>finasteride</strong>, our approach offers several <strong>advantages</strong>. These existing treatments often have limited <strong>efficacy</strong> and can cause <strong>side effects</strong>. Our soluble <strong>microneedle delivery system</strong> allows for more <strong>targeted</strong> and <strong>efficient delivery</strong> of the active ingredients, potentially increasing the treatment's <strong>effectiveness</strong> and reducing <strong>systemic side effects</strong>.</p>
+                    <p>Outside of <strong>synthetic biology</strong> and <strong>biotechnology</strong>, some <strong>alternative solutions</strong> include <strong>herbal remedies</strong> and <strong>hair transplant surgeries</strong>. <strong>Herbal remedies</strong> may lack scientific validation of their <strong>efficacy</strong>, while <strong>hair transplant surgeries</strong> are invasive and <strong>expensive</strong>. Our approach combines the precision of modern <strong>biotechnology</strong> with a relatively <strong>non-invasive delivery method</strong>, offering a more <strong>attractive option</strong> for many patients.</p>
+
+                    <p>For more information, click <a href="entrepreneurship.html">here</a> to find out more.</p>
+                </section>
+
+                <section id="close" class="content-section">
+                    <h1>Close the Loop</h1>
+                    <p>We establish multiple channels for feedback collection. Patients can provide feedback through online surveys, phone calls, or in - person consultations. Healthcare providers can also share their experiences and suggestions. We analyze this feedback regularly to identify areas for improvement. Based on the feedback, we make iterative improvements to our product and treatment protocol. If patients report difficulties in using the application device, we modify the design. If healthcare providers suggest changes to the treatment dosage, we conduct further research to evaluate the proposed changes. <strong>That's how our project meets our idea.</strong></p>
+                </section>
+        </div?>
+        </div>
+        
+        <!-- 背景图 -->
+        <div id="img-modal" class="medusa-container">
+            <img src="../assets/img/medusa_1.png" alt="medusa_1" class="medusa-img" id="medusa-img">
+            <!-- 箭头图片 -->
+            <img src="../assets/img/arrow.png" alt="arrow" id="arrow-img">
+            <!-- <img src="../assets/img/medusa_2.png" alt="medusa_2" class="medusa-img">
+            <img src="../assets/img/medusa_3.png" alt="medusa_3" class="medusa-img"> -->
+        </div>
+
+        </div>
     </main>
 
     <!-- 页脚 -->
     <footer>
-        <div class="container">
-            <p>© 2023 - iGEM ZJU-China</p>
+        <div class="foot-container">
+            <div class="foot-content">
+                <p>© 2025 - iGEM ZJU-China</p>
+            </div>
         </div>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            var nav = $('.content-nav');
+            var navTop = nav.offset().top;  // 获取目录原始位置
+            var headerHeight = 60;  // 导航栏高度
+
+            // 添加调试信息
+            console.log('Initial nav top position:', navTop);
+            console.log('Header height:', headerHeight);
+
+            // 页面加载时先检查一次位置
+            checkPosition();
+
+            // 滚动时检查位置
+            $(window).scroll(function() {
+                checkPosition();
+                checkActiveSection();
+            });
+
+            // 检查位置的函数
+            function checkPosition() {
+                var scrollTop = $(window).scrollTop();
+                console.log('Scroll position:', scrollTop); // 调试用
+                
+                if (scrollTop + headerHeight + 75 > navTop) {
+                    console.log('Adding fixed class'); // 调试用
+                    nav.addClass('fixed');
+                } else {
+                    console.log('Removing fixed class'); // 调试用
+                    nav.removeClass('fixed');
+                }
+            }
+
+            // 检查激活章节的函数
+            function checkActiveSection() {
+                let scrollPosition = $(window).scrollTop();
+                
+                // 检查主要章节位置
+                $('.content-section').each(function() {
+                    let sectionTop = $(this).offset().top - 100;
+                    let sectionBottom = sectionTop + $(this).outerHeight();
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                        let id = $(this).attr('id');
+                        // 移除所有激活状态
+                        $('.content-nav li').removeClass('active');
+                        $('.submenu li').removeClass('active');
+                        
+                        // 激活当前主菜单项
+                        let currentMainItem = $('.content-nav a[href="#' + id + '"]').parent();
+                        currentMainItem.addClass('active');
+                    }
+                });
+                
+                // 检查子章节位置
+                $('section[id] h2').each(function() {
+                    let subSectionTop = $(this).offset().top - 100;
+                    let subSectionBottom = subSectionTop + $(this).parent().outerHeight();
+                    
+                    if (scrollPosition >= subSectionTop && scrollPosition <= subSectionBottom) {
+                        let id = $(this).parent().attr('id');
+                        // 移除所有子菜单项的激活状态
+                        $('.submenu li').removeClass('active');
+                        // 激活当前子菜单项
+                        $('.submenu a[href="#' + id + '"]').parent().addClass('active');
+                        // 确保父菜单保持激活状态
+                        $('.submenu a[href="#' + id + '"]').parents('.has-submenu').addClass('active');
+                    }
+                });
+            }
+            
+            // 点击目录链接时平滑滚动
+            $('.content-nav a').click(function(e) {
+                e.preventDefault();
+                let target = $($(this).attr('href'));
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            });
+
+            // Toggle the collapse content when clicking on the title
+        $(".collapse-title").click(function() {
+            var content = $(this).next(".collapse-content");
+            // Slide toggle the content
+            content.slideToggle();
+            // Optionally, collapse other sections when one is opened (accordion behavior)
+            $(".collapse-content").not(content).slideUp();
+            });
+
+            const arrowImg = $("#arrow-img");
+
+            // 点击箭头图片返回顶部
+            arrowImg.click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+        });
+
+        // 定义图片路径数组
+    const images = [
+        "../assets/img/medusa_1.png", 
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_3.png",
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_1.png",
+    ];
+
+    // 初始化当前图片索引
+    let currentImageIndex = 0;
+
+    // 获取图片元素
+    const imgElement = document.getElementById('medusa-img');
+    
+    // 监听滚动事件
+    $(window).scroll(function() {
+        // 获取当前的滚动位置
+        var scrollTop = $(window).scrollTop();
+        console.log('Scroll position:', scrollTop); // 打印当前的滚动位置
+
+        // 每1000px滚动时切换一次图片
+        if (scrollTop >= 1000) {
+            // 计算应该切换的图片索引
+            currentImageIndex = Math.floor(scrollTop / 1000) % 5;
+
+            // 根据当前图片索引切换图片
+            imgElement.src = images[currentImageIndex];
+
+            // 可选：重置滚动位置，避免频繁触发
+            // $(window).scrollTop(0); // 可选：如果你希望在达到1000px时重置滚动位置，可以取消注释此行
+        }
+    });
+
+        
+        // 模拟加载延迟
+        window.onload = function() {
+                document.getElementById('mainContainer').style.display = 'none';
+                setTimeout(function() {
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                }, 2000); // 设置3秒钟后隐藏加载器
+            };
+
+        function changeIcon(element, newSrc) {
+        element.src = newSrc;
+        }
+
+        window.onscroll = function() {
+            // 获取文档的总高度和当前滚动的高度
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrollPosition = window.scrollY;
+
+            // 计算滚动进度百分比
+            var scrollPercentage = (scrollPosition / docHeight) * 100;
+
+            // 更新进度条的宽度
+            document.getElementById("progress-bar").style.width = scrollPercentage + "%";
+        }
+    </script>
 </body>
 </html>

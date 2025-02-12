@@ -3,23 +3,452 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的网站</title>
+    <title>Design | iGEM 2025 Project</title>
     <!-- 添加 Kirang Haerang 字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
+    <!-- 添加 Ranga 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ranga:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 添加 Montserrat 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 添加 Do Hyeon 字体 -->
+    <link href="https://fonts.font.im/css?family=Do+Hyeon" rel="stylesheet">
+    <!-- 引入 Playfair Display 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!-- 添加 Shadows Into Light 字体 -->
+    <link href="https://fonts.font.im/css?family=Shadows+Into+Light" rel="stylesheet">
+    <!-- 确保 jQuery 在其他脚本之前加载 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- 添加新的样式 -->
+    <style>
+        /* page-name 容器样式 */
+        .page-name {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;  /* 为导航栏留出空间 */
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;  /* 防止气泡超出容器 */
+        }
+
+        .page-name h1 {
+            margin-top: 5%;
+            font-family: 'Ranga', cursive;
+            font-size: 5em;
+            font-weight: 700;
+            color: #333;
+            z-index: 2; /* 确保 h1 在图片上方 */
+            position: relative; /* 让 h1 作为相对定位，图片可以在其下方 */
+            -webkit-text-stroke: 2px #c0b4e2; /* 黑色的 1px 描边 */
+        }
+
+        .page-name h2 {
+            margin-top: 5px;
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            z-index: 99;
+            /* -webkit-text-stroke: 0.1px #ffd58d; */
+        }
+
+        .page-name img {
+            position: absolute;  /* 绝对定位 */
+            top: 30%;  /* 使图片位于 h1 的下方 */
+            left: 50%;  /* 居中图片 */
+            transform: translate(-50%, -30%);  /* 水平居中，同时微调上下位置 */
+            width: 39%;  /* 控制图片宽度 */
+            z-index: 100;  /* 确保图片在 h1 下面 */
+        }
+
+        /* 目录样式 */
+        .content-nav {
+            width: 200px;
+            position: absolute;  /* 初始状态为absolute */
+            left: 100px;
+            font-weight: bold;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            z-index: 100;  /* 保证目录始终在最上层 */
+        }
+        
+        /* 固定定位的样式 */
+        .content-nav.fixed {
+            position: fixed;
+            top: 125px;  /* 与导航栏高度相同 */
+            left: 100px;  /* 保持与初始位置相同的左偏移 */
+        }
+        
+        .content-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .content-nav li {
+            margin-bottom: 5px;
+        }
+        
+        /* 主菜单项样式 */
+        .has-submenu > a {
+            display: block;
+            padding: 5px 8px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* 主菜单项的悬浮和激活效果 */
+        .content-nav ul li.has-submenu > a:hover,
+        .content-nav ul li.has-submenu.active > a {
+            background: #9383e4;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        /* 子菜单默认隐藏 */
+        .submenu {
+            display: none;  /* 默认隐藏子菜单 */
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        /* 当父菜单激活或鼠标悬浮时显示子菜单 */
+        .has-submenu.active > .submenu,
+        .has-submenu:hover > .submenu {
+            display: block;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        /* 子菜单样式 */
+        .submenu {
+            display: none;  /* 默认隐藏 */
+            margin-left: 20px;  /* 缩进 */
+            padding-left: 10px;
+        }
+        
+        /* 子菜单项样式 */
+        .submenu a {
+            padding: 0px 0px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-size: 0.9rem;
+        }
+
+        /* 子菜单项的悬浮和激活效果 */
+        .submenu a:hover {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+        
+        .submenu li.active a {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+
+        /* 当父菜单激活时显示子菜单 */
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        /* 内容区样式 */
+        .content-area {
+            width: 60%;
+            margin-left: 350px;
+            margin-bottom: 5%;
+            padding: 20px;
+            background-color: #fbf2f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0px #ffd58d; 
+        }
+
+        .content-area h1 {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 3rem;
+            color: whitesmoke;
+            -webkit-text-stroke: 0.5px #9383e4;  /* 给文字添加边框 */
+            text-shadow: #9383e4 1px 2px 2px;
+        }
+        .content-area h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:#ff8b71;
+            margin-top: 10px;
+        }
+        .content-area h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .content-area h4 {
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area p {   
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .saying {
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 95%;
+            margin: 0 auto;
+            border-left: 5px solid #c9c1f9;  /* 添加左侧竖线 */
+        }
+
+        .saying:hover {
+            transform: scale(1.01);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        .saying p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .content-section {
+            min-height: 50px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .img-container {
+            text-align: center;
+        }
+        
+
+        .content-section img {
+        display: inline-block;  /* 将图片设置为块级元素 */
+        margin: 20px auto;  /* 上下间距20px，左右自动居中 */
+        max-width: 80%;  /* 确保图片不会超出容器宽度 */
+        height: auto;  /* 保持图片比例 */
+        vertical-align: middle; /* 保持垂直对齐 */
+        margin-right: 10px; /* 设置两张图片之间的间距 */
+        border-radius: 20px;
+        }
+
+        .collapse-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .collapse-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .collapse-title {
+            padding: 10px;
+            background-color: #f8e7c8;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: semi-bold;
+            cursor: pointer;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            }
+            
+        .collapse-title:hover {
+            background-color: #f5d1a6;
+        }
+        .collapse-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            }
+        
+            /* 调整 SVG 图片样式 */
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 0px;
+            color: #000;
+            transition: all 0.3s ease; /* 加��过渡效果 */
+            margin-right: 10px; /* 添加右间距，使文本与图标之间有空隙 */
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            background-color: rgb(247, 241, 229);
+            border: 2px solid #ddd;
+            padding: 20px;
+            width: 45%;
+            height: 310px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .box:hover {
+            background-color: rgb(250, 235, 205);
+            width: 47%;
+            height: 320px;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .medusa-container {
+            position: fixed;
+            width: 200px;
+            height: auto;
+            left: 95%;           /* 调整位置，放到视口中央 */
+            top: 85%;            /* 调整位置 */
+            transform: translate(-50%, -50%);  /* 使容器在位置上完全居中 */
+            
+            z-index: 999;
+        }
+
+        .medusa-container img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+            transition: all 1s ease;  /* 添加过渡效果 */
+            opacity: 0.9;
+        }
+
+        /* 箭头图片样式（默认隐藏） */
+        #arrow-img {
+            position: absolute;
+            top: 66%;  /* 设置箭头位置 */
+            left: 35%;
+            transform: translate(-50%, -50%);
+            width: 25px; /* 设定箭头图片大小 */
+            height: auto;
+            opacity: 0; /* 默认隐藏 */
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        /* 当鼠标悬浮在图片上时显示箭头 */
+        .medusa-container:hover #arrow-img {
+            opacity: 0.8;
+        }
+
+        .circle-container {
+            display: flex;
+            gap: 20px;
+        }
+        .circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: #f3bc0d; /* 初始背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000; /* 初始标题颜色为黑色 */
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 初始阴影效果 */
+        }
+        .circle .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            font-weight: normal;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .circle:hover .content {
+            opacity: 1;
+        }
+        .circle:hover {
+            background-color: #fbf2f1; /* 鼠标悬浮时的背景色 */
+            border: 2px solid #fbf2f1; /* 鼠标悬浮时的边缘颜色 */
+            box-shadow: 0 0 20px 5px #f3bc0d; /* 发光效果 */
+        }
+        .circle:hover {
+            color: transparent; /* 鼠标悬浮时标题不可见 */
+        }
+        .image-text-container {
+            display: flex;
+            align-items: center; /* Vertically aligns the text with the image */
+            gap: 15px; /* Adds space between the image and the text */
+        }
+
+        .image {
+            width: 28%;
+            height: auto; /* Keeps the aspect ratio intact */
+        }
+
+        .text {
+            flex: 1; /* Allows the text to take up the remaining space */
+        }
+</style>
 </head>
 <body>
+    <!-- 进度条容器 -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <a href="../index.html">ZJU-CHINA</a>
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
+                    M-E-D-U-S-A
+                </a>
             </div>
             <ul class="nav-links">
                 <li class="dropdown">
                     <a href="#">TEAM</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Team Page/member.html">Member</a></li>
+                        <li><a href="../Team Page/member.html">Members</a></li>
                         <li><a href="../Team Page/attributions.html">Attributions</a></li>
                     </ul>
                 </li>
@@ -28,41 +457,37 @@
                     <ul class="dropdown-content">
                         <li><a href="description.html">Description</a></li>
                         <li><a href="design.html">Design</a></li>
-                        <li><a href="implementation.html">Implementation</a></li>
-                        <li><a href="plant.html">Plant</a></li>
-                        <li><a href="contribution.html">Contribution</a></li>
-                        <li><a href="safety.html">Safety</a></li>
+                        <li><a href="safety.html">Biosafety</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">WET LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Wetlab Page/results.html">Results</a></li>
-                        <li><a href="../Wetlab Page/proof.html">Proof</a></li>
-                        <li><a href="../Wetlab Page/part.html">Part</a></li>
+                        <li><a href="../Wetlab Page/proof.html">Proof of Concept</a></li>
+                        <li><a href="../Wetlab Page/part.html">Parts</a></li>
                         <li><a href="../Wetlab Page/protocol.html">Protocol</a></li>
                         <li><a href="../Wetlab Page/engineering.html">Engineering</a></li>
                         <li><a href="../Wetlab Page/measurement.html">Measurement</a></li>
-                        <li><a href="../Wetlab Page/notebook.html">Notebook</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">DRY LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Drylab Page/model.html">Model</a></li>
-                        <li><a href="../Drylab Page/software.html">Software</a></li>
+                        <li><a href="../Drylab Page/model.html">Model & Software</a></li>
                         <li><a href="../Drylab Page/hardware.html">Hardware</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">HUMAN PRACTICE</a>
                     <ul class="dropdown-content">
-                        <li><a href="../HP Page/ec.html">Education & Communication</a></li>
-                        <li><a href="../HP Page/cp.html">Collaboration & Partnership</a></li>
-                        <li><a href="../HP Page/cp.html">Intergrated Human Practices</a></li>
-                        <li><a href="../HP Page/entrepreneurship.html">Entrepreneurship</a></li>
-                        <li><a href="../HP Page/bp.html">Bigger Picture</a></li>
+                        <li><a href="../HP Page/overview.html"> Overview</a></li>
+                        <li><a href="../HP Page/ihp.html">Intergrated Human Practices</a></li>
+                        <li><a href="../HP Page/education.html">Education & Communication</a></li>
+                        <li><a href="../HP Page/ca.html">Communication & Availability</a></li>
                         <li><a href="../HP Page/inclusivity.html">Inclusivity</a></li>
+                        <li><a href="../HP Page/entrepreneurship.html">Entrepreneurship</a></li>
+                        <li><a href="../HP Page/SDG.html">SDG</a></li>
+                        <li><a href="../HP Page/bp.html">Bigger Picture</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,21 +496,342 @@
 
     <!-- 主要内容区 -->
     <main>
-        <!-- 首页banner -->
-        <section id="home" class="hero">
-            <div class="container">
-                <h1>design page</h1>
+        <!-- 加载动画 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-content">
+                <img src="../assets/img/spinner.png" class="loading-spinner" alt="Loading" style="width: 30%; height: auto;">
+                <p style="font-family: 'Kirang Haerang', cursive; font-size: 3rem; color: #333;">Loading...</p>
             </div>
-        </section>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="main-container" id="mainContainer">
+        <div class="page-name">
+            <!-- 左侧的气泡 -->
+            <div class="bubble bubble-left-1"></div>
+            <div class="bubble bubble-left-2"></div>
+
+            <img src="../assets/img/snake.png" alt="snake">
+            <!-- <img src="../assets/img/dp_0_0.png" alt="example picture" style="width: 650px; height: auto; margin-top: 10px; margin-bottom: 0px;"> -->
+            <h1>Design</h1>
+
+            <!-- 右侧的气泡 -->
+            <div class="bubble bubble-right-1"></div>
+            <div class="bubble bubble-right-2"></div>
+        </div>
+
+        <div class="content-nav">
+            <ul>
+                <li class="has-submenu">
+                    <a href="#chassis">Chassis Selection</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#cure">Cure Module</a>
+                    <ul class="submenu">
+                        <li><a href="#abtac">AbTAC function verification module </a></li>
+                        <li><a href="#abtac2">AbTAC function verification module-2 </a></li>
+                        <li><a href="#cell">Cell-free protein synthesis system </a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#module">Growth Module</a>
+                </li>
+                <li class="has-submenu">
+                    <a href="#KGF">Advantage Comparison: KGF</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="content-area" style="margin-top: 50px; margin-bottom: 0px;">
+            
+            <section id="chassis" class="content-section">
+                <h1>Chassis Selection</h1>
+                <p>We have opted to use <strong>E. Coli Strain KGK10</strong> as our chassis organism. This choice is underpinned by a series of remarkable characteristics that make it highly suitable for our genetic engineering endeavors.</p>
+                <p><strong>E. Coli Strain KGK10</strong> comes with a precisely defined genetic makeup. Through strategic gene deletions and modifications, it has been tailored to provide an optimal environment for genetic manipulation. For instance, the deletion of genes like <strong>ΔendA</strong> significantly reduces the background of endogenous endonuclease activity. This is of great importance as it minimizes the risk of unwanted DNA cleavage during the introduction of exogenous genetic material, thereby enhancing the stability and efficiency of gene cloning processes.</p>
+                <p>When it comes to <strong>biosafety</strong>, <strong>E. Coli Strain KGK10</strong> meets stringent standards. It has been carefully engineered to lack genes associated with pathogenicity and virulence. As per the established biosafety guidelines, it belongs to a low-risk category, posing minimal threats to laboratory personnel and the surrounding environment. This not only ensures a safe working environment but also simplifies the regulatory procedures associated with our research and development activities.</p>
+            </section>
+
+            <section id="cure" class="content-section">
+                <h1>Cure Module</h1>
+                <section id="abtac">
+                    <h2>AbTAC function verification module</h2>
+                        <h5>Cycle 1: Functional verification of each antibody</h5>
+                        <h3>Design1</h3>
+                        <p>We obtained highly specific monoclonal phage, and obtained scFv antibody genes of RNF43 and SRD5A2 by sequencing. SnugDock was used to optimize the antibody-antigen flexible docking. In this cycle, we need to use Linker to fuse the antibody to the N-terminal part of GFP and the antigen to the C-terminal part of GFP to verify the effectiveness of each antibody by bimolecular fluorescence complemency (BiFC) technology, since the antibody may have non-specific binding to the antigen after fusion with the phage coat protein.</p>
+                        <h3>Build1</h3>
+                        <p>To verify the role of each antibody, we decided to build the following genetic pathways:</p>
+                        <div class="img-container">
+                            <img src="../assets/img/design_1.png" alt="example picture">
+                        </div>
+                </section>
+
+                <section id="abtac2">
+                    <h2>AbTAC function verification module-2</h2>
+                        <p></p>
+                        <h3>Build2</h3>
+                        <p>We constructed the following genetic pathways:</p>
+                        <div class="img-container">
+                            <img src="../assets/img/design_2.png" alt="example picture">
+                        </div>
+                </section>
+                
+                <section id="cell">
+                    <h2>Cell-free protein synthesis system</h2>
+                        <p>Based on the need for antibody double-strand assembly in vitro, we selected a cell-free protein synthesis system to produce AbTac. Compared with traditional in vivo production methods, cell-free protein synthesis systems have obvious advantages: higher synthesis rates, easy to add regulatory factors, convenient for the extraction and purification of target proteins, etc. Most importantly, cell-free protein synthesis systems can focus energy mainly on targeted protein synthesis, rather than maintaining cell survival.</p>
+                        <p>We chose to construct a cell-free expression system using E. coli lysate. Among the existing cell-free expression systems, E. coli lysate has attracted more attention due to its advantages of easy preparation and high protein synthesis rate. E. coli lysate has been used in the research of IgG antibody production[i].</p>
+
+                        <div class="img-container">
+                            <img src="../assets/img/design_3.png" alt="example picture">
+                        </div>
+                        <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 1: Schematic diagram of cell-free protein synthesis system[1]</p>
+                        <p>In order to construct this cell-free expression system, firstly we needed to prepare E. coli lysate. E. coli was cultured to exponential growth stage and the cells were broken by ultrasound. Then added the DNA template,amino acids, NTPs, energy substrate and other cofactors to the lysate.(The ratio of light chain and heavy chain template was controlled to 1:1, and the light chain reaction was first added for 1 hour. Because the light chain can help the heavy chain fold correctly). Finally, the target protein AbTac was purified by chromatography after centrifugation.</p>
+                
+                        <div class="img-container">
+                            <img src="../assets/img/design_4.png" alt="example picture">
+                        </div>
+                        <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 2: Preparation method of E. coli lysate.</p>
+                        <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Note: The method in the last line was adopted in our project[Ⅲ]</p>
+                        <p>In order to further improve the production of the cell-free expression system, we adopted the following methods: ①Since the main problem of <strong>E. coli</strong> expression of eukaryotic proteins is that the proteins containing multiple disulfide bonds cannot be correctly folded, <strong>10μM disulfide isomerase</strong> companion DsbC was added to the reaction system to promote the formation of disulfide bonds and the correct folding of proteins. ②<strong>Glutathione buffer</strong> was added to adjust the REDOX conditions and affect the enzyme activity. ③In cell-free synthesis, translation initiation rather than extension is the rate-limiting step[Ⅳ]. Therefore, we optimized the translation initiation sequence <strong>TIR</strong> for the upstream untranslated region of the antibody gene to optimize the translation initiation step, as detailed in the engineering section.</p>
+                </section>
+            </section>
+
+            <section id="module" class="content-section">
+                <h1>Growth Module</h1>
+                <p>Growth factors (GFs) are cytokines that stimulate cell growth. They can effectively stimulate the growth of <strong>hair follicle cells</strong>, improve the <strong>scalp microenvironment</strong> and blood supply to the scalp. In many randomized clinical trials, the <strong>safety</strong> and <strong>efficacy</strong> of repeated injections of growth factors have been proven. However, most growth factors are produced by <strong>human cells</strong>. They come in a wide variety of types, and it is difficult to achieve high-yield production of a specific growth factor.</p>
+                <p>We found that among the growth factors capable of promoting <strong>hair regeneration</strong>, there is a type called <strong>keratinocyte growth factor 2 (KGF-2)</strong>, which can be produced through engineering in <strong>Escherichia coli</strong>. By adding a <strong>protein tag</strong>, this protein can be separated and purified. In the final <strong>organoid co-culture</strong>, it showed good <strong>growth-promoting effects</strong>.</p>
+                <p>Efficient systems usually mimic the <strong>slow release</strong> and <strong>controlled signaling</strong> of growth factors in vivo. The <strong>stability</strong>, <strong>bioavailability</strong>, and <strong>signal transduction</strong> of growth factors are also strictly regulated on the cell surface through binding to transmembrane <strong>heparan sulfate proteoglycans</strong>. In particular, synthetic substances can regulate the availability and signal transduction of various growth factors by acting as receptors on the cell surface, which can greatly enhance the functionality of growth factors.</p>
+                <p>Therefore, we selected a sequence from <strong>laminin</strong> that has a high-affinity binding to cell-surface proteoglycans and linked it to the <strong>C-terminus</strong> of the growth factor to construct a <strong>recombinant growth factor</strong>. Through this modification, the <strong>local residence time</strong> of the recombinant growth factor on the cell surface is prolonged, which in turn triggers a relatively low-level but continuous form of <strong>signal transduction</strong> (tonic signal transduction), enhancing the <strong>regeneration-promoting ability</strong> of the growth factor.</p>
+
+
+                <h5>Vector Build</h5>
+                <p>Preparation of Recombinant Human Keratinocyte Growth Factor - 2 (rhKGF - 2) Expressed in Escherichia coli Using a Plasmid with a His - Tag</p>
+                <div class="img-container">
+                    <img src="../assets/img/design_5.png" alt="example picture">
+                </div>
+                <p>Using human KGF - 2 cDNA as a template, Taq DNA polymerase and the following primers were employed:</p>
+                <p style="padding-left: 10px; font-weight: bold;">Primer [A]: 5’ - GGATCCTTGGTCAGGACATGGTG - 3’</p>
+                <p style="padding-left: 10px; font-weight: bold;">Primer [B]: 5’ - GAATTCCTATGAGTGTACCACCATTGG - 3’</p>
+                <p>The cDNA encoding human KGF - 2 (amino acids 40–208) was amplified by PCR for 25 cycles. After digestion, the amplified product was ligated into the EcoRI/BamHI sites of the expression vector pCMV3 - C - and then transfected into the Escherichia coli strain BL21(DE3).</p>
+            
+                <h5>Selection of Histidine Tag</h5>
+                <div class="img-container">
+                    <img src="../assets/img/design_6.png" alt="example picture">
+                </div>
+                <p></p>
+
+                <h5>Purification Principle</h5>
+                <p>We changed the protein tag to a <strong>histidine tag (His Tag)</strong>. The His tag has a small molecular weight of only about <strong>0.84 KD</strong>. Generally, whether it is cleaved after expression does not affect the structure and function of the recombinant protein. Moreover, it has relatively low <strong>immunogenicity</strong>, can be applied to various <strong>expression systems</strong>, and the <strong>purification conditions</strong> are mild with simple operations.</p>
+                <div class="img-container">
+                    <img src="../assets/img/design_7.png" alt="example picture">
+                </div>
+
+                <h5>Final Product and Mode of Action</h5>
+                <div class="img-container">
+                    <img src="../assets/img/design_8.png" alt="example picture">
+                </div>
+                <p>A sequence from <strong>laminin</strong> that can bind to <strong>cell-surface proteoglycans</strong> with high affinity was selected and linked to the <strong>C-terminus</strong> of the growth factor. After the modification, the <strong>local residence time</strong> of the recombinant growth factor on the cell surface is prolonged. This, in turn, triggers a relatively low-level but continuous form of <strong>signal transduction</strong> (tonic signal transduction), thereby enhancing the <strong>regeneration-promoting ability</strong> of the growth factor.</p>
+            </section>
+
+            <section id="KGF" class="content-section">
+                <h1>Advantage Comparison: KGF</h1>
+                    <h5>Advantages of KGF</h5>
+                    <p><strong>KGF</strong> stands out for its high specificity and direct stimulatory effect on <strong>hair follicle cells</strong>. It can not only promote the <strong>proliferation</strong> and <strong>differentiation</strong> of hair follicle cells but also reduce <strong>hair loss</strong>, demonstrating strong <strong>anti-damage ability</strong>. Moreover, the mechanism of action of <strong>KGF</strong> is relatively simple and clear, which helps to minimize the occurrence of <strong>side effects</strong>.</p>
+
+                    <h5>Functions of Other Growth Factors</h5>
+                    <p>Although <strong>FGF</strong>, <strong>HGF</strong>, and <strong>VEGF</strong> also play important roles in promoting <strong>hair growth</strong>, their mechanisms of action are relatively complex and may involve multiple <strong>signaling pathways</strong> and <strong>cell types</strong>. Therefore, when using them, their <strong>non-specific effects</strong> and potential <strong>risks</strong> need to be taken into consideration.</p>
+                </section>
+
+            <section class="content-section">
+                <h3>References</h3>
+                <div class="references-container" style="color: black; font-weight: semi-bold; font-style: italic;">
+                    <p style="margin-bottom: 10px;">[1] Xu YR, Lee J, Tran C, et al. Production of bispecific antibodies in “knobs-into-holes” using a cell-free expression system[J]. mAbs, 2015, 7(1): 231-242.</p>
+                    <p style="margin-bottom: 10px;">[2] Hou JQ, Jiang N, Ma LJ, et al. Cell-free protein synthesis: from basic research to engineering applications[J]. Synthetic Biology Journal, 2022, 3(03): 465-486.</p>
+                    <p style="margin-bottom: 10px;">[3] Kwon YC, Jewett MC. High-throughput preparation methods of crude extract for robust cell-free protein synthesis[J]. Scientific Reports, 2015, 5: 8663.</p>
+                    <p style="margin-bottom: 10px;">[4] Yin G, Garces ED, Yang JH, et al. Aglycosylated antibodies and antibody fragments produced in a scalable in vitro transcription-translation system[J]. mAbs, 2012, 4(2): 217-225.</p>
+                </div>
+            </section>
+        </div?>
+        </div>
+        
+        <!-- 背景图 -->
+        <div id="img-modal" class="medusa-container">
+            <img src="../assets/img/medusa_1.png" alt="medusa_1" class="medusa-img" id="medusa-img">
+            <!-- 箭头图片 -->
+            <img src="../assets/img/arrow.png" alt="arrow" id="arrow-img">
+            <!-- <img src="../assets/img/medusa_2.png" alt="medusa_2" class="medusa-img">
+            <img src="../assets/img/medusa_3.png" alt="medusa_3" class="medusa-img"> -->
+        </div>
+
+        </div>
     </main>
 
     <!-- 页脚 -->
     <footer>
-        <div class="container">
-            <p>© 2023 - iGEM ZJU-China</p>
+        <div class="foot-container">
+            <div class="foot-content">
+                <p>© 2025 - iGEM ZJU-China</p>
+            </div>
         </div>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            var nav = $('.content-nav');
+            var navTop = nav.offset().top;  // 获取目录原始位置
+            var headerHeight = 60;  // 导航栏高度
+
+            // 添加调试信息
+            console.log('Initial nav top position:', navTop);
+            console.log('Header height:', headerHeight);
+
+            // 页面加载时先检查一次位置
+            checkPosition();
+
+            // 滚动时检查位置
+            $(window).scroll(function() {
+                checkPosition();
+                checkActiveSection();
+            });
+
+            // 检查位置的函数
+            function checkPosition() {
+                var scrollTop = $(window).scrollTop();
+                console.log('Scroll position:', scrollTop); // 调试用
+                
+                if (scrollTop + headerHeight + 75 > navTop) {
+                    console.log('Adding fixed class'); // 调试用
+                    nav.addClass('fixed');
+                } else {
+                    console.log('Removing fixed class'); // 调试用
+                    nav.removeClass('fixed');
+                }
+            }
+
+            // 检查激活章节的函数
+            function checkActiveSection() {
+                let scrollPosition = $(window).scrollTop();
+                
+                // 检查主要章节位置
+                $('.content-section').each(function() {
+                    let sectionTop = $(this).offset().top - 100;
+                    let sectionBottom = sectionTop + $(this).outerHeight();
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                        let id = $(this).attr('id');
+                        // 移除所有激活状态
+                        $('.content-nav li').removeClass('active');
+                        $('.submenu li').removeClass('active');
+                        
+                        // 激活当前主菜单项
+                        let currentMainItem = $('.content-nav a[href="#' + id + '"]').parent();
+                        currentMainItem.addClass('active');
+                    }
+                });
+                
+                // 检查子章节位置
+                $('section[id] h2').each(function() {
+                    let subSectionTop = $(this).offset().top - 100;
+                    let subSectionBottom = subSectionTop + $(this).parent().outerHeight();
+                    
+                    if (scrollPosition >= subSectionTop && scrollPosition <= subSectionBottom) {
+                        let id = $(this).parent().attr('id');
+                        // 移除所有子菜单项的激活状态
+                        $('.submenu li').removeClass('active');
+                        // 激活当前子菜单项
+                        $('.submenu a[href="#' + id + '"]').parent().addClass('active');
+                        // 确保父菜单保持激活状态
+                        $('.submenu a[href="#' + id + '"]').parents('.has-submenu').addClass('active');
+                    }
+                });
+            }
+            
+            // 点击目录链接时平滑滚动
+            $('.content-nav a').click(function(e) {
+                e.preventDefault();
+                let target = $($(this).attr('href'));
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            });
+
+            // Toggle the collapse content when clicking on the title
+        $(".collapse-title").click(function() {
+            var content = $(this).next(".collapse-content");
+            // Slide toggle the content
+            content.slideToggle();
+            // Optionally, collapse other sections when one is opened (accordion behavior)
+            $(".collapse-content").not(content).slideUp();
+            });
+
+            const arrowImg = $("#arrow-img");
+
+            // 点击箭头图片返回顶部
+            arrowImg.click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+        });
+
+        // 定义图片路径数组
+    const images = [
+        "../assets/img/medusa_1.png", 
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_3.png",
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_1.png",
+    ];
+
+    // 初始化当前图片索引
+    let currentImageIndex = 0;
+
+    // 获取图片元素
+    const imgElement = document.getElementById('medusa-img');
+    
+    // 监听滚动事件
+    $(window).scroll(function() {
+        // 获取当前的滚动位置
+        var scrollTop = $(window).scrollTop();
+        console.log('Scroll position:', scrollTop); // 打印当前的滚动位置
+
+        // 每1000px滚动时切换一次图片
+        if (scrollTop >= 1000) {
+            // 计算应该切换的图片索引
+            currentImageIndex = Math.floor(scrollTop / 1000) % 5;
+
+            // 根据当前图片索引切换图片
+            imgElement.src = images[currentImageIndex];
+
+            // 可选：重置滚动位置，避免频繁触发
+            // $(window).scrollTop(0); // 可选：如果你希望在达到1000px时重置滚动位置，可以取消注释此行
+        }
+    });
+
+        
+        // 模拟加载延迟
+        window.onload = function() {
+                document.getElementById('mainContainer').style.display = 'none';
+                setTimeout(function() {
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                }, 2000); // 设置3秒钟后隐藏加载器
+            };
+
+        function changeIcon(element, newSrc) {
+        element.src = newSrc;
+        }
+
+        window.onscroll = function() {
+            // 获取文档的总高度和当前滚动的高度
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrollPosition = window.scrollY;
+
+            // 计算滚动进度百分比
+            var scrollPercentage = (scrollPosition / docHeight) * 100;
+
+            // 更新进度条的宽度
+            document.getElementById("progress-bar").style.width = scrollPercentage + "%";
+        }
+    </script>
 </body>
 </html>

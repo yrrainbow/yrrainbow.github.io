@@ -3,23 +3,459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的网站</title>
+    <title>Entrepreneurship | iGEM 2025 Project</title>
     <!-- 添加 Kirang Haerang 字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
+    <!-- 添加 Ranga 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ranga:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 添加 Montserrat 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 添加 Do Hyeon 字体 -->
+    <link href="https://fonts.font.im/css?family=Do+Hyeon" rel="stylesheet">
+    <!-- 引入 Playfair Display 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!-- 添加 Shadows Into Light 字体 -->
+    <link href="https://fonts.font.im/css?family=Shadows+Into+Light" rel="stylesheet">
+    <!-- 确保 jQuery 在其他脚本之前加载 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- 添加新的样式 -->
+    <style>
+        /* page-name 容器样式 */
+        .page-name {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;  /* 为导航栏留出空间 */
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;  /* 防止气泡超出容器 */
+        }
+
+        .page-name h1 {
+            margin-top: 5%;
+            font-family: 'Ranga', cursive;
+            font-size: 5em;
+            font-weight: 700;
+            color: #333;
+            z-index: 2; /* 确保 h1 在图片上方 */
+            position: relative; /* 让 h1 作为相对定位，图片可以在其下方 */
+            -webkit-text-stroke: 2px #c0b4e2; /* 黑色的 1px 描边 */
+        }
+
+        .page-name h2 {
+            margin-top: 5px;
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            z-index: 99;
+            /* -webkit-text-stroke: 0.1px #ffd58d; */
+        }
+
+        .page-name img {
+            position: absolute;  /* 绝对定位 */
+            top: 30%;  /* 使图片位于 h1 的下方 */
+            left: 50%;  /* 居中图片 */
+            transform: translate(-50%, -30%);  /* 水平居中，同时微调上下位置 */
+            width: 39%;  /* 控制图片宽度 */
+            z-index: 100;  /* 确保图片在 h1 下面 */
+        }
+
+        /* 目录样式 */
+        .content-nav {
+            width: 200px;
+            position: absolute;  /* 初始状态为absolute */
+            left: 100px;
+            font-weight: bold;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            z-index: 100;  /* 保证目录始终在最上层 */
+        }
+        
+        /* 固定定位的样式 */
+        .content-nav.fixed {
+            position: fixed;
+            top: 125px;  /* 与导航栏高度相同 */
+            left: 100px;  /* 保持与初始位置相同的左偏移 */
+        }
+        
+        .content-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .content-nav li {
+            margin-bottom: 5px;
+        }
+        
+        /* 主菜单项样式 */
+        .has-submenu > a {
+            display: block;
+            padding: 5px 8px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* 主菜单项的悬浮和激活效果 */
+        .content-nav ul li.has-submenu > a:hover,
+        .content-nav ul li.has-submenu.active > a {
+            background: #9383e4;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        /* 子菜单默认隐藏 */
+        .submenu {
+            display: none;  /* 默认隐藏子菜单 */
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        /* 当父菜单激活或鼠标悬浮时显示子菜单 */
+        .has-submenu.active > .submenu,
+        .has-submenu:hover > .submenu {
+            display: block;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        /* 子菜单样式 */
+        .submenu {
+            display: none;  /* 默认隐藏 */
+            margin-left: 20px;  /* 缩进 */
+            padding-left: 10px;
+        }
+        
+        /* 子菜单项样式 */
+        .submenu a {
+            padding: 0px 0px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-size: 0.9rem;
+        }
+
+        /* 子菜单项的悬浮和激活效果 */
+        .submenu a:hover {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+        
+        .submenu li.active a {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+
+        /* 当父菜单激活时显示子菜单 */
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        /* 内容区样式 */
+        .content-area {
+            width: 60%;
+            margin-left: 350px;
+            margin-bottom: 5%;
+            padding: 20px;
+            background-color: #fbf2f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0px #ffd58d; 
+        }
+
+        .content-area h1 {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 3rem;
+            color: whitesmoke;
+            -webkit-text-stroke: 0.5px #9383e4;  /* 给文字添加边框 */
+            text-shadow: #9383e4 1px 2px 2px;
+        }
+        .content-area h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:#ff8b71;
+            margin-top: 10px;
+        }
+        .content-area h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .content-area h4 {
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area p {   
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .saying {
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 95%;
+            margin: 0 auto;
+            border-left: 5px solid #c9c1f9;  /* 添加左侧竖线 */
+        }
+
+        .saying:hover {
+            transform: scale(1.01);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        .saying p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .content-section {
+            min-height: 50px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .img-container {
+            text-align: center;
+        }
+        
+
+        .content-section img {
+        display: inline-block;  /* 将图片设置为块级元素 */
+        margin: 20px auto;  /* 上下间距20px，左右自动居中 */
+        max-width: 80%;  /* 确保图片不会超出容器宽度 */
+        height: auto;  /* 保持图片比例 */
+        vertical-align: middle; /* 保持垂直对齐 */
+        margin-right: 10px; /* 设置两张图片之间的间距 */
+        border-radius: 20px;
+        }
+
+        .collapse-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .collapse-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .collapse-title {
+            padding: 10px;
+            background-color: #f8e7c8;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: semi-bold;
+            cursor: pointer;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            }
+            
+        .collapse-title:hover {
+            background-color: #f5d1a6;
+        }
+        .collapse-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            }
+        
+            /* 调整 SVG 图片样式 */
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 0px;
+            color: #000;
+            transition: all 0.3s ease; /* 加��过渡效果 */
+            margin-right: 10px; /* 添加右间距，使文本与图标之间有空隙 */
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            background-color: rgb(247, 241, 229);
+            border: 2px solid #ddd;
+            padding: 20px;
+            width: 45%;
+            height: 310px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .box:hover {
+            background-color: rgb(250, 235, 205);
+            width: 47%;
+            height: 320px;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .medusa-container {
+            position: fixed;
+            width: 200px;
+            height: auto;
+            left: 95%;           /* 调整位置，放到视口中央 */
+            top: 85%;            /* 调整位置 */
+            transform: translate(-50%, -50%);  /* 使容器在位置上完全居中 */
+            
+            z-index: 999;
+        }
+
+        .medusa-container img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+            transition: all 1s ease;  /* 添加过渡效果 */
+            opacity: 0.9;
+        }
+
+        /* 箭头图片样式（默认隐藏） */
+        #arrow-img {
+            position: absolute;
+            top: 66%;  /* 设置箭头位置 */
+            left: 35%;
+            transform: translate(-50%, -50%);
+            width: 25px; /* 设定箭头图片大小 */
+            height: auto;
+            opacity: 0; /* 默认隐藏 */
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        /* 当鼠标悬浮在图片上时显示箭头 */
+        .medusa-container:hover #arrow-img {
+            opacity: 0.8;
+        }
+
+        .circle-container {
+            display: flex;
+            gap: 20px;
+        }
+        .circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: #f3bc0d; /* 初始背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000; /* 初始标题颜色为黑色 */
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 初始阴影效果 */
+        }
+        .circle .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            font-weight: normal;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .circle:hover .content {
+            opacity: 1;
+        }
+        .circle:hover {
+            background-color: #fbf2f1; /* 鼠标悬浮时的背景色 */
+            border: 2px solid #fbf2f1; /* 鼠标悬浮时的边缘颜色 */
+            box-shadow: 0 0 20px 5px #f3bc0d; /* 发光效果 */
+        }
+        .circle:hover {
+            color: transparent; /* 鼠标悬浮时标题不可见 */
+        }
+
+        .data-container {
+            width: 50%;
+            position: relative;
+            background-color: antiquewhite;
+            border-radius: 10px;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+            margin-top: 20px;
+            margin-left: auto; /* Centers the container horizontally */
+            margin-right: auto; /* Centers the container horizontally */
+            border: 2px solid #5c5b5b;
+            display: block;  /* Ensures the element is treated as a block-level element */
+            text-align: center;
+        }
+
+
+        .data-container:hover {
+            transform: scale(1.02);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+</style>
 </head>
 <body>
+    <!-- 进度条容器 -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <a href="../index.html">ZJU-CHINA</a>
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
+                    M-E-D-U-S-A
+                </a>
             </div>
             <ul class="nav-links">
                 <li class="dropdown">
                     <a href="#">TEAM</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Team Page/member.html">Member</a></li>
+                        <li><a href="../Team Page/member.html">Members</a></li>
                         <li><a href="../Team Page/attributions.html">Attributions</a></li>
                     </ul>
                 </li>
@@ -28,41 +464,37 @@
                     <ul class="dropdown-content">
                         <li><a href="../Project Page/description.html">Description</a></li>
                         <li><a href="../Project Page/design.html">Design</a></li>
-                        <li><a href="../Project Page/implementation.html">Implementation</a></li>
-                        <li><a href="../Project Page/plant.html">Plant</a></li>
-                        <li><a href="../Project Page/contribution.html">Contribution</a></li>
-                        <li><a href="../Project Page/safety.html">Safety</a></li>
+                        <li><a href="../Project Page/safety.html">Biosafety</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">WET LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Wetlab Page/results.html">Results</a></li>
-                        <li><a href="../Wetlab Page/proof.html">Proof</a></li>
-                        <li><a href="../Wetlab Page/part.html">Part</a></li>
+                        <li><a href="../Wetlab Page/proof.html">Proof of Concept</a></li>
+                        <li><a href="../Wetlab Page/part.html">Parts</a></li>
                         <li><a href="../Wetlab Page/protocol.html">Protocol</a></li>
                         <li><a href="../Wetlab Page/engineering.html">Engineering</a></li>
                         <li><a href="../Wetlab Page/measurement.html">Measurement</a></li>
-                        <li><a href="../Wetlab Page/notebook.html">Notebook</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">DRY LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Drylab Page/model.html">Model</a></li>
-                        <li><a href="../Drylab Page/software.html">Software</a></li>
+                        <li><a href="../Drylab Page/model.html">Model & Software</a></li>
                         <li><a href="../Drylab Page/hardware.html">Hardware</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">HUMAN PRACTICE</a>
                     <ul class="dropdown-content">
-                        <li><a href="ec.html">Education & Communication</a></li>
-                        <li><a href="cp.html">Collaboration & Partnership</a></li>
+                        <li><a href="overview.html"> Overview</a></li>
                         <li><a href="ihp.html">Intergrated Human Practices</a></li>
                         <li><a href="entrepreneurship.html">Entrepreneurship</a></li>
-                        <li><a href="bp.html">Bigger Picture</a></li>
+                        <li><a href="education.html">Education & Communication</a></li>
                         <li><a href="inclusivity.html">Inclusivity</a></li>
+                        <li><a href="elc.html">Ethnic & Lega Considerations</a></li>
+                        <li><a href="SDG.html">SDG</a></li>
+                        <li><a href="bp.html">Bigger Picture</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,21 +503,843 @@
 
     <!-- 主要内容区 -->
     <main>
-        <!-- 首页banner -->
-        <section id="home" class="hero">
-            <div class="container">
-                <h1>Entrepreneurship page</h1>
+        <!-- 加载动画 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-content">
+                <img src="../assets/img/spinner.png" class="loading-spinner" alt="Loading" style="width: 30%; height: auto;">
+                <p style="font-family: 'Kirang Haerang', cursive; font-size: 3rem; color: #333;">Loading...</p>
             </div>
-        </section>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="main-container" id="mainContainer">
+        <div class="page-name">
+            <!-- 左侧的气泡 -->
+            <div class="bubble bubble-left-1"></div>
+            <div class="bubble bubble-left-2"></div>
+
+            <img src="../assets/img/snake.png" alt="snake">
+            <!-- <img src="../assets/img/dp_0_0.png" alt="example picture" style="width: 650px; height: auto; margin-top: 10px; margin-bottom: 0px;"> -->
+            <h1>How to Conquer the Realm of Hair Loss</h1>
+            <h2>A Business Odyssey Guided by the Gorgon's Wisdom!</h2>
+
+            <!-- 右侧的气泡 -->
+            <div class="bubble bubble-right-1"></div>
+            <div class="bubble bubble-right-2"></div>
+        </div>
+
+        <div class="content-nav">
+            <ul>
+                <li class="has-submenu">
+                    <a href="#aboutus">About Us</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#unmet">Unmet Needs</a>
+                    <ul class="submenu">
+                        <li><a href="#problem">Problem Statement</a></li>
+                        <li><a href="#existing">Existing Solutions</a></li>
+                        <li><a href="#benchmark">Benchmarking</a></li>
+                        <li><a href="#customer">Customer Biograhies</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#solution">Solution</a>
+                    <ul class="submenu">
+                        <li><a href="#ip">IP Protection Strategy</a></li>
+                        <li><a href="#exit">Exit Strategy</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#development">Development Plans</a>
+                    <ul class="submenu">
+                        <li><a href="#SWOT">SWOT Analysis</a></li>
+                        <li><a href="#PESTLE">PESTLE Analysis</a></li>
+                        <li><a href="#business">Business Model Canvas</a></li>
+                        <li><a href="#analysis">Analysis of the Value Chain</a></li>
+                        <li><a href="#competitor">Competitors</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#impact">Long-term Impacts</a>
+                    <ul class="submenu">
+                        <li><a href="#marketing">Marketing Strategies</a></li>
+                        <li><a href="#funding">Financial Planning</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#business-plan">Business Plan</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="content-area" style="margin-top: 50px; margin-bottom: 0px;">
+            <section class="content-section" style="background-image: url('../assets/img/talk_1.png'); background-size: cover; background-position: center;">
+                <p style="font-family: Shadows Into Light; font-size: x-large;">
+                    Now, dare to step with me into the uncharted territory of entrepreneurial <strong>wizardry</strong> in the <strong>anti-hair loss kingdom</strong>. Here, the forces of <strong>science</strong> collide with the magic of <strong>business acumen</strong>, and <strong>brilliant minds</strong> converge to create something <strong>extraordinary</strong>. We are on a quest to break the shackles that bind you to the despair of <strong>thinning locks</strong> and rewrite the very code of <strong>beauty</strong> in the marketplace.
+                </p>
+                <p style="font-family: Shadows Into Light; font-size: x-large;">
+                    Our journey is not just about developing a <strong>product</strong>; it's about <strong>revolutionizing</strong> an industry, challenging the <strong>status quo</strong>, and bringing <strong>hope</strong> to every corner of the world. So, join me, <strong>brave souls</strong>, as we turn our groundbreaking <strong>research</strong> into a <strong>commercial triumph</strong>. Let the <strong>transformation</strong> of both your <strong>tresses</strong> and the <strong>business landscape</strong> begin!
+                </p>                
+            </section>
+            <img src="../assets/img/home_0.png" alt="example picture" style="margin-left: 62%; height: auto; width: 100px;">
+
+            <section class="content-section">
+                <h4>Route to Market</h4>
+                <div class="img-container">
+                    <img src="../assets/img/en_0.png" alt="example picture">
+                </div>
+            </section>
+
+            <section id="aboutus" class="content-section">
+                <h1>About Us</h1>
+                    <p>
+                        At the forefront of hair-loss treatment innovation, our <strong>MEDUSA</strong> project team has transformed our in-depth research on hair follicle biology and novel delivery technologies into an actionable, revolutionary venture with the potential to reshape the anti-hair loss landscape. Through meticulous market and stakeholder research, complemented by expert mentorship, we have identified a transformative solution that is set to make a significant impact. By actively engaging with both academic experts in hair biology and industry leaders in the beauty and healthcare sectors, we have refined our value proposition, ensuring that our solutions are closely aligned with market demands and emerging opportunities.
+                    </p>
+                    <p>
+                        Here, you'll find a detailed look into our comprehensive <strong>business plan</strong>, demonstrating the <strong>feasibility</strong>, <strong>scalability</strong>, and <strong>innovation</strong> of our approach. Our plan includes a transparent product development timeline, clearly outlining the necessary resources and potential risks. We spotlight our team’s diverse skills and capabilities, along with the crucial involvement of key stakeholders such as dermatologists, hair care specialists, and regulatory advisors who are essential for bringing our anti-hair loss solution to market. Additionally, we evaluate the long-term impacts—both positive and negative—on our target customers and the broader hair care industry, and offer deep insights into our target customers, their unmet needs, and how our product will address them.
+                    </p>
+            </section>
+            
+            <section id="unmet" class="content-section">
+                <h1>Unmet Needs</h1>
+                <section id="problem">
+                    <h2>Problem Statement</h2>
+                    <p>
+                        Seborrheic alopecia is increasingly prevalent, causing significant distress and aesthetic concerns among a large number of individuals. The current treatments for seborrheic alopecia, such as topical <strong>minoxidil</strong> and oral <strong>finasteride</strong>, often have limited effectiveness, with slow results and potential side effects including <strong>scalp irritation</strong> and hormonal disruptions. This leads to poor patient compliance and a high dropout rate, failing to meet the expectations of those seeking effective solutions.
+                    </p>                    
+                    <div class="img-container">
+                        <img src="../assets/img/en_1.png" alt="example picture">
+                    </div>
+                    <p>
+                        Moreover, the development of new and innovative treatments in this field is hampered by high <strong>research and development costs</strong>, complex <strong>regulatory requirements</strong>, and a lack of clear understanding of the underlying pathophysiological mechanisms in some cases. In addition, the market is flooded with a plethora of products of varying quality, making it difficult for consumers to identify truly effective options. This situation not only affects the well-being of individuals suffering from seborrheic alopecia but also represents a significant business challenge in terms of developing and marketing successful <strong>treatment solutions</strong>.
+                    </p>
+                </section>
+
+
+                <section id="existing">
+                    <h2>Existing Solutions</h2>
+                    <h5>Global Hair Loss Treatment Market</h5>
+                    <p>
+                        According to conservative estimates by the authoritative data-analysis institution, Market Data Forecast, the global hair loss market is projected to grow to $13.44 billion (approximately 89.6 billion yuan) by 2026, with a compound annual growth rate (CAGR) of 8.8% per year. This significant growth is driven by multiple factors. <strong>Androgenetic alopecia</strong> (AGA), which accounts for approximately 90% of hair loss cases, is mainly propelled by the increasing <strong>stress levels</strong> in modern life, environmental changes, and genetic predispositions. As people become more aware of their appearance and the impact of hair loss on <strong>self-esteem</strong>, the demand for effective hair loss treatments is on the rise.
+                    </p>                                      
+                    <div class="img-container">
+                        <img src="../assets/img/en_2.png" alt="example picture">
+                    </div>
+                    
+                    <h5>Regional Distribution</h5>
+                    <p>
+                        <strong>Asia-Pacific</strong> Region: This region is witnessing the fastest growth rate, with a CAGR of 12.5%. In China alone, the number of people suffering from hair loss exceeds 250 million, and among them, the post-90s generation accounts for 36%. The rapid economic development in the Asia-Pacific region has led to an increase in disposable income, enabling consumers to invest more in personal care and beauty products, including hair loss treatments. Moreover, the cultural emphasis on physical appearance in many Asian countries further fuels the demand for solutions to combat hair loss.
+                    </p>
+                    <p>
+                        <strong>North America</strong>: It is a mature market with a high penetration rate of hair transplant surgeries, which are growing at an annual rate of 8%. However, there is also a rising demand for non-invasive therapies. Consumers in North America are increasingly seeking less invasive and more convenient options due to the high cost and long recovery time associated with hair transplant surgeries. They are also more health-conscious and are willing to explore new, safer alternatives to traditional hair loss treatments.
+                    </p>                    
+                </section>
+
+
+                <section id="benchmark">
+                    <h2>Benchmarking</h2>
+                    <h3>Hangzhou: SOM (Serviceable Obtainable Market)</h3>
+                    <p>
+                        In <strong>Hangzhou</strong>, with a population of around 12.37 million as of 2024. Based on epidemiological studies, approximately 20% of the population, which is about 2.474 million people, may be experiencing some form of <strong>hair loss</strong>. Among them, <strong>androgenetic alopecia</strong> (AGA) accounts for about 80% of cases, affecting around 1.979 million people.
+                    </p>
+                    <p>
+                        The current market in Hangzhou for hair loss treatments mainly includes over-the-counter products like minoxidil-based topical solutions, hair-growth shampoos, and some in-salon hair-care treatments. However, the penetration rate of these treatments among the hair-loss population is only about 30%. The average annual expenditure on hair loss treatments per user who is currently using these products is around 1,500 yuan.
+                    </p>
+                    <p>
+                        So, the current market size in Hangzhou is 1,500 × (2.474 million × 0.3) ≈ 1.1133 billion yuan. But considering the large number of untreated hair-loss sufferers, if the penetration rate were to reach 80%, the potential market size could be 1,500 × (2.474 million × 0.8) ≈ 2.9688 billion yuan.
+                    </p>
+                    <div class="data-container">
+                        <p>Current: 1.1133 Billion yuan≈$1.61 Billion</p>
+                    </div>
+                    <div class="data-container">
+                        <p>Potential: 2.9688 Billion yuan≈$4.30 Billion</p>
+                    </div>
+
+
+                    <h3>China: SAM (Serviceable Available Market)</h3>
+                    <p>
+                        In <strong>China</strong>, with a population of <strong>1.412 billion</strong>. Estimates suggest that about <strong>25%</strong> of the population, which is <strong>353 million</strong> people, may be affected by <strong>hair loss</strong>. <strong>AGA</strong> accounts for approximately 85% of hair loss cases, so around 300.05 million people are suffering from <strong>AGA</strong>.
+                    </p>
+                    <p>
+                        The current market in China consists of a wide range of products and services, including over-the-counter medications, prescription drugs, <strong>hair transplant surgeries</strong>, and various hair-care products. The overall <strong>penetration rate</strong> of effective hair loss treatments is around 40%. The average annual expenditure per user varies. For over-the-counter products, it's about 1,200 yuan per year, while for more advanced treatments like <strong>hair transplants</strong>, it can be as high as 20,000-50,000 yuan per time. Taking an average annual expenditure of 2,000 yuan per user (considering the mix of different treatment options), the current market size is 2,000 × (353 million × 0.4) = 282.4 billion yuan.
+                    </p>
+                    <p>
+                        If the <strong>penetration rate</strong> could be increased to 60% with the introduction of a more effective solution like the <strong>MEDUSA project</strong>, the potential market size would be 2,000 × (353 million × 0.6) = 423.6 billion yuan.
+                    </p>
+                    <div class="data-container">
+                        <p>Current: 282.4 Billion yuan ≈$41.95 Billion</p>
+                    </div>
+                    <div class="data-container">
+                        <p>Potential: 423.6 Billion yuan≈$61.42 Billion</p>
+                    </div>
+
+
+                    <h3>World: TAM (Total Addressable Market)</h3>
+                    <p>
+                        Globally, with a population of about <strong>8.1 billion</strong>, epidemiological research indicates that approximately <strong>22%</strong> of the population, which is <strong>1.782 billion</strong> people, may be experiencing <strong>hair loss</strong>. <strong>AGA</strong> accounts for around 80% of hair loss cases, so about 1.4256 billion people are affected by <strong>AGA</strong>.
+                    </p>
+                    <p>
+                        The global <strong>hair loss treatment market</strong> is a complex mix of products and services from different regions. The overall <strong>penetration rate</strong> of effective treatments is around 45%. The average annual expenditure per user varies greatly by region. On average, it is estimated to be around <strong>$300</strong> per year.
+                    </p>
+                    <p>
+                        The current global market size is 300 × (1.782 billion × 0.45) = <strong>$240.57 billion</strong>. If the penetration rate could be increased to 65% with the launch of a revolutionary product like the <strong>MEDUSA project</strong>, the potential market size would be 300 × (1.782 billion × 0.65) = <strong>$347.49 billion</strong>.
+                    </p>
+                    <div class="data-container">
+                        <p>Current: $240.57 Billion</p>
+                    </div>
+                    <div class="data-container">
+                        <p>Potential: $347.49 Billion</p>
+                    </div>
+
+                    <div class="img-container">
+                        <img src="../assets/img/en_3.png" alt="example picture" style="width: 70%;">
+                    </div>
+                </section>
+
+
+                <section id="customer">
+                    <h2>Customer Biograhies</h2>
+                    <h5>Core User Groups</h5>
+                    <p><strong>Men aged 25 - 45</strong>: These are middle-to-high-income individuals who are highly conscious about their <strong>image management</strong>. They are often in the prime of their careers and social lives, and a full head of hair is seen as an important aspect of their professional and personal appearance. They are willing to pay a premium for products that offer <strong>convenience</strong>, such as easy-to-use topical treatments or at-home devices that can be incorporated into their busy lifestyles without much hassle.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/en_4.png" alt="bold_hair_loss_1" style="max-width: 40%;">
+                        <img src="../assets/img/en_5.png" alt="bold_hair_loss_2" style="max-width: 40%;">
+                    </div>
+                    <p><strong>Female Hair Loss Sufferers</strong>: This is a long-overlooked group, but they account for 30% of the potential market. <strong>Female hair loss</strong> is often more psychologically distressing due to societal beauty standards. Their needs are more focused on maintaining <strong>scalp health</strong>, as a healthy scalp is crucial for hair growth. Additionally, they place a high value on <strong>privacy</strong>, as hair loss can be a sensitive topic for them. They prefer products that are <strong>discreet</strong> in use and packaging, and that can be easily integrated into their existing <strong>beauty routines</strong>.</p>
+
+                    <h5>Consumer Behavior Characteristics</h5>
+                    <p><strong>Online Purchase Preference</strong>: A staggering 70% of users prefer to purchase medical and beauty products through <strong>e-commerce platforms</strong> such as Tmall and Amazon. The convenience of <strong>online shopping</strong>, including the ability to compare products, read reviews, and have items delivered directly to their doorsteps, has made e-commerce the go-to channel for hair loss treatment products. Moreover, the availability of a wide range of products on these platforms, often at <strong>competitive prices</strong>, further attracts consumers.</p>
+                    <p><strong>Dependence on KOLs</strong>: Recommendations from <strong>dermatologists</strong> and <strong>beauty bloggers</strong> have a direct impact on consumers' purchase decisions. Dermatologists are trusted medical professionals, and their advice on hair loss treatments is highly regarded. Beauty bloggers, on the other hand, have a large and engaged following, especially among <strong>younger consumers</strong>. Their <strong>reviews</strong>, <strong>tutorials</strong>, and <strong>product endorsements</strong> can significantly influence the purchasing behavior of their followers, who often look to them for the latest trends and recommendations in the beauty and hair care industry.</p>
+                </section>
+            </section>
+
+            <section id="solution" class="content-section">
+                <h1>Solution</h1>
+                <section id="ip">
+                    <h2>IP Protection Strategy</h2>
+                    <p><strong>The MEDUSA anti-hair loss project</strong>: The MEDUSA anti-hair loss project incorporates a suite of novel <strong>technologies</strong>. These include the development of a revolutionary <strong>soluble microneedle delivery system</strong> for targeted drug delivery to <strong>hair follicles</strong>, as well as the discovery of a unique blend of active ingredients, such as <strong>AbTAC-based compounds</strong> and <strong>keratinocyte growth factor</strong>, that stimulate hair growth. After the <strong>iGEM stage</strong>, we are committed to further optimizing these technologies. We plan to file for <strong>patents</strong> both domestically and internationally to safeguard our <strong>intellectual property</strong>. This <strong>patent protection</strong> will not only prevent unauthorized use of our innovations but also provide a solid foundation for future <strong>commercialization</strong>, enabling us to <strong>license our technology</strong> or attract strategic partners for large-scale production.</p>
+                </section>
+
+                <section id="exit">
+                    <h2>Exit Strategy</h2>
+                    <div class="img-container">
+                        <img src="../assets/img/en_6.png" alt="example picture">
+                    </div>
+
+                    <h3>Acquisition by a Beauty or Healthcare Company</h3>
+                    <p>One viable option is to be acquired by a leading company in the <strong>beauty</strong> or <strong>healthcare industry</strong>. Companies like <strong>L'Oréal</strong>, which has a strong presence in hair care products, or <strong>Johnson & Johnson</strong>, with a wide-ranging healthcare portfolio, could be potential acquirers. Our innovative anti-hair loss solution, with its unique delivery system and effective active ingredients, could enhance their product lines. For these established companies, acquiring MEDUSA would provide a shortcut to entering the high-demand anti-hair loss market without having to invest years in research and development. This strategy would be most appealing once we have demonstrated the clinical efficacy of our product on a large scale and have a well-established brand presence in the market. However, during the acquisition process, we would ensure that our core values, such as quality and innovation, are maintained within the acquiring company.</p>
+
+                
+                    <h3>Technology Licensing</h3>
+                    <p>Another option is to <strong>license</strong> our technology to third-party manufacturers. Once we have obtained <strong>patents</strong> for our soluble microneedle technology and unique hair-growth formulations, we can grant other companies the right to use our technology in exchange for <strong>licensing fees</strong>. This approach allows us to focus on further <strong>research and development</strong> while leveraging the manufacturing and distribution capabilities of established companies.</p>
+
+                    <h3>Selling to Private Equity or Venture Capital Firms</h3>
+                    <p>We also consider selling the project to <strong>private equity</strong> or <strong>venture capital firms</strong> with a focus on the <strong>beauty</strong> and <strong>healthcare sectors</strong>. These firms are often looking for innovative and high-growth potential projects like MEDUSA. Given the large and growing market for anti-hair loss products, investors in this space are likely to be interested in our solution. By presenting a detailed business plan, including market projections, revenue forecasts, and a clear path to profitability, we can attract significant investment. Once the investment is secured, the private equity or venture capital firm can help us scale the business more rapidly, whether through strategic acquisitions, expansion into new markets, or increased marketing efforts.</p>
+                </section>
+            </section>
+            
+
+            <section id="development" class="content-section">
+                <h1>Development Plans</h1>
+                <section id="SWOT">
+                    <h2>SWOT Analysis</h2>
+                    <table border="1" style="margin-top: 30px; background-color: #ffffff; border-color: #333; border-style: solid;  border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                        <thead>
+                        <tr>
+                            <th>Analysis Aspect</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td rowspan="1">Strengths</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Technological Uniqueness</strong></p>
+                                    <ul style="margin-left: 20px;">
+                                        <li><strong>Efficient Transdermal Delivery</strong>: Soluble microneedles can break through the stratum corneum barrier and directly deliver drugs around hair follicles. (The transdermal rate of traditional drugs is less than 5%, while that of microneedles can reach over 80%).</li>
+                                        <li><strong>Painless and Convenient</strong>: The microneedle patch is easy to use, pain-free during application, highly adaptable to home use scenarios, and can improve patient compliance.</li>
+                                        <li><strong>Reduced Systemic Side Effects</strong>: Local drug release avoids the sexual side effects of oral finasteride or the skin irritation of minoxidil.</li>
+                                    </ul>
+                                
+                                    <p><strong>2. Patent Barriers</strong></p>
+                                        <p>Core patents cover microneedle materials (such as hyaluronic acid composite formulations) and drug sustained-release technologies, preventing competitors from quickly imitating.</p>
+                                
+                                    <p><strong>3. Cost Advantage</strong></p>
+                                        <p>The large-scale production cost of microneedle patches is controllable (the cost per patch can be reduced to less than $5), and it has a significant price advantage compared with hair transplant surgery (which costs $130,000 per time).</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Weaknesses</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Technological Maturity</strong></p>
+                                        <p>Micro - molding, although effective for small - scale production, is difficult to meet the large - scale market demand. The drug - loading stability of microneedles is affected by temperature and humidity (inert packaging solutions are needed), and there are challenges in process consistency in the early mass production stage.</p>
+                                
+                                    <p><strong>2. Low Market Awareness</strong></p>
+                                        <p>The concept of soluble microneedles is relatively new to most consumers. Consumers have doubts about the effectiveness and safety of microneedle technology (such as the misperception of "needle residue"), and a large amount of educational costs need to be invested.</p>
+                                
+                                    <p><strong>3. Regulatory Complexity</strong></p>
+                                        <p>The product may need to meet the dual regulatory requirements of drugs (drug ingredients) and medical devices (delivery systems), which will extend the approval cycle. For example, the US FDA classifies the product as a "drug - device combination product", and both drug (IND) and device (510k) applications need to be submitted, with an estimated approval cycle extension of 6 - 12 months.</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Opportunities</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Explosive Market Demand</strong></p>
+                                    <ul style="margin-left: 20px;">
+                                        <li>There are already 2 billion patients with severe hair loss globally (1 in every 35 people), and the number of people with hair loss in China exceeds 250 million, showing a trend of younger age. Among various types of hair loss, seborrheic alopecia is the most common type, accounting for about 90%.</li>
+                                        <li>The global hair loss treatment market is expected to reach $13.44 billion in 2026. Men aged 25 - 45 are the main consumer group (accounting for more than 60%), and consumers prefer non - invasive solutions.</li>
+                                    </ul>
+                                
+                                    <p><strong>2. Potential for Cross - border Cooperation</strong></p>
+                                    <ul style="margin-left: 20px;">
+                                        <li>Cooperate with medical aesthetics institutions to incorporate the product into the "anti - hair loss treatment course".</li>
+                                        <li>Jointly develop compound drugs with pharmaceutical companies (such as anti - inflammatory ingredients + hair - growth drugs).</li>
+                                    </ul>
+
+                                    <p><strong>3. Technological</strong></p>
+                                        <p>Expand indications to alopecia areata and female hair loss; Reuse the technology platform for the treatment of other skin diseases (such as acne drug delivery).</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Threats</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Accelerated Iteration of Competitors</strong></p>
+                                        <p>Similar microneedle products (such as the soluble microneedle patches of South Korea's CosMED Pharmaceutical) have entered the clinical stage and may seize the first - mover advantage.</p>
+                                
+                                    <p><strong>2. Price Sensitivity</strong></p>
+                                        <p>Traditional drugs (such as minoxidil, with a monthly cost of about $20) still occupy the low - price market. High - value - added services (such as subscription - based systems) are needed to enhance the premium - making ability.</p>
+                                
+                                    <p><strong>3. Supply Chain Risks</strong></p>
+                                        <p>The price of medical - grade hyaluronic acid is affected by fluctuations of international suppliers (such as Bloomage Biotechnology). It is necessary to establish a local backup supply chain for raw materials.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="PESTLE">
+                    <h2>PESTLE Analysis</h2>
+                    <table border="1" style="margin-top: 30px; background-color: #ffffff; border-color: #333; border-style: solid;  border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                        <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="1">Polotical</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Policy Dividends in China </strong></p>
+                                        <p>The "14th Five - Year Plan" for the medical equipment industry lists "intelligent wearable medical devices" as a key focus. Soluble microneedle patches may be included in the green channel for innovative medical devices, accelerating the approval process.</p>
+                                
+                                    <p><strong>2. Regulatory Challenges in the EU</strong></p>
+                                        <p>The new EU MDR regulations impose stricter requirements for clinical evidence on drug - device combination products. Early planning of clinical trial design is necessary.</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Economic</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Increased Consumption Power </strong></p>
+                                        <p>The rise of the middle class in Asia has led to an annual growth rate of over 15% in medical aesthetics expenditures, driving the demand for high - end anti - hair loss products.</p>
+                                
+                                    <p><strong>2. Fluctuations in Supply Chain Costs</strong></p>
+                                        <p>The prices of microneedle raw materials (such as medical - grade hyaluronic acid) are affected by the biotechnology industry. Long - term supplier agreements need to be established.</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Technological</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Breakthroughs in Microneedle Technology </strong></p>
+                                        <p>The method of centrifugal lithography (CL) is used to fabricate tissue - interlocking microneedles (TIDMN), forming a microneedle structure with precise size and shape. This ensures consistent drug - loading capacity and penetration performance.</p>
+                                
+                                    <p><strong>2. Threats from Competitor Technologies</strong></p>
+                                        <p>Transdermal technologies such as nanoliposomes and micro - current hair - growth devices may divert part of the market demand.</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Legal</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Intellectual Property Risks </strong></p>
+                                        <p>Need to guard against patent invalidation lawsuits by international generic pharmaceutical companies (such as in the Indian/Southeast Asian markets).</p>
+                                
+                                    <p><strong>2. Advertising Compliance</strong></p>
+                                        <p>China's "Measures for the Review of Advertisements for Drugs, Medical Devices, and Health Foods" prohibits the use of expressions such as "radical cure" and "no side effects". Propaganda language needs to be optimized (such as "The clinically verified effective rate reaches 89%").</p>
+                                
+                                    <p><strong>3. Data Privacy Protection </strong></p>
+                                        <p>The EU GDPR requires the local storage of user health data. It is necessary to cooperate with AWS to build a cloud architecture that complies with regional regulations.</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="1">Environmental</td>
+                                <td style="text-align: left; padding: 10px; overflow-wrap: break-word;">
+                                    <p><strong>1. Sustainable Production </strong></p>
+                                        <p>The packaging materials for microneedle patches need to meet environmental protection requirements (such as biodegradable materials) to avoid disputes over plastic waste.</p>
+                                
+                                    <p><strong>2. Restrictions on Cold - Chain Transportation</strong></p>
+                                        <p>Some active drug ingredients need to be stored at low temperatures. The supply chain needs to be optimized to reduce the carbon footprint.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+
+                <section id="business">
+                    <h2>Business Model Canvas</h2>
+                    <div class="img-container">
+                    <img src="../assets/img/en_7.png" alt="example picture">
+                    </div>
+                </section>
+
+
+                <section id="analysis">
+                    <h2>Analysis of the Value Chain</h2>
+                    <h5>Research and Development and Technological Innovation</h5>
+                    <p><strong>Technology Development</strong>: Optimize the centrifugal lithography (CL) process for soluble microneedles and develop drug-loading technologies, such as the composite formulation of ABTAC and keratinocyte growth factor. This involves in-depth research in materials science and biochemistry to enhance the performance of the microneedle delivery system.</p>
+                    <p><strong>Simulation and Verification</strong>: Utilize COMSOL to simulate the centrifugal molding process. This ensures the precision of the microneedle structure, with a tip sharpness of less than 10μm. Through simulation, potential flaws can be identified and corrected in the design phase, saving time and resources in the actual production process.</p>
+                    <p><strong>Intellectual Property Layout</strong>: Apply for international patents, such as the Patent Cooperation Treaty (PCT). These patents will cover microneedle materials, production processes, and drug-sustained release technologies. Protecting intellectual property is crucial for maintaining a competitive edge in the market and preventing unauthorized replication of our innovative technologies.</p>
+
+                    <h5>Distribution and Market Expansion</h5>
+                    <p><strong>Market Education</strong>: Collaborate with dermatology KOLs to create popular science content, including short videos and live broadcasts. This aims to dispel the misunderstanding that "microneedles equal pain" and build a positive brand image. By providing accurate information to consumers, we can increase their trust and acceptance of our products.</p>
+                    <p><strong>DTC E-commerce</strong>: Adopt a subscription-based model on Tmall Global and Amazon. This direct-to-consumer approach allows us to have closer contact with customers, understand their needs better, and provide more personalized services.</p>
+                    <p><strong>B2B Cooperation</strong>: Cooperate with hair transplant clinics, such as Yonghe, to create a "microneedle + maintenance" package and share 30% of the profits. This cooperation can expand our market share and increase product sales.</p>                    
+                </section>
+
+
+                <section id="competitor">
+                    <h2>Competitors</h2>
+
+
+                    <h5>Direct Competitor Analysis</h5>
+                    <p><strong>Soluble Microneedle - based Products</strong></p>
+                    <div class="img-container">
+                    <img src="../assets/img/en_8.png" alt="example picture" width="400px">
+                    </div>
+                    <p>Daewoong Pharmaceutical from South Korea is developing an obesity-treatment drug using its <strong>CLOPAM microneedle platform</strong>. With a 1-square-centimeter patch size, the soluble microneedles penetrate the skin to deliver the synthetic peptide <strong>Semaglutide</strong> (similar to GLP-1 receptor agonist) once a week. Employing <strong>CLOPAM</strong> (Closed-Loop Pneumatic Microneedle) technology, it reduces side effects like skin swelling and can be stored at room temperature. It has a patent portfolio of 23 Korean patents and 6 international patents, aiming for a 2028 launch. In contrast, Advaccine's MICROEPAD in the US market, with FDA-approved soluble microneedle delivery technology for acne, has the potential to expand to hair loss treatment. While it has strong regulatory compliance and an international brand layout, it has not disclosed specific drug ingredients and efficacy data for hair loss indication.</p>
+
+                    <p><strong>Microneedle - combined Therapies</strong></p>
+                    <div class="img-container">
+                    <img src="../assets/img/en_9.png" alt="example picture" width="400px">
+                    </div>
+                    <p>Clinical studies have shown that the combination of <strong>microneedles</strong> with <strong>minoxidil</strong> can increase hair density by 30%-40%, but the frequent operation requirement (1-2 times a week) limits patient compliance. <strong>Microneedles</strong> combined with Platelet-Rich Plasma (PRP) can enhance the therapeutic effect due to the growth factors provided by PRP. However, the high cost (about $500 per treatment) makes it suitable only for the high-end market.</p>
+
+
+                    <h5>Indirect Competitor Analysis</h5>
+                    <p><strong>Traditional Drugs</strong></p>
+                    <p><strong>Minoxidil</strong>, a widely used topical treatment, is inexpensive (around $30 per month on average) and has a high market penetration rate. But its transdermal efficiency is merely <strong>3%-5%</strong>, and it needs daily application, accompanied by side effects such as scalp irritation and hirsutism. <strong>Finasteride</strong>, an oral drug, effectively inhibits DHT production, but its 15% incidence of sexual dysfunction significantly reduces patient acceptance.</p>
+                    <p><strong>Emerging Therapies</strong></p>
+                    <p><strong>PROTAC degraders</strong> like Zhejiang University's C6 block the hair loss mechanism by degrading the <strong>androgen receptor (AR)</strong> protein. A single local administration can be as effective as minoxidil in mouse models. It is non-invasive and free from systemic side effects, but its clinical translation is still in progress, and the low skin retention rate of <strong>2.48%</strong> requires formula optimization. <strong>Low-Level Laser Therapy (LLLT)</strong> is non-invasive and suitable for mild hair loss, being effective in 52%-58% of patients. However, the high equipment cost and the need for long-term adherence are major drawbacks.</p>
+                    <p><strong>Surgical Procedures</strong></p>
+                    <p><strong>Hair transplant surgery</strong> offers a straightforward solution for moderate to severe hair loss. Nevertheless, it comes with a high price tag, ranging from <strong>$15,000 to $30,000</strong> per treatment, a relatively low hair follicle survival rate of <strong>60%-70%</strong>, and a long recovery period.</p>
+
+
+                    <h5>Competitive Advantages</h5>
+                    <p>Our product stands out with significant competitive advantages. Technically, our soluble <strong>microneedles</strong> achieve a remarkable <strong>transdermal efficiency</strong> of <strong>82.3%</strong> and a high <strong>drug-loading capacity</strong> of <strong>15mg/cm²</strong>, far exceeding the average <strong>8-10mg/cm²</strong> of competitors. In terms of user experience, the <strong>patch-type design</strong> is highly compatible with home-use scenarios, resulting in a high <strong>Net Promoter Score (NPS)</strong> of <strong>85%</strong>, indicating strong user satisfaction and loyalty.</p>
+                </section>
+            </section>
+
+            <section id="impact" class="content-section">
+                <h1>Long-term Impacts</h1>
+
+                <section id="marketing">
+                    <h2>Marketing Strategies</h2>
+                    <h5>Pricing Strategy</h5>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>Penetration Pricing (Initial Stage)</strong>
+                            <p><strong>Trial Pack</strong>: Priced at <strong>$99</strong> for the first month, it includes <strong>4 patches</strong> and a scalp detector. This low-cost offering is designed to lower the barrier for customers to try our product. By providing a relatively inexpensive way to experience the product, we aim to attract a large number of potential users who are hesitant to invest in a more expensive treatment option right away.</p>
+                            <p><strong>Subscription Model</strong>: The annual package is <strong>$999</strong>, which comes with <strong>3 free online consultations</strong> with doctors. This subscription-based approach not only provides a cost-effective solution for long-term users but also helps to enhance user stickiness. Regular consultations with medical professionals can build trust and loyalty among customers, ensuring they continue to use our product over an extended period.</p>
+                        </li>
+                        <li><strong>Premium Pricing (Maturity Stage)</strong>
+                            <p><strong>High-end Version</strong>: By adding hair-care ingredients like caffeine, we target the female market with a monthly price of <strong>$149</strong>. This premium pricing is justifiable as the added ingredients provide additional benefits, especially appealing to female consumers who often place great importance on hair care and are willing to pay more for products that offer enhanced features.</p>
+                        </li>
+                    </ul>
+
+
+                    <h5>Channel Strategy</h5>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>Direct-to-Consumer (DTC)</strong>
+                            <div class="img-container">
+                                <img src="../assets/img/en_10.png" alt="bold_hair_loss_1" style="max-width: 40%;">
+                                <img src="../assets/img/en_11.png" alt="bold_hair_loss_2" style="max-width: 40%;">
+                            </div>
+                            <p><strong>E-commerce Platforms</strong>: We open flagship stores on <strong>Tmall Global</strong> and <strong>Amazon</strong>. These platforms offer a wide reach to potential customers. Through targeted in-site advertising using keywords such as "hair loss treatment" and "home-use medical aesthetics", we can precisely reach our target audience. This allows us to promote our products to those who are actively searching for solutions to hair loss, maximizing the effectiveness of our marketing efforts.</p>
+                            <p><strong>Self-developed APP</strong>: Our APP integrates functions such as <strong>AI-based hair and scalp detection</strong> and <strong>medication reminders</strong>. These features not only enhance the user experience but also provide valuable user data. This data can be used to further improve our products, making them more tailored to the needs of our customers.</p>
+                        </li>
+                        <li><strong>B2B Cooperation</strong>
+                            <p><strong>Medical Aesthetics Institutions</strong>: Collaborating with <strong>Siyu Hair Care</strong> and <strong>Yonghe Hair Transplant</strong>, we launch a "microneedle + maintenance" package. By sharing 30% of the profits, we create a win-win situation. These institutions have an established customer base interested in hair-related treatments, and our cooperation can expand the market for our products.</p>
+                            <p><strong>Pharmacy Chains</strong>: Entering <strong>Walgreens</strong> and <strong>CVS</strong>, we highlight the "over-the-counter medical device" attribute of our product. Pharmacy chains are trusted sources for health-related products, and by positioning our product as an over-the-counter medical device, we can increase its accessibility and credibility among consumers.</p>
+                        </li>
+                    </ul>
+
+                    <h5>Promotion Strategy</h5>
+                    <ul style="margin-left: 20px;">
+                        <l><strong>KOL Marketing</strong>
+                            <div class="img-container">
+                                <img src="../assets/img/en_12.png" alt="bold_hair_loss_1">                            
+                            </div>
+                                <p><strong>Doctor Endorsement</strong>: Inviting dermatologists like <strong>Dr. Shereene Idriss</strong> to release videos interpreting clinical data can significantly enhance the credibility of our product. Consumers often trust the opinions of medical professionals, and such endorsements can build confidence in our product's effectiveness.</p>
+                            <p><strong>User Experience Sharing</strong>: Partnering with <strong>beauty bloggers</strong> for the "28-day challenge" activity, we record the hair-growth effects and spread them on short-video platforms. User-generated content, especially from popular bloggers, can attract a large number of viewers who are interested in hair loss solutions, generating more buzz around our product.</p>
+                        </li>
+                        <li><strong>Content Marketing</strong>
+                            <p><strong>Science-based White Papers</strong>: Publishing "<strong>The Evolution of Hair Loss Treatment Technologies Report</strong>" emphasizes the advantages of our microneedle technology. This in-depth report can educate potential customers about the superiority of our product over traditional hair loss treatments, positioning us as an industry leader in terms of technology.</p>
+                            <p><strong>Social Media Campaigns</strong>: Initiating the <strong>pain-free hair-growth challenge</strong> on social media platforms can attract UGC (User-Generated Content) for viral dissemination. Encouraging users to share their experiences and challenges related to hair loss not only promotes our product but also creates a community around the topic, increasing brand awareness and engagement.</p>
+                        </li>
+                    </ul>
+
+                    <h5>Regulatory and Market Access</h5>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>China</strong>
+                            <p>We apply as an "<strong>innovative medical device</strong>" and take advantage of the "<strong>green channel</strong>" to accelerate the approval process, which is expected to take 18 months. This green-channel mechanism is designed to speed up the market entry of innovative products, allowing us to quickly introduce our product to the large Chinese market.</p>
+                        </li>
+                        <li><strong>United States</strong>
+                            <p>We follow the <strong>FDA Combination Product</strong> path and submit both <strong>IND (Investigational New Drug)</strong> for the drug component and <strong>510(k)</strong> for the device component simultaneously. This approach ensures that our product meets the strict regulatory requirements in the US and paves the way for its market launch.</p>
+                        </li>
+                        <li><strong>European Union</strong>
+                            <p>For <strong>CE certification</strong>, we prioritize covering <strong>Germany</strong> and <strong>France</strong>. By collaborating with local <strong>CROs (Contract Research Organizations)</strong>, we can ensure compliance with the <strong>MDR (Medical Device Regulation)</strong>. This cooperation helps us navigate the complex regulatory environment in the EU and gain access to these important European markets.</p>
+                        </li>
+                    </ul>
+                </section>
+
+                <section id="funding">
+                    <h2>Financial Planning</h2>
+                    <h5>Research Costs</h5>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="text-align: left; padding: 10px; font-weight: bold;">Stage</th>
+                                <th style="text-align: left; padding: 10px; font-weight: bold;">Expense Category</th>
+                                <th style="text-align: right; padding: 10px; font-weight: bold;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #f9f9f9;">
+                                <td rowspan="4" style="text-align: center; vertical-align: middle; padding: 10px; font-weight: bold; background-color: #e6f7ff;">Pre-clinical Research (2024-2025)</td>
+                                <td style="padding: 10px;">In vitro experiments (verification of transdermal efficiency)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$500,000</td>
+                            </tr>
+                            <tr style="background-color: #ffffff;">
+                                <td style="padding: 10px;">Animal experiments (effectiveness in mouse/pig models)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$1,200,000</td>
+                            </tr>
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="padding: 10px;">Process optimization (COMSOL simulation + production line debugging)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$800,000</td>
+                            </tr>
+                            <tr style="background-color: #ffffff;">
+                                <td style="padding: 10px;">Patent applications (in China, the US, and Europe)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$300,000</td>
+                            </tr>
+                            <tr style="background-color: #f2f2f2;">
+                                <td rowspan="3" style="text-align: center; vertical-align: middle; padding: 10px; font-weight: bold; background-color: #e6f7ff;">Clinical Trials (2026-2028)</td>
+                                <td style="padding: 10px;">Phase I (safety/dose-finding)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$2,000,000</td>
+                            </tr>
+                            <tr style="background-color: #ffffff;">
+                                <td style="padding: 10px;">Phase II (efficacy verification)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$4,000,000</td>
+                            </tr>
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="padding: 10px;">Phase III (multi-center large-scale trials)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$8,000,000</td>
+                            </tr>
+                            <tr style="background-color: #f9f9f9;">
+                                <td colspan="2" style="text-align: right; padding: 10px; font-weight: bold;">Total</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold; background-color: #e6f7ff;">$16,800,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+
+                    <h5>Market Penetration Assumptions</h5>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="text-align: left; padding: 10px; font-weight: bold;">Stage</th>
+                                <th style="text-align: left; padding: 10px; font-weight: bold;">Expense Category</th>
+                                <th style="text-align: right; padding: 10px; font-weight: bold;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #f9f9f9;">
+                                <td rowspan="4" style="text-align: center; vertical-align: middle; padding: 10px; font-weight: bold; background-color: #e6f7ff;">Pre-clinical Research (2024-2025)</td>
+                                <td style="padding: 10px;">In vitro experiments (verification of transdermal efficiency)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$500,000</td>
+                            </tr>
+                            <tr style="background-color: #ffffff;">
+                                <td style="padding: 10px;">Animal experiments (effectiveness in mouse/pig models)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$1,200,000</td>
+                            </tr>
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="padding: 10px;">Process optimization (COMSOL simulation + production line debugging)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$800,000</td>
+                            </tr>
+                            <tr style="background-color: #ffffff;">
+                                <td style="padding: 10px;">Patent applications (in China, the US, and Europe)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$300,000</td>
+                            </tr>
+                            <tr style="background-color: #f2f2f2;">
+                                <td rowspan="3" style="text-align: center; vertical-align: middle; padding: 10px; font-weight: bold; background-color: #e6f7ff;">Clinical Trials (2026-2028)</td>
+                                <td style="padding: 10px;">Phase I (safety/dose-finding)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$2,000,000</td>
+                            </tr>
+                            <tr style="background-color: #ffffff;">
+                                <td style="padding: 10px;">Phase II (efficacy verification)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$4,000,000</td>
+                            </tr>
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="padding: 10px;">Phase III (multi-center large-scale trials)</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold;">$8,000,000</td>
+                            </tr>
+                            <tr style="background-color: #f9f9f9;">
+                                <td colspan="2" style="text-align: right; padding: 10px; font-weight: bold;">Total</td>
+                                <td style="text-align: right; padding: 10px; font-weight: bold; background-color: #e6f7ff;">$16,800,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p><strong>Revene Model</strong></p>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="text-align: left; padding: 10px; font-weight: bold;">Year</th>
+                                <th style="text-align: left; padding: 10px; font-weight: bold;">Number of Users</th>
+                                <th style="text-align: right; padding: 10px; font-weight: bold;">Average Revenue per User ($)</th>
+                                <th style="text-align: right; padding: 10px; font-weight: bold;">Total Revenue ($10,000)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="padding: 10px;">2026</td>
+                                <td style="padding: 10px;">100,000</td>
+                                <td style="text-align: right; padding: 10px;">150</td>
+                                <td style="text-align: right; padding: 10px;">1,500</td>
+                            </tr>
+                            <tr style="background-color: #ffffff;">
+                                <td style="padding: 10px;">2027</td>
+                                <td style="padding: 10px;">300,000</td>
+                                <td style="text-align: right; padding: 10px;">145 (with discount promotion)</td>
+                                <td style="text-align: right; padding: 10px;">4,350</td>
+                            </tr>
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="padding: 10px;">2028</td>
+                                <td style="padding: 10px;">800,000</td>
+                                <td style="text-align: right; padding: 10px;">140</td>
+                                <td style="text-align: right; padding: 10px;">11,200</td>
+                            </tr>
+                            <tr style="background-color: #ffffff;">
+                                <td style="padding: 10px;">2029</td>
+                                <td style="padding: 10px;">1,200,000</td>
+                                <td style="text-align: right; padding: 10px;">135</td>
+                                <td style="text-align: right; padding: 10px;">16,200</td>
+                            </tr>
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="padding: 10px;">2030</td>
+                                <td style="padding: 10px;">1,500,000</td>
+                                <td style="text-align: right; padding: 10px;">130</td>
+                                <td style="text-align: right; padding: 10px;">19,500</td>
+                            </tr>
+                        </tbody>
+                    </table>                    
+            </section>
+
+            <section id="business-plan" class="content-section">
+                <h1>Business Plan (Abridged Version)</h1>
+                <embed src="../assets/Businessplan.pdf" width="100%" height="600px"/>
+            </section>
+        </div?>
+        </div>
+        
+        <!-- 背景图 -->
+        <div id="img-modal" class="medusa-container">
+            <img src="../assets/img/medusa_1.png" alt="medusa_1" class="medusa-img" id="medusa-img">
+            <!-- 箭头图片 -->
+            <img src="../assets/img/arrow.png" alt="arrow" id="arrow-img">
+            <!-- <img src="../assets/img/medusa_2.png" alt="medusa_2" class="medusa-img">
+            <img src="../assets/img/medusa_3.png" alt="medusa_3" class="medusa-img"> -->
+        </div>
+
+        </div>
     </main>
 
     <!-- 页脚 -->
     <footer>
-        <div class="container">
-            <p>© 2023 - iGEM ZJU-China</p>
+        <div class="foot-container">
+            <div class="foot-content">
+                <p>© 2025 - iGEM ZJU-China</p>
+            </div>
         </div>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            var nav = $('.content-nav');
+            var navTop = nav.offset().top;  // 获取目录原始位置
+            var headerHeight = 60;  // 导航栏高度
+
+            // 添加调试信息
+            console.log('Initial nav top position:', navTop);
+            console.log('Header height:', headerHeight);
+
+            // 页面加载时先检查一次位置
+            checkPosition();
+
+            // 滚动时检查位置
+            $(window).scroll(function() {
+                checkPosition();
+                checkActiveSection();
+            });
+
+            // 检查位置的函数
+            function checkPosition() {
+                var scrollTop = $(window).scrollTop();
+                console.log('Scroll position:', scrollTop); // 调试用
+                
+                if (scrollTop + headerHeight + 75 > navTop) {
+                    console.log('Adding fixed class'); // 调试用
+                    nav.addClass('fixed');
+                } else {
+                    console.log('Removing fixed class'); // 调试用
+                    nav.removeClass('fixed');
+                }
+            }
+
+            // 检查激活章节的函数
+            function checkActiveSection() {
+                let scrollPosition = $(window).scrollTop();
+                
+                // 检查主要章节位置
+                $('.content-section').each(function() {
+                    let sectionTop = $(this).offset().top - 100;
+                    let sectionBottom = sectionTop + $(this).outerHeight();
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                        let id = $(this).attr('id');
+                        // 移除所有激活状态
+                        $('.content-nav li').removeClass('active');
+                        $('.submenu li').removeClass('active');
+                        
+                        // 激活当前主菜单项
+                        let currentMainItem = $('.content-nav a[href="#' + id + '"]').parent();
+                        currentMainItem.addClass('active');
+                    }
+                });
+                
+                // 检查子章节位置
+                $('section[id] h2').each(function() {
+                    let subSectionTop = $(this).offset().top - 100;
+                    let subSectionBottom = subSectionTop + $(this).parent().outerHeight();
+                    
+                    if (scrollPosition >= subSectionTop && scrollPosition <= subSectionBottom) {
+                        let id = $(this).parent().attr('id');
+                        // 移除所有子菜单项的激活状态
+                        $('.submenu li').removeClass('active');
+                        // 激活当前子菜单项
+                        $('.submenu a[href="#' + id + '"]').parent().addClass('active');
+                        // 确保父菜单保持激活状态
+                        $('.submenu a[href="#' + id + '"]').parents('.has-submenu').addClass('active');
+                    }
+                });
+            }
+            
+            // 点击目录链接时平滑滚动
+            $('.content-nav a').click(function(e) {
+                e.preventDefault();
+                let target = $($(this).attr('href'));
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            });
+
+            // Toggle the collapse content when clicking on the title
+        $(".collapse-title").click(function() {
+            var content = $(this).next(".collapse-content");
+            // Slide toggle the content
+            content.slideToggle();
+            // Optionally, collapse other sections when one is opened (accordion behavior)
+            $(".collapse-content").not(content).slideUp();
+            });
+
+            const arrowImg = $("#arrow-img");
+
+            // 点击箭头图片返回顶部
+            arrowImg.click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+        });
+
+        // 定义图片路径数组
+    const images = [
+        "../assets/img/medusa_1.png", 
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_3.png",
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_1.png",
+    ];
+
+    // 初始化当前图片索引
+    let currentImageIndex = 0;
+
+    // 获取图片元素
+    const imgElement = document.getElementById('medusa-img');
+    
+    // 监听滚动事件
+    $(window).scroll(function() {
+        // 获取当前的滚动位置
+        var scrollTop = $(window).scrollTop();
+        console.log('Scroll position:', scrollTop); // 打印当前的滚动位置
+
+        // 每1000px滚动时切换一次图片
+        if (scrollTop >= 1000) {
+            // 计算应该切换的图片索引
+            currentImageIndex = Math.floor(scrollTop / 1000) % 5;
+
+            // 根据当前图片索引切换图片
+            imgElement.src = images[currentImageIndex];
+
+            // 可选：重置滚动位置，避免频繁触发
+            // $(window).scrollTop(0); // 可选：如果你希望在达到1000px时重置滚动位置，可以取消注释此行
+        }
+    });
+
+        
+        // 模拟加载延迟
+        window.onload = function() {
+                document.getElementById('mainContainer').style.display = 'none';
+                setTimeout(function() {
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                }, 2000); // 设置3秒钟后隐藏加载器
+            };
+
+        function changeIcon(element, newSrc) {
+        element.src = newSrc;
+        }
+
+        window.onscroll = function() {
+            // 获取文档的总高度和当前滚动的高度
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrollPosition = window.scrollY;
+
+            // 计算滚动进度百分比
+            var scrollPercentage = (scrollPosition / docHeight) * 100;
+
+            // 更新进度条的宽度
+            document.getElementById("progress-bar").style.width = scrollPercentage + "%";
+        }
+    </script>
 </body>
 </html>

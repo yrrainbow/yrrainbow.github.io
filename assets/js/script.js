@@ -1,5 +1,3 @@
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-
 
 // 平滑滚动
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -39,3 +37,4 @@ if (contactForm) {
 window.addEventListener('load', function() {
     document.body.classList.add('loaded');
 });
+

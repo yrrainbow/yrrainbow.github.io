@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Development Impact | iGEM 2025 Project</title>
+    <!-- 添加 Kirang Haerang 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
+    <!-- 添加 Ranga 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ranga:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 添加 Montserrat 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 添加 Do Hyeon 字体 -->
+    <link href="https://fonts.font.im/css?family=Do+Hyeon" rel="stylesheet">
+    <!-- 引入 Playfair Display 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!-- 添加 Shadows Into Light 字体 -->
+    <link href="https://fonts.font.im/css?family=Shadows+Into+Light" rel="stylesheet">
+    <!-- 确保 jQuery 在其他脚本之前加载 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- 添加新的样式 -->
+    <style>
+        /* page-name 容器样式 */
+        .page-name {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;  /* 为导航栏留出空间 */
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;  /* 防止气泡超出容器 */
+        }
+
+        .page-name h1 {
+            margin-top: 5%;
+            font-family: 'Ranga', cursive;
+            font-size: 5em;
+            font-weight: 700;
+            color: #333;
+            z-index: 2; /* 确保 h1 在图片上方 */
+            position: relative; /* 让 h1 作为相对定位，图片可以在其下方 */
+            -webkit-text-stroke: 2px #c0b4e2; /* 黑色的 1px 描边 */
+        }
+
+        .page-name h2 {
+            margin-top: 5px;
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            z-index: 99;
+            /* -webkit-text-stroke: 0.1px #ffd58d; */
+        }
+
+        .page-name img {
+            position: absolute;  /* 绝对定位 */
+            top: 30%;  /* 使图片位于 h1 的下方 */
+            left: 50%;  /* 居中图片 */
+            transform: translate(-50%, -30%);  /* 水平居中，同时微调上下位置 */
+            width: 39%;  /* 控制图片宽度 */
+            z-index: 100;  /* 确保图片在 h1 下面 */
+        }
+
+        /* 目录样式 */
+        .content-nav {
+            width: 200px;
+            position: absolute;  /* 初始状态为absolute */
+            left: 100px;
+            font-weight: bold;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            z-index: 100;  /* 保证目录始终在最上层 */
+        }
+        
+        /* 固定定位的样式 */
+        .content-nav.fixed {
+            position: fixed;
+            top: 125px;  /* 与导航栏高度相同 */
+            left: 100px;  /* 保持与初始位置相同的左偏移 */
+        }
+        
+        .content-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .content-nav li {
+            margin-bottom: 5px;
+        }
+        
+        /* 主菜单项样式 */
+        .has-submenu > a {
+            display: block;
+            padding: 5px 8px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* 主菜单项的悬浮和激活效果 */
+        .content-nav ul li.has-submenu > a:hover,
+        .content-nav ul li.has-submenu.active > a {
+            background: #9383e4;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        /* 子菜单默认隐藏 */
+        .submenu {
+            display: none;  /* 默认隐藏子菜单 */
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        /* 当父菜单激活或鼠标悬浮时显示子菜单 */
+        .has-submenu.active > .submenu,
+        .has-submenu:hover > .submenu {
+            display: block;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        /* 子菜单样式 */
+        .submenu {
+            display: none;  /* 默认隐藏 */
+            margin-left: 20px;  /* 缩进 */
+            padding-left: 10px;
+        }
+        
+        /* 子菜单项样式 */
+        .submenu a {
+            padding: 0px 0px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-size: 0.9rem;
+        }
+
+        /* 子菜单项的悬浮和激活效果 */
+        .submenu a:hover {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+        
+        .submenu li.active a {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+
+        /* 当父菜单激活时显示子菜单 */
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        /* 内容区样式 */
+        .content-area {
+            width: 60%;
+            margin-left: 350px;
+            margin-bottom: 5%;
+            padding: 20px;
+            background-color: #fbf2f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0px #ffd58d; 
+        }
+
+        .content-area h1 {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 3rem;
+            color: whitesmoke;
+            -webkit-text-stroke: 0.5px #9383e4;  /* 给文字添加边框 */
+            text-shadow: #9383e4 1px 2px 2px;
+        }
+        .content-area h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:#ff8b71;
+            margin-top: 10px;
+        }
+        .content-area h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .content-area h4 {
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area p {   
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .saying {
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 95%;
+            margin: 0 auto;
+            border-left: 5px solid #c9c1f9;  /* 添加左侧竖线 */
+        }
+
+        .saying:hover {
+            transform: scale(1.01);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        .saying p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .content-section {
+            min-height: 50px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .img-container {
+            text-align: center;
+        }
+        
+
+        .content-section img {
+        display: inline-block;  /* 将图片设置为块级元素 */
+        margin: 20px auto;  /* 上下间距20px，左右自动居中 */
+        max-width: 80%;  /* 确保图片不会超出容器宽度 */
+        height: auto;  /* 保持图片比例 */
+        vertical-align: middle; /* 保持垂直对齐 */
+        margin-right: 10px; /* 设置两张图片之间的间距 */
+        border-radius: 20px;
+        }
+
+        .collapse-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .collapse-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .collapse-title {
+            padding: 10px;
+            background-color: #f8e7c8;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: semi-bold;
+            cursor: pointer;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            }
+            
+        .collapse-title:hover {
+            background-color: #f5d1a6;
+        }
+        .collapse-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            }
+        
+            /* 调整 SVG 图片样式 */
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 0px;
+            color: #000;
+            transition: all 0.3s ease; /* 加��过渡效果 */
+            margin-right: 10px; /* 添加右间距，使文本与图标之间有空隙 */
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            background-color: rgb(247, 241, 229);
+            border: 2px solid #ddd;
+            padding: 20px;
+            width: 45%;
+            height: 310px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .box:hover {
+            background-color: rgb(250, 235, 205);
+            width: 47%;
+            height: 320px;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .medusa-container {
+            position: fixed;
+            width: 200px;
+            height: auto;
+            left: 95%;           /* 调整位置，放到视口中央 */
+            top: 85%;            /* 调整位置 */
+            transform: translate(-50%, -50%);  /* 使容器在位置上完全居中 */
+            
+            z-index: 999;
+        }
+
+        .medusa-container img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+            transition: all 1s ease;  /* 添加过渡效果 */
+            opacity: 0.9;
+        }
+
+        /* 箭头图片样式（默认隐藏） */
+        #arrow-img {
+            position: absolute;
+            top: 66%;  /* 设置箭头位置 */
+            left: 35%;
+            transform: translate(-50%, -50%);
+            width: 25px; /* 设定箭头图片大小 */
+            height: auto;
+            opacity: 0; /* 默认隐藏 */
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        /* 当鼠标悬浮在图片上时显示箭头 */
+        .medusa-container:hover #arrow-img {
+            opacity: 0.8;
+        }
+
+        .circle-container {
+            display: flex;
+            gap: 20px;
+        }
+        .circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: #f3bc0d; /* 初始背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000; /* 初始标题颜色为黑色 */
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 初始阴影效果 */
+        }
+        .circle .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            font-weight: normal;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .circle:hover .content {
+            opacity: 1;
+        }
+        .circle:hover {
+            background-color: #fbf2f1; /* 鼠标悬浮时的背景色 */
+            border: 2px solid #fbf2f1; /* 鼠标悬浮时的边缘颜色 */
+            box-shadow: 0 0 20px 5px #f3bc0d; /* 发光效果 */
+        }
+        .circle:hover {
+            color: transparent; /* 鼠标悬浮时标题不可见 */
+        }
+        .image-text-container {
+            display: flex;
+            align-items: center; /* Vertically aligns the text with the image */
+            gap: 15px; /* Adds space between the image and the text */
+        }
+
+        .image {
+            width: 28%;
+            height: auto; /* Keeps the aspect ratio intact */
+        }
+
+        .text {
+            flex: 1; /* Allows the text to take up the remaining space */
+        }
+</style>
+</head>
+<body>
+    <!-- 进度条容器 -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
+                    M-E-D-U-S-A
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#">TEAM</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../Team Page/member.html">Members</a></li>
+                        <li><a href="../Team Page/attributions.html">Attributions</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">PROJECT</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../Project Page/description.html">Description</a></li>
+                        <li><a href="../Project Page/design.html">Design</a></li>
+                        <li><a href="../Project Page/safety.html">Biosafety</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">WET LAB</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../Wetlab Page/proof.html">Proof of Concept</a></li>
+                        <li><a href="../Wetlab Page/part.html">Parts</a></li>
+                        <li><a href="../Wetlab Page/protocol.html">Protocol</a></li>
+                        <li><a href="../Wetlab Page/engineering.html">Engineering</a></li>
+                        <li><a href="../Wetlab Page/measurement.html">Measurement</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">DRY LAB</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../Drylab Page/model.html">Model & Software</a></li>
+                        <li><a href="../Drylab Page/hardware.html">Hardware</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">HUMAN PRACTICE</a>
+                    <ul class="dropdown-content">
+                        <li><a href="overview.html"> Overview</a></li>
+                        <li><a href="ihp.html">Intergrated Human Practices</a></li>
+                        <li><a href="entrepreneurship.html">Entrepreneurship</a></li>
+                        <li><a href="education.html">Education & Communication</a></li>
+                        <li><a href="inclusivity.html">Inclusivity</a></li>
+                        <li><a href="elc.html">Ethnic & Lega Considerations</a></li>
+                        <li><a href="SDG.html">SDG</a></li>
+                        <li><a href="bp.html">Bigger Picture</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main>
+        <!-- 加载动画 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-content">
+                <img src="../assets/img/spinner.png" class="loading-spinner" alt="Loading" style="width: 30%; height: auto;">
+                <p style="font-family: 'Kirang Haerang', cursive; font-size: 3rem; color: #333;">Loading...</p>
+            </div>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="main-container" id="mainContainer">
+        <div class="page-name">
+            <!-- 左侧的气泡 -->
+            <div class="bubble bubble-left-1"></div>
+            <div class="bubble bubble-left-2"></div>
+
+            <img src="../assets/img/snake.png" alt="snake">
+            <!-- <img src="../assets/img/dp_0_0.png" alt="example picture" style="width: 650px; height: auto; margin-top: 10px; margin-bottom: 0px;"> -->
+            <h1>Nurturing Hair and Planet Alike</h1>
+            <h2>To be or not to be; that is a question.</h2>
+
+            <!-- 右侧的气泡 -->
+            <div class="bubble bubble-right-1"></div>
+            <div class="bubble bubble-right-2"></div>
+        </div>
+
+        <div class="content-nav">
+            <ul>
+                <li class="has-submenu">
+                    <a href="#overview">Overview</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#main-goals">Main Goals</a>
+                    <ul class="submenu">
+                        <li><a href="#SDG3">SDG3: Good Health and Well-being</a></li>
+                        <li><a href="#SDG9">SDG9: Industry, Innovation and Infrastructure</a></li>
+                        <li><a href="#SDG12">SDG12: Responsible Consumption and Production</a></li>
+                        <li><a href="#list">Stakeholders’s List（Draft）</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#relevant-goals">Relevant Goals</a>
+                    <ul class="submenu">
+                        <li><a href="#SDG4">SDG4: Quality Education</a></li>
+                        <li><a href="#SDG17">SDG17:Partnerships for the Goals</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#long">Long Term Impact</a>
+                    <ul class="submenu">
+                        <li><a href="#collaboration">Collaboration</a></li>
+                        <li><a href="#SDGs">SDGs</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="content-area" style="margin-top: 50px; margin-bottom: 0px;">
+            <section class="content-section" style="background-image: url('../assets/img/talk_1.png'); background-size: cover; background-position: center;">
+                <p style="font-family: Shadows Into Light; font-size: x-large;">In this pursuit of luscious locks, we must not forget the world that cradles us. Our battle against hair loss should not be waged at the cost of our precious Earth. Just as my serpents are a part of me, so too is our planet an integral part of our quest. We shall forge a path of sustainable development, where every step taken to restore hair health also nurtures the environment. Let us embrace this harmonious journey, for the well - being of our tresses and the world around us.</p>
+            </section>
+            <img src="../assets/img/home_0.png" alt="example picture" style="margin-left: 62%; height: auto; width: 100px;">
+
+            <section id="overview" class="content-section">
+                <h1>Overview</h1>
+                <section id="saying" class="saying">
+                    <p>"The SDGs are a to-do list for people and the planet, and a blueprint for success."</p>
+                    <p style="margin-left: 60%;">-- The United Nations</p>
+                </section>
+
+                <div class="img-container">
+                    <img src="../assets/img/SDG_1.png" alt="example picture">
+                </div>
+                <p>The <strong>UN's 17 Sustainable Development Goals (SDGs)</strong> call for global action to <strong>eliminate poverty</strong>, <strong>protect the planet</strong>, and <strong>improve the lives</strong> and futures of all people. At present, progress is being made in many places, but overall, the <strong>pace</strong> and <strong>scale of progress</strong> have not yet reached the level needed to achieve the <strong>Sustainable Development Goals</strong>. Within the decade starting from <strong>2020</strong>, we must take <strong>strong actions</strong> to achieve the <strong>SDGs</strong> by <strong>2030</strong>.</p>
+            </section>
+
+            <section id="main-goals" class="content-section">
+                <h1>Main Goals</h1>
+                <section id="SDG3">
+                    <h2>SDG 3: Good Health and Well-being</h2>
+                        <div class="img-container">
+                            <img src="../assets/img/SDG_2.png" alt="example picture">
+                        </div>
+
+                        <h3>Relation</h3>
+                        <p><strong>Good health</strong> and <strong>well-being</strong> will remain one of the crucial goals of <strong>sustainable development</strong>, and our <strong>anti-hair loss project</strong> is poised to make a substantial positive contribution in this domain. In the future, <strong>hair loss problems</strong>, especially <strong>seborrheic alopecia</strong>, are likely to continue affecting not only an individual's <strong>appearance</strong> but also having a significant negative impact on the <strong>mental health</strong> of patients, potentially leading to more prevalent emotional issues such as <strong>anxiety</strong> and <strong>low self-esteem</strong>.</p>
+
+                        <div class="img-container">
+                            <img src="../assets/img/SDG_3.png" alt="example picture">
+                        </div>
+
+                        <h3>Plan</h3>
+                        <p>Our project will adopt the innovative technology of using <strong>soluble microneedles</strong> to deliver <strong>drugs</strong>, and we will be wholeheartedly committed to providing highly effective <strong>treatment solutions</strong> for patients. In the upcoming <strong>research and development</strong> phases, through meticulously designing even more advanced <strong>microneedles</strong> and optimizing the precise <strong>drug delivery system</strong>, we will ensure that the therapeutic <strong>drugs</strong> can be delivered even more directly and efficiently to the <strong>hair loss area</strong>, thereby greatly enhancing the <strong>efficacy</strong> of the drugs. For instance, we will conduct further in-depth studies on drug components like <strong>AbTAC</strong> and <strong>KGF</strong>. After undergoing even more rigorous <strong>safety</strong> and <strong>efficacy tests</strong> in the future, these components are expected to play an even more prominent positive role in promoting <strong>hair growth</strong> and regulating <strong>scalp oil secretion</strong>, thus remarkably improving the patient's <strong>hair loss condition</strong>. This will not only significantly enhance the patient's <strong>physical health</strong> but also, to a much greater extent, relieve the <strong>psychological pressure</strong> caused by <strong>hair loss</strong>, boost <strong>self-confidence</strong>, and effectively promote <strong>mental health</strong>, truly offering robust support for the patient's <strong>good health</strong> and <strong>well-being</strong>.</p>
+
+                        <h3>Potential Stakeholders</h3>
+                        <table border="1" style="margin-top: 30px; background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                                <tr>
+                                    <th><strong>Potential Stakeholders</strong></th>
+                                    <th><strong>Related Field</strong></th>
+                                    <th><strong>Role and Relevance</strong></th>
+                                </tr>
+                                <tr>
+                                    <td><strong>People with Hair Loss</strong></td>
+                                    <td><strong>Healthcare and Personal Well-being</strong></td>
+                                    <td>Direct beneficiaries of the anti-hair loss project. Their experiences, needs, and feedback on existing treatments will be crucial for the development and improvement of our project.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dermatologists and Trichologists</strong></td>
+                                    <td><strong>Medical and Healthcare Professionals</strong></td>
+                                    <td>Specialists in skin and hair health, they have in-depth knowledge of hair loss causes and treatments.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pharmaceutical Companies</strong></td>
+                                    <td><strong>Pharmaceutical Industry</strong></td>
+                                    <td>They may be involved in the development, production, and supply of the drugs used in the soluble microneedle delivery system.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Medical Device Manufacturers</strong></td>
+                                    <td><strong>Medical Device Industry</strong></td>
+                                    <td>Responsible for manufacturing the soluble microneedles and related equipment.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Research Institutions and Universities</strong></td>
+                                    <td><strong>Academic and Research Sector</strong></td>
+                                    <td>Provide scientific research support, including fundamental research on hair loss mechanisms, development of new technologies, and clinical trials.</td>
+                                </tr>
+                            </table>
+                </section>
+
+                <section id="SDG9">
+                    <h2>SDG9: Industry, Innovation and Infrastructure</h2>
+                    <div class="img-container">
+                        <img src="../assets/img/SDG_4.png" alt="example picture">
+                    </div>
+
+                    <h3>Relation</h3>
+                    <p>Industry, innovation, and infrastructure will continue to be of utmost importance for promoting the sustainable development of society, and our anti-hair loss project is set to play an even more significant role in these aspects in the future.</p>
+                    
+                    <h3>Plan</h3>
+                    <div class="img-container">
+                        <img src="../assets/img/SDG_5.png" alt="example picture">
+                    </div>
+                    <p>In terms of <strong>innovation</strong>, we will further apply and advance cutting-edge <strong>synthetic biology</strong> and <strong>biomedical engineering technologies</strong>. We will develop even more sophisticated versions of the innovative treatment method using <strong>soluble microneedles</strong> to deliver <strong>drugs</strong>. This future technology will not only break through the existing limitations but also precisely target the <strong>hair loss areas</strong> with enhanced accuracy, greatly improving the treatment effect. We will continuously explore and optimize new <strong>microneedle materials</strong> and refine the <strong>drug formulation</strong>, aiming to achieve even more groundbreaking technological innovations in the <strong>hair loss treatment</strong> field.</p>
+
+                    <p>Regarding <strong>industrial development</strong>, our project will drive the coordinated development of related industries more vigorously. In the future, from the <strong>research and development</strong> to the large-scale production of <strong>microneedles</strong> and <strong>drugs</strong>, and then to broader clinical applications and extensive market promotion, we will cover multiple links and expand into more fields. This will strongly promote the deeper integration and development of industries like <strong>biotechnology</strong>, <strong>medical devices</strong>, and <strong>pharmaceuticals</strong>, creating a large number of new high-quality job opportunities and significant economic growth points. We will also strengthen our cooperation with upstream and downstream enterprises, integrating <strong>industrial chain</strong> resources more effectively to accelerate the upgrading and optimization of the entire industry.</p>
+                    
+                    <p>In terms of <strong>infrastructure construction</strong>, we will upgrade and expand our existing advanced laboratories and <strong>research and development platforms</strong>. We will equip them with more state-of-the-art professional equipment and recruit more outstanding technical personnel. These enhanced infrastructures will provide even stronger support for the project's <strong>research</strong> and <strong>innovation</strong> and create an even better environment for cultivating top-notch professional talents in related fields. Additionally, we will take a more active part in formulating and perfecting <strong>industry standards</strong>, promoting the standardization and regularization of the <strong>hair loss treatment</strong> field to a higher level, and further strengthening and improving the industrial infrastructure.</p>
+                    
+
+                    <h3>Potential Stakeholders</h3>
+                    <table border="1" style="margin-top: 30px; background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                        <tr>
+                            <th><strong>Potential Stakeholders</strong></th>
+                            <th><strong>Related Field</strong></th>
+                            <th><strong>Role and Relevance to SDG 9 (Industry, Innovation and Infrastructure) for the Anti-Hair Loss Project</strong></th>
+                        </tr>
+                        <tr>
+                            <td><strong>Material Suppliers for Microneedles</strong></td>
+                            <td><strong>Chemical and Material Science Industry</strong></td>
+                            <td>Supply specialized materials for the production of soluble microneedles, such as <strong>biocompatible polymers</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Equipment Manufacturers for Microneedle Production</strong></td>
+                            <td><strong>Manufacturing Industry</strong></td>
+                            <td>Design and produce machinery and equipment required for the precise manufacturing of soluble microneedles.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Software Development Firms for Production Management</strong></td>
+                            <td><strong>Information Technology Industry</strong></td>
+                            <td>Develop <strong>software solutions</strong> for production management, such as inventory control systems, quality management software, and process automation software.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Logistics and Supply Chain Companies</strong></td>
+                            <td><strong>Logistics and Supply Chain Management</strong></td>
+                            <td>Manage the transportation, storage, and distribution of raw materials, finished products (microneedles and drugs), and related supplies. They ensure the timely and efficient movement of goods throughout the supply chain, which is crucial for the smooth operation of the industry.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Standards and Certification Bodies</strong></td>
+                            <td><strong>Quality Assurance and Regulatory Support</strong></td>
+                            <td>Develop and enforce industry standards for the production and performance of soluble microneedles and related products.</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section id="SDG12">
+                    <h2>SDG12: Responsible Consumption and Production</h2>
+                    <div class="img-container">
+                        <img src="../assets/img/SDG_6.png" alt="example picture">
+                    </div>
+                    <h3>Relation</h3>
+                    <p>Responsible consumption and production are key links in achieving sustainable development. Our anti-hair loss project has also taken a series of positive measures in this regard. In the production process, we attach great importance to the safety and <strong>sustainability</strong> of the products. For the materials of soluble microneedles, we select materials with good <strong>biocompatibility</strong> and degradability to avoid environmental pollution. In the process of drug research and development, we try to reduce the use of rare resources and harmful chemicals, adopt <strong>green synthesis methods</strong> and sustainable production processes, and reduce energy consumption and environmental pollution during production.</p>
+
+                    <h3>Plan</h3>
+                    <p>In terms of <strong>consumption</strong>, we are committed to providing consumers with high-quality, safe, and reliable hair loss treatment products. Through scientific publicity and education, we guide consumers to establish correct consumption concepts, rationally deal with hair loss problems, and avoid blindly following the trend to buy ineffective or unsafe products. At the same time, we pay attention to the <strong>recyclability</strong> and reusability of products to reduce the impact of product waste on the environment.</p>
+                    <p>In addition, we will actively cooperate with suppliers and partners to promote the <strong>sustainable development</strong> of the entire supply chain. We will require suppliers to provide raw materials and components that meet environmental protection standards and work together to achieve the <strong>greening</strong> and sustainability of the supply chain. Through these measures, we have earnestly practiced the concept of responsible consumption and production in our anti-hair loss project and made contributions to achieving the sustainable development goals. We will also conduct comprehensive <strong>LCA analysis</strong> and NGO assessment afterwards, which are closely connected with entrepreneurship.</p>
+                    <p>For more information about LCA & NGO, click <a href="entrepreneurship.html">here</a> to find out our Business Plan.</p>
+
+
+                    <h3>Potential Stakeholders</h3>
+                    <table border="1" style="margin-top: 30px; background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                        <tr>
+                            <th><strong>Potential Stakeholders</strong></th>
+                            <th><strong>Related Field</strong></th>
+                            <th><strong>Role and Relevance to SDG 12 (Responsible Consumption and Production) for the Anti-Hair Loss Project</strong></th>
+                        </tr>
+                        <tr>
+                            <td><strong>Sustainable Raw Material Sourcing Companies</strong></td>
+                            <td><strong>Supply Chain and Resource Management</strong></td>
+                            <td>Source and provide sustainable raw materials for the production of soluble microneedles and the drugs used in the anti-hair loss treatment.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Life Cycle Assessment (LCA) Consultants</strong></td>
+                            <td><strong>Environmental Consulting</strong></td>
+                            <td>Conduct life cycle assessments of the anti-hair loss products, from raw material extraction to product disposal.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ethical Certification Organizations</strong></td>
+                            <td><strong>Ethical and Sustainable Certification</strong></td>
+                            <td>Develop and administer ethical and sustainable certification programs for the anti-hair loss industry. These certifications can cover aspects such as environmental sustainability, social responsibility, and product safety.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Recycling Facilities</strong></td>
+                            <td><strong>Recycling Industry</strong></td>
+                            <td>Process and recycle the materials used in the anti-hair loss products, such as the packaging materials and potentially some components of the microneedles or drug delivery systems.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NGOs Promoting Circular Economy</strong></td>
+                            <td><strong>Non-Governmental Organizations</strong></td>
+                            <td>Advocate for the adoption of circular economy principles in the anti-hair loss industry.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sustainable Energy Providers</strong></td>
+                            <td><strong>Energy Sector</strong></td>
+                            <td>Supply renewable energy sources, such as solar, wind, or hydro power, to the production facilities involved in the anti-hair loss project.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Industry Alliances for Sustainable Development</strong></td>
+                            <td><strong>Industry Collaboration and Advocacy</strong></td>
+                            <td>Facilitate collaboration among companies in the anti-hair loss industry to develop and implement sustainable development initiatives.</td>
+                        </tr>
+                      </table>
+                </section>
+
+                <section id="list">
+                    <h2>Stakeholders’s List（Draft）</h2>
+                    <embed src="../assets/Potential Stakeholders.pdf" width="100%" height="600px"/>
+                </section>
+            </section>
+            
+            <section id="relevant-goals" class="content-section">
+                <h1>Relevant Goals</h1>
+
+                <section id="SDG4">
+                    <h2>SDG4: Quality Education</h2>
+                    <div class="image-text-container">
+                        <img src="../assets/img/SDG_7.png" alt="example picture" class="image" >
+                        <p class="text">We recognize that <strong>synthetic biology</strong> plays a pivotal role in developing our innovative treatment method. To enhance public understanding of this field, we have initiated <strong>educational programs</strong> tailored to different populations and age groups. For students at the primary and secondary school levels, we have designed engaging science outreach activities, such as <strong>interactive workshops</strong> and science fairs. These activities aim to introduce the basic concepts of synthetic biology in an accessible and interesting way, sparking their curiosity about scientific research and potentially inspiring future scientists.</p>
+                        <p class="text">For university students and young researchers, we offer more in-depth training sessions and seminars. These events cover the latest advancements in <strong>synthetic biology</strong> relevant to our anti-hair loss treatment, including the design and optimization of the <strong>soluble microneedle drug delivery system</strong>. By providing such educational opportunities, we not only help them acquire valuable knowledge and skills but also contribute to building a pipeline of talent for the field.</p>
+                    </div>
+                </section>
+
+                <section id="SDG17">
+                    <h2>SDG17: Partnerships for the Goals</h2>
+                    <div class="image-text-container">
+                        <img src="../assets/img/SDG_8.png" alt="example picture" class="image" >
+                        <p class="text">We understand that <strong>collaboration</strong> is essential for driving innovation and achieving sustainable development in the field of <strong>synthetic biology</strong> and medical treatments. By working closely with other <strong>iGEM teams</strong>, we can pool our resources, expertise, and ideas. For instance, we have engaged in joint research projects where we share our findings on the use of <strong>soluble microneedles</strong> for drug delivery and learn from their experiences in related areas such as <strong>genetic engineering</strong> and <strong>bioprocessing</strong>.</p>
+                        <p class="text">These partnerships also extend to the development of experimental protocols and the sharing of laboratory techniques. We collaborate on optimizing the production process of soluble microneedles, exchanging insights on <strong>material selection</strong>, <strong>manufacturing methods</strong>, and <strong>quality control</strong>. This collaborative approach not only accelerates the progress of our project but also contributes to the overall advancement of the <strong>iGEM community</strong>.</p>
+                    </div>
+                </section>
+            </section>
+
+            <section id="long" class="content-section">
+                <h1>Long Term Impact</h1>
+                <section id="collaboration">
+                    <h2>Collaboration</h2>
+                    <div class="img-container">
+                    <img src="../assets/img/SDG_9.png" alt="example picture" style="width: 30%;">
+                    <img src="../assets/img/SDG_10.png" alt="example picture" style="width: 30%;">
+                    <img src="../assets/img/SDG_11.png" alt="example picture" style="width: 30%;">
+                    </div>
+                    <p>We have the potential to establish close <strong>collaborations</strong> with various entities in the <strong>Hangzhou</strong> and <strong>Shanghai</strong> regions. These collaborations will play a crucial role in driving the project's long-term success and broader impact.</p>
+
+                    <p>In the <strong>medical industry</strong>, partnerships with leading hospitals like the <strong>Second Affiliated Hospital of Zhejiang University School of Medicine</strong> in <strong>Hangzhou</strong> and <strong>Zhongshan Hospital</strong> affiliated to <strong>Fudan University</strong> in <strong>Shanghai</strong> will be invaluable. These hospitals can provide <strong>clinical resources</strong> for our research, including <strong>patient recruitment</strong> for clinical trials, access to <strong>medical data</strong>, and feedback from <strong>medical professionals</strong>.</p>
+
+                    <p>Moreover, we aim to collaborate with <strong>research institutions</strong> such as the <strong>Shanghai Institute of Materia Medica</strong> and the <strong>Zhejiang Academy of Medical Sciences</strong>. These institutions have rich experience in <strong>drug research and development</strong>, and their participation can accelerate the process of turning our research findings into practical products.</p>                </section>
+
+                <section id="SDGs">
+                    <h2>SDGs</h2>
+                        <h3><strong>Economic Perspective</strong></h3>
+                        <p>In the long run, our anti-hair loss project will have a positive economic impact. The development and commercialization of our innovative treatment method using <strong>soluble microneedles</strong> will drive the growth of related industries such as <strong>biotechnology</strong>, <strong>medical devices</strong>, and <strong>pharmaceuticals</strong>. This will create new <strong>job opportunities</strong>, ranging from <strong>research and development</strong> positions to <strong>manufacturing</strong> and <strong>marketing</strong> roles.</p>
+                        
+                        <h3><strong>Environmental Perspective</strong></h3>
+                        <p>Our project is committed to sustainable development in terms of the <strong>environment</strong>. By using <strong>biocompatible</strong> and <strong>biodegradable materials</strong> for the soluble microneedles and adopting <strong>green synthesis methods</strong> for drug development, we minimize the environmental impact of our production processes. In the long term, this approach will help conserve <strong>natural resources</strong> and reduce pollution associated with traditional hair loss treatment methods.</p>
+                        
+                        <h3><strong>Social Perspective</strong></h3>
+                        <p>Socially, our anti-hair loss project will bring about significant benefits. For patients suffering from <strong>seborrheic alopecia</strong>, our effective treatment will improve their <strong>physical health</strong> and <strong>mental well-being</strong>, enhancing their quality of life and self-esteem. This will have a positive impact on their <strong>social interactions</strong> and overall happiness. Moreover, through <strong>educational initiatives</strong> and <strong>public awareness campaigns</strong>, we will increase the public's understanding of hair loss and its treatment options, promoting better <strong>health management</strong> and prevention.</p>
+                        
+                </section>
+            </section>
+        </div?>
+        </div>
+        
+        <!-- 背景图 -->
+        <div id="img-modal" class="medusa-container">
+            <img src="../assets/img/medusa_1.png" alt="medusa_1" class="medusa-img" id="medusa-img">
+            <!-- 箭头图片 -->
+            <img src="../assets/img/arrow.png" alt="arrow" id="arrow-img">
+            <!-- <img src="../assets/img/medusa_2.png" alt="medusa_2" class="medusa-img">
+            <img src="../assets/img/medusa_3.png" alt="medusa_3" class="medusa-img"> -->
+        </div>
+
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="foot-container">
+            <div class="foot-content">
+                <p>© 2025 - iGEM ZJU-China</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            var nav = $('.content-nav');
+            var navTop = nav.offset().top;  // 获取目录原始位置
+            var headerHeight = 60;  // 导航栏高度
+
+            // 添加调试信息
+            console.log('Initial nav top position:', navTop);
+            console.log('Header height:', headerHeight);
+
+            // 页面加载时先检查一次位置
+            checkPosition();
+
+            // 滚动时检查位置
+            $(window).scroll(function() {
+                checkPosition();
+                checkActiveSection();
+            });
+
+            // 检查位置的函数
+            function checkPosition() {
+                var scrollTop = $(window).scrollTop();
+                console.log('Scroll position:', scrollTop); // 调试用
+                
+                if (scrollTop + headerHeight + 75 > navTop) {
+                    console.log('Adding fixed class'); // 调试用
+                    nav.addClass('fixed');
+                } else {
+                    console.log('Removing fixed class'); // 调试用
+                    nav.removeClass('fixed');
+                }
+            }
+
+            // 检查激活章节的函数
+            function checkActiveSection() {
+                let scrollPosition = $(window).scrollTop();
+                
+                // 检查主要章节位置
+                $('.content-section').each(function() {
+                    let sectionTop = $(this).offset().top - 100;
+                    let sectionBottom = sectionTop + $(this).outerHeight();
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                        let id = $(this).attr('id');
+                        // 移除所有激活状态
+                        $('.content-nav li').removeClass('active');
+                        $('.submenu li').removeClass('active');
+                        
+                        // 激活当前主菜单项
+                        let currentMainItem = $('.content-nav a[href="#' + id + '"]').parent();
+                        currentMainItem.addClass('active');
+                    }
+                });
+                
+                // 检查子章节位置
+                $('section[id] h2').each(function() {
+                    let subSectionTop = $(this).offset().top - 100;
+                    let subSectionBottom = subSectionTop + $(this).parent().outerHeight();
+                    
+                    if (scrollPosition >= subSectionTop && scrollPosition <= subSectionBottom) {
+                        let id = $(this).parent().attr('id');
+                        // 移除所有子菜单项的激活状态
+                        $('.submenu li').removeClass('active');
+                        // 激活当前子菜单项
+                        $('.submenu a[href="#' + id + '"]').parent().addClass('active');
+                        // 确保父菜单保持激活状态
+                        $('.submenu a[href="#' + id + '"]').parents('.has-submenu').addClass('active');
+                    }
+                });
+            }
+            
+            // 点击目录链接时平滑滚动
+            $('.content-nav a').click(function(e) {
+                e.preventDefault();
+                let target = $($(this).attr('href'));
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            });
+
+            // Toggle the collapse content when clicking on the title
+        $(".collapse-title").click(function() {
+            var content = $(this).next(".collapse-content");
+            // Slide toggle the content
+            content.slideToggle();
+            // Optionally, collapse other sections when one is opened (accordion behavior)
+            $(".collapse-content").not(content).slideUp();
+            });
+
+            const arrowImg = $("#arrow-img");
+
+            // 点击箭头图片返回顶部
+            arrowImg.click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+        });
+
+        // 定义图片路径数组
+    const images = [
+        "../assets/img/medusa_1.png", 
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_3.png",
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_1.png",
+    ];
+
+    // 初始化当前图片索引
+    let currentImageIndex = 0;
+
+    // 获取图片元素
+    const imgElement = document.getElementById('medusa-img');
+    
+    // 监听滚动事件
+    $(window).scroll(function() {
+        // 获取当前的滚动位置
+        var scrollTop = $(window).scrollTop();
+        console.log('Scroll position:', scrollTop); // 打印当前的滚动位置
+
+        // 每1000px滚动时切换一次图片
+        if (scrollTop >= 1000) {
+            // 计算应该切换的图片索引
+            currentImageIndex = Math.floor(scrollTop / 1000) % 5;
+
+            // 根据当前图片索引切换图片
+            imgElement.src = images[currentImageIndex];
+
+            // 可选：重置滚动位置，避免频繁触发
+            // $(window).scrollTop(0); // 可选：如果你希望在达到1000px时重置滚动位置，可以取消注释此行
+        }
+    });
+
+        
+        // 模拟加载延迟
+        window.onload = function() {
+                document.getElementById('mainContainer').style.display = 'none';
+                setTimeout(function() {
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                }, 2000); // 设置3秒钟后隐藏加载器
+            };
+
+        function changeIcon(element, newSrc) {
+        element.src = newSrc;
+        }
+
+        window.onscroll = function() {
+            // 获取文档的总高度和当前滚动的高度
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrollPosition = window.scrollY;
+
+            // 计算滚动进度百分比
+            var scrollPercentage = (scrollPosition / docHeight) * 100;
+
+            // 更新进度条的宽度
+            document.getElementById("progress-bar").style.width = scrollPercentage + "%";
+        }
+    </script>
+</body>
+</html>

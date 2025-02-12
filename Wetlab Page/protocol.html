@@ -3,23 +3,452 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的网站</title>
+    <title>Protocal | iGEM 2025 Project</title>
     <!-- 添加 Kirang Haerang 字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
+    <!-- 添加 Ranga 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ranga:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 添加 Montserrat 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 添加 Do Hyeon 字体 -->
+    <link href="https://fonts.font.im/css?family=Do+Hyeon" rel="stylesheet">
+    <!-- 引入 Playfair Display 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!-- 添加 Shadows Into Light 字体 -->
+    <link href="https://fonts.font.im/css?family=Shadows+Into+Light" rel="stylesheet">
+    <!-- 确保 jQuery 在其他脚本之前加载 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- 添加新的样式 -->
+    <style>
+        /* page-name 容器样式 */
+        .page-name {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;  /* 为导航栏留出空间 */
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;  /* 防止气泡超出容器 */
+        }
+
+        .page-name h1 {
+            margin-top: 5%;
+            font-family: 'Ranga', cursive;
+            font-size: 5em;
+            font-weight: 700;
+            color: #333;
+            z-index: 2; /* 确保 h1 在图片上方 */
+            position: relative; /* 让 h1 作为相对定位，图片可以在其下方 */
+            -webkit-text-stroke: 2px #c0b4e2; /* 黑色的 1px 描边 */
+        }
+
+        .page-name h2 {
+            margin-top: 5px;
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            z-index: 99;
+            /* -webkit-text-stroke: 0.1px #ffd58d; */
+        }
+
+        .page-name img {
+            position: absolute;  /* 绝对定位 */
+            top: 30%;  /* 使图片位于 h1 的下方 */
+            left: 50%;  /* 居中图片 */
+            transform: translate(-50%, -30%);  /* 水平居中，同时微调上下位置 */
+            width: 39%;  /* 控制图片宽度 */
+            z-index: 100;  /* 确保图片在 h1 下面 */
+        }
+
+        /* 目录样式 */
+        .content-nav {
+            width: 200px;
+            position: absolute;  /* 初始状态为absolute */
+            left: 100px;
+            font-weight: bold;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            z-index: 100;  /* 保证目录始终在最上层 */
+        }
+        
+        /* 固定定位的样式 */
+        .content-nav.fixed {
+            position: fixed;
+            top: 125px;  /* 与导航栏高度相同 */
+            left: 100px;  /* 保持与初始位置相同的左偏移 */
+        }
+        
+        .content-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .content-nav li {
+            margin-bottom: 5px;
+        }
+        
+        /* 主菜单项样式 */
+        .has-submenu > a {
+            display: block;
+            padding: 5px 8px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* 主菜单项的悬浮和激活效果 */
+        .content-nav ul li.has-submenu > a:hover,
+        .content-nav ul li.has-submenu.active > a {
+            background: #9383e4;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        /* 子菜单默认隐藏 */
+        .submenu {
+            display: none;  /* 默认隐藏子菜单 */
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        /* 当父菜单激活或鼠标悬浮时显示子菜单 */
+        .has-submenu.active > .submenu,
+        .has-submenu:hover > .submenu {
+            display: block;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        /* 子菜单样式 */
+        .submenu {
+            display: none;  /* 默认隐藏 */
+            margin-left: 20px;  /* 缩进 */
+            padding-left: 10px;
+        }
+        
+        /* 子菜单项样式 */
+        .submenu a {
+            padding: 0px 0px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-size: 0.9rem;
+        }
+
+        /* 子菜单项的悬浮和激活效果 */
+        .submenu a:hover {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+        
+        .submenu li.active a {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+
+        /* 当父菜单激活时显示子菜单 */
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        /* 内容区样式 */
+        .content-area {
+            width: 60%;
+            margin-left: 350px;
+            margin-bottom: 5%;
+            padding: 20px;
+            background-color: #fbf2f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0px #ffd58d; 
+        }
+
+        .content-area h1 {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 3rem;
+            color: whitesmoke;
+            -webkit-text-stroke: 0.5px #9383e4;  /* 给文字添加边框 */
+            text-shadow: #9383e4 1px 2px 2px;
+        }
+        .content-area h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:#ff8b71;
+            margin-top: 10px;
+        }
+        .content-area h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .content-area h4 {
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area p,li {   
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .saying {
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 95%;
+            margin: 0 auto;
+            border-left: 5px solid #c9c1f9;  /* 添加左侧竖线 */
+        }
+
+        .saying:hover {
+            transform: scale(1.01);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        .saying p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .content-section {
+            min-height: 50px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .img-container {
+            text-align: center;
+        }
+        
+
+        .content-section img {
+        display: inline-block;  /* 将图片设置为块级元素 */
+        margin: 20px auto;  /* 上下间距20px，左右自动居中 */
+        max-width: 80%;  /* 确保图片不会超出容器宽度 */
+        height: auto;  /* 保持图片比例 */
+        vertical-align: middle; /* 保持垂直对齐 */
+        margin-right: 10px; /* 设置两张图片之间的间距 */
+        border-radius: 20px;
+        }
+
+        .collapse-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .collapse-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .collapse-title {
+            padding: 10px;
+            background-color: #f8e7c8;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: semi-bold;
+            cursor: pointer;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            }
+            
+        .collapse-title:hover {
+            background-color: #f5d1a6;
+        }
+        .collapse-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            }
+        
+            /* 调整 SVG 图片样式 */
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 0px;
+            color: #000;
+            transition: all 0.3s ease; /* 加��过渡效果 */
+            margin-right: 10px; /* 添加右间距，使文本与图标之间有空隙 */
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            background-color: rgb(247, 241, 229);
+            border: 2px solid #ddd;
+            padding: 20px;
+            width: 45%;
+            height: 310px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .box:hover {
+            background-color: rgb(250, 235, 205);
+            width: 47%;
+            height: 320px;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .medusa-container {
+            position: fixed;
+            width: 200px;
+            height: auto;
+            left: 95%;           /* 调整位置，放到视口中央 */
+            top: 85%;            /* 调整位置 */
+            transform: translate(-50%, -50%);  /* 使容器在位置上完全居中 */
+            
+            z-index: 999;
+        }
+
+        .medusa-container img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+            transition: all 1s ease;  /* 添加过渡效果 */
+            opacity: 0.9;
+        }
+
+        /* 箭头图片样式（默认隐藏） */
+        #arrow-img {
+            position: absolute;
+            top: 66%;  /* 设置箭头位置 */
+            left: 35%;
+            transform: translate(-50%, -50%);
+            width: 25px; /* 设定箭头图片大小 */
+            height: auto;
+            opacity: 0; /* 默认隐藏 */
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        /* 当鼠标悬浮在图片上时显示箭头 */
+        .medusa-container:hover #arrow-img {
+            opacity: 0.8;
+        }
+
+        .circle-container {
+            display: flex;
+            gap: 20px;
+        }
+        .circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: #f3bc0d; /* 初始背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000; /* 初始标题颜色为黑色 */
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 初始阴影效果 */
+        }
+        .circle .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            font-weight: normal;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .circle:hover .content {
+            opacity: 1;
+        }
+        .circle:hover {
+            background-color: #fbf2f1; /* 鼠标悬浮时的背景色 */
+            border: 2px solid #fbf2f1; /* 鼠标悬浮时的边缘颜色 */
+            box-shadow: 0 0 20px 5px #f3bc0d; /* 发光效果 */
+        }
+        .circle:hover {
+            color: transparent; /* 鼠标悬浮时标题不可见 */
+        }
+        .image-text-container {
+            display: flex;
+            align-items: center; /* Vertically aligns the text with the image */
+            gap: 15px; /* Adds space between the image and the text */
+        }
+
+        .image {
+            width: 28%;
+            height: auto; /* Keeps the aspect ratio intact */
+        }
+
+        .text {
+            flex: 1; /* Allows the text to take up the remaining space */
+        }
+</style>
 </head>
 <body>
+    <!-- 进度条容器 -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <a href="../index.html">ZJU-CHINA</a>
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
+                    M-E-D-U-S-A
+                </a>
             </div>
             <ul class="nav-links">
                 <li class="dropdown">
                     <a href="#">TEAM</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Team Page/member.html">Member</a></li>
+                        <li><a href="../Team Page/member.html">Members</a></li>
                         <li><a href="../Team Page/attributions.html">Attributions</a></li>
                     </ul>
                 </li>
@@ -28,41 +457,37 @@
                     <ul class="dropdown-content">
                         <li><a href="../Project Page/description.html">Description</a></li>
                         <li><a href="../Project Page/design.html">Design</a></li>
-                        <li><a href="../Project Page/implementation.html">Implementation</a></li>
-                        <li><a href="../Project Page/plant.html">Plant</a></li>
-                        <li><a href="../Project Page/contribution.html">Contribution</a></li>
-                        <li><a href="../Project Page/safety.html">Safety</a></li>
+                        <li><a href="../Project Page/safety.html">Biosafety</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">WET LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="results.html">Results</a></li>
-                        <li><a href="proof.html">Proof</a></li>
-                        <li><a href="part.html">Part</a></li>
-                        <li><a href="protocol.html">Protocol</a></li>
-                        <li><a href="engineering.html">Engineering</a></li>
-                        <li><a href="measurement.html">Measurement</a></li>
-                        <li><a href="notebook.html">Notebook</a></li>
+                        <li><a href="../Wetlab Page/proof.html">Proof of Concept</a></li>
+                        <li><a href="../Wetlab Page/part.html">Parts</a></li>
+                        <li><a href="../Wetlab Page/protocol.html">Protocol</a></li>
+                        <li><a href="../Wetlab Page/engineering.html">Engineering</a></li>
+                        <li><a href="../Wetlab Page/measurement.html">Measurement</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">DRY LAB</a>
                     <ul class="dropdown-content">
-                        <li><a href="../Drylab Page/model.html">Model</a></li>
-                        <li><a href="../Drylab Page/software.html">Software</a></li>
+                        <li><a href="../Drylab Page/model.html">Model & Software</a></li>
                         <li><a href="../Drylab Page/hardware.html">Hardware</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#">HUMAN PRACTICE</a>
                     <ul class="dropdown-content">
-                        <li><a href="../HP Page/ec.html">Education & Communication</a></li>
-                        <li><a href="../HP Page/cp.html">Collaboration & Partnership</a></li>
-                        <li><a href="../HP Page/cp.html">Intergrated Human Practices</a></li>
-                        <li><a href="../HP Page/entrepreneurship.html">Entrepreneurship</a></li>
-                        <li><a href="../HP Page/bp.html">Bigger Picture</a></li>
-                        <li><a href="../HP Page/inclusivity.html">Inclusivity</a></li>
+                        <li><a href="overview.html"> Overview</a></li>
+                        <li><a href="ihp.html">Intergrated Human Practices</a></li>
+                        <li><a href="entrepreneurship.html">Entrepreneurship</a></li>
+                        <li><a href="education.html">Education & Communication</a></li>
+                        <li><a href="inclusivity.html">Inclusivity</a></li>
+                        <li><a href="elc.html">Ethnic & Lega Considerations</a></li>
+                        <li><a href="SDG.html">SDG</a></li>
+                        <li><a href="bp.html">Bigger Picture</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,21 +496,819 @@
 
     <!-- 主要内容区 -->
     <main>
-        <!-- 首页banner -->
-        <section id="home" class="hero">
-            <div class="container">
-                <h1>protocol page</h1>
+        <!-- 加载动画 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-content">
+                <img src="../assets/img/spinner.png" class="loading-spinner" alt="Loading" style="width: 30%; height: auto;">
+                <p style="font-family: 'Kirang Haerang', cursive; font-size: 3rem; color: #333;">Loading...</p>
             </div>
-        </section>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="main-container" id="mainContainer">
+        <div class="page-name">
+            <!-- 左侧的气泡 -->
+            <div class="bubble bubble-left-1"></div>
+            <div class="bubble bubble-left-2"></div>
+
+            <img src="../assets/img/snake.png" alt="snake">
+            <!-- <img src="../assets/img/dp_0_0.png" alt="example picture" style="width: 650px; height: auto; margin-top: 10px; margin-bottom: 0px;"> -->
+            <h1>Protocal</h1>
+
+            <!-- 右侧的气泡 -->
+            <div class="bubble bubble-right-1"></div>
+            <div class="bubble bubble-right-2"></div>
+        </div>
+
+        <div class="content-nav">
+            <ul>
+                <li class="has-submenu">
+                    <a href="#culture">E. Coli Strain selection and cell culture</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#preparation">Preparation of E. coli lysate</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#cell">Cell-free protein synthesis</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#isolation">Isolation and purification of AbTac</a>
+                    <ul class="submenu">
+                        <li><a href="#human">Human Embryo Lung Fibroblast Cell Culture</a></li>
+                        <li><a href="#mRNA">mRNA Extraction</a></li>
+                        <li><a href="#cDNA">cDNA Synthesis - Riboclone M-MLV(H-) cDNA Synthesis Technology</a></li>
+                        <li><a href="#KGF">Amplification of KGF gene and splicing of SB sequence</a></li>
+                        <li><a href="#construction">Construction of an Expression Vector</a></li>
+                        <li><a href="#protein">Purification of Labeling Protein</a></li>
+                        <li><a href="#culture">Culture Conditions for Escherichia coli</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+        </div>
+        
+        <div class="content-area" style="margin-top: 50px; margin-bottom: 0px;">
+
+            <section id="technical" class="content-section">
+                <h1>E. Coli Strain selection and cell culture</h1>
+                <p>E. Coli Strain[i]: KGK10 [A19 ΔendA ΔtonA ΔspeA ΔtnaA metþ ΔsdaA ΔsdaB ΔgshA Δgor TrxB_HAtag; (Knapp et al., 2007)]. The use of KGK10 strain can reduce the demand of iodoacetamide (IAM, see in the part of Cell-free protein synthesis) and make the disulfide isomerase DsbC, which is important for the formation of disulfide bond structure, less inactivated.</p>
+                <p>Cell culture[ii]: Culture E. coli using the medium listed below(Zawada J et al, 2005).</p>
+                <p style="margin: 0 auto;">Table 1 Medium for E. Coli Culture[6]</p>
+
+                <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Table 1 Medium for E. Coli Culture[6]</p>
+                <table border="1" style="margin-top: 30px; margin-left: auto; margin-right: auto; background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                <tr>
+                    <th>Component</th>
+                    <th>g/L (Before Sterilization)</th>
+                </tr>
+                <tr>
+                    <td>(NH4)2SO4</td>
+                    <td>1.5</td>
+                </tr>
+                <tr>
+                    <td>NaH2PO4•H2O</td>
+                    <td>3.5</td>
+                </tr>
+                <tr>
+                    <td>KCl</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Trisodium citrate dihydrate</td>
+                    <td>0.5</td>
+                </tr>
+            </table>
+
+            <table border="1" style="margin-top: 30px; margin-left: auto; margin-right: auto;background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                <tr>
+                    <th>After Sterilization Add</th>
+                    <th>mg/L</th>
+                </tr>
+                <tr>
+                    <td>Choline chloride</td>
+                    <td>28.6</td>
+                </tr>
+                <tr>
+                    <td>Niacin</td>
+                    <td>25.1</td>
+                </tr>
+                <tr>
+                    <td>p-Aminobenzoic acid (potassium salt)</td>
+                    <td>25.6</td>
+                </tr>
+                <tr>
+                    <td>Pantothenic acid (hemi-calcium salt)</td>
+                    <td>9.4</td>
+                </tr>
+                <tr>
+                    <td>Pyridoxine hydrochloride</td>
+                    <td>1.5</td>
+                </tr>
+                <tr>
+                    <td>Riboflavin</td>
+                    <td>3.9</td>
+                </tr>
+                <tr>
+                    <td>Thiamine hydrochloride</td>
+                    <td>17.7</td>
+                </tr>
+                <tr>
+                    <td>Biotin</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td>Cyanocobalamin</td>
+                    <td>0.01</td>
+                </tr>
+                <tr>
+                    <td>Folic acid</td>
+                    <td>...</td>
+                </tr>
+            </table>
+
+            <p>The amino acid feed was pH adjusted to 11 –11.5 with potassium hydroxide. At lower pH values, the mixture is not soluble. The initial mineral salt mixture and the glucose feed were autoclaved (separately); all other medium components were filter sterilized. Adding all the required magnesium sulfate to the initial batch medium resulted in precipitation. Therefore,  the magnesium sulfate was mixed with the glucose feed so that it would be added gradually during the fermentation[6].</p>
+            <p>For the inoculum, a 1-mL stock culture frozen in 20% (v/v) glycerol was thawed at room temperature and was used  to inoculate 100 mL of defined medium (see Table I). A new tube of stock culture was used for each fermentation. After overnight growth at 37℃, 20 mL was transferred to 400 mL of fresh media[6]. </p>
+            </section>
+
+            <section id="preparation" class="content-section">
+                <h1>Preparation of E. coli lysate[3]</h1>
+                <p>The cultured cells were monitored by spectrophotometry until OD600 reached at 3.0. Then the cells were harvested in the middle of exponential growth phase by centrifuging at 5000 RCF at 4°C for 15 min and were washed three times with cold Buffer A. Buffer A contained 10 mM Tris-acetate (pH 8.2), 14 mM magnesium acetate, 60 mM potassium glutamate and 2 mM dithiothreitol. After final wash and centrifugation, the pelleted wet cells were weighed, flash frozen in liquid nitrogen and stored at −80℃.</p>
+                <p>The thawed cells were suspended in 1 mL of Buffer A per 1 g of wet cell mass.In order to remove cell debris and insoluble components in the cell lysate, the lysate was centrifuged twice at 30,000 RCF at 4°C for 30 min. The supernatant was then incubated at 37°C for 60 min with gentle shaking (250 rpm) and centrifuged at 15,000 RCF at 4°C for 15 min.</p>
+                <p>Thawed and suspended cells were transferred into 1.5 mL microtube and placed in an ice-water bath. The cells were lysed using a Q125 Sonicator (Qsonica, Newtown, CT) with 3.175 mm diameter probe at frequency of 20 kHz and 50% of amplitude. The input energy was monitored and recorded during sonication( The ultrasound energy of 556 joules is optimal for 1.5ml cell suspension). The lysate was then centrifuged once at 12,000 RCF at 4°C for 10 min. The run-off reaction (37°C at 250 rpm) and second centrifugation (10,000 RCF at 4°C for 10 min) were performed. All of prepared cell extract was flash frozen in liquid nitrogen and stored at −80°C until use.</p>
+            </section>
+
+            <section id="cell" class="content-section">
+                <h1>Cell-free protein synthesis</h1>
+                <p>The CFPS reactions were carried out in a 1.5 mL microtube in the incubator. The standard reaction mixture for CFPS consists of the following components in a final volume of 15 μL[3]: </p>
+                <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;">Table 2 mixture for CFPS[3](Adapted from Kwon YC,2015)</p>
+                <table border="1" style="margin-top: 30px; margin-left: auto; margin-right: auto; background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                    <tr>
+                        <th>Component</th>
+                        <th>Concentration</th>
+                    </tr>
+                    <tr>
+                        <td>ATP</td>
+                        <td>1.2 mM</td>
+                    </tr>
+                    <tr>
+                        <td>GTP, UTP, CTP</td>
+                        <td>0.85 mM each</td>
+                    </tr>
+                    <tr>
+                        <td>L-5-formyl-5,6,7,8-tetrahydrofolic acid (folinic acid)</td>
+                        <td>34.0 μg/mL</td>
+                    </tr>
+                    <tr>
+                        <td>E. coli tRNA mixture</td>
+                        <td>170.0 μg/mL</td>
+                    </tr>
+                    <tr>
+                        <td>Potassium glutamate</td>
+                        <td>130 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Ammonium glutamate</td>
+                        <td>10 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Magnesium glutamate</td>
+                        <td>12 mM</td>
+                    </tr>
+                    <tr>
+                        <td>20 amino acids</td>
+                        <td>2 mM each</td>
+                    </tr>
+                    <tr>
+                        <td>L-[14C(U)]-leucine</td>
+                        <td>10 μM</td>
+                    </tr>
+                    <tr>
+                        <td>Nicotinamide adenine dinucleotide (NAD)</td>
+                        <td>0.33 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Coenzyme-A (CoA)</td>
+                        <td>0.27 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Spermidine</td>
+                        <td>1.5 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Putrescine</td>
+                        <td>1 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Sodium oxalate</td>
+                        <td>4 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Phosphoenolpyruvate (PEP)</td>
+                        <td>33 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Plasmid</td>
+                        <td>13.3 μg/mL</td>
+                    </tr>
+                    <tr>
+                        <td>T7 RNA polymerase</td>
+                        <td>100 μg/mL</td>
+                    </tr>
+                    <tr>
+                        <td>Cell extract</td>
+                        <td>27% v/v</td>
+                    </tr>
+                    <tr>
+                        <td>iodoacetamide (IAM)</td>
+                        <td>50 μM</td>
+                    </tr>
+                    <tr>
+                        <td>disulfide isomerase DsbC</td>
+                        <td>10 μM</td>
+                    </tr>
+                    <tr>
+                        <td>GSSG (Oxidized Glutathione Disulfide)</td>
+                        <td>4 mM</td>
+                    </tr>
+                    <tr>
+                        <td>GSH (Reduced Glutathione)</td>
+                        <td>1 mM</td>
+                    </tr>
+                </table>                
+
+                <p>To promote the correct folding of disulfide bonds and control the REDOX potential, we added the last four additions in the table above. GSSG and GSH were used to artificially adjust the REDOX potential of the culture system. IAM is used to inactivate the bacteria's own glutathione reductase(Gor)[5]. Since IAM also reacts with G-3PDH, a glycolytic enzyme containing cysteine residues, glucose cannot be used as an energy source in this cell-free protein synthesis. Instead, we use PEP as an energy substance.</p>
+                <p>The CFPS reactions were carried out in a microplate or 1.5ml centrifuge tube at 37°C for 4~6 hours.</p>
+            </section>
+
+            <section id="preparation" class="content-section">
+                <h1>Isolation and purification of AbTac[4]</h1>
+                <p>AbTac was purified from the cell-free reaction via a three column procedure. After dilution with 0.5 volumes of PBS, clarification via centrifugation and filtration on a 1.2μM PES membrane, the material was loaded onto a Protein A HP (GE Healthcare Life Sciences,  Piscataway, NJ) column with 5 min residence time. Elution was performed using a step to 0.1 M glycine-HCl, pH 3.0, followed by immediate neutralization with 0.15 mL of 1 M TRIS-HCl, pH 8.5 per 1 mL of eluate. Removal of soluble aggregates from the Protein A HP pool was accomplished by HIC chromatography on Phenyl (high sub) Sepharose FF (GE Healthcare Life Sciences, Piscataway, NJ), after adjustment of the pooled material to a concentration of 0.75 M (NH4)2SO4. Precipitates formed upon (NH4)2SO4 addition were removed by centrifugation. HIC chromatography was performed in 50 mM NaH2PO4-NaOH, pH 7.3 with a linear gradient from 0.75 M to 0 M (NH4)2SO4. 此处删去Trastuzumab改成AbTac eluted from the column was pooled and subsequently concentrated 36-fold on a 10 kD ultrafilter for injection on a Superdex 200 10/300 GL (GE Healthcare Life Sciences, Piscataway, NJ) size exclusion column. As the final purification step SEC was performed in 50 mM L-histidine, 300 mM NaCl, 4% (w/v) trehalose dehydrate, pH 6.0. The correct intact mass of AbTac was confirmed by mass spec analysis.</p>
+            </section>
+
+            <section id="cell"  class="content-section">
+                <h1>Cell-free protein synthesis</h1>
+                <p>The CFPS reactions were carried out in a 1.5 mL microtube in the incubator. The standard reaction mixture for CFPS consists of the following components in a final volume of 15 μL[3]:</p>
+                <p style="color:#ddb266; text-align: center; margin-bottom: 10px; font-size: 0.9rem;">Table 2 mixture for CFPS[3](Adapted from Kwon YC,2015)</p>
+                <table border="1" style="margin-top: 30px; margin-left: auto; margin-right: auto; background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                    <tr>
+                        <th>Component</th>
+                        <th>Concentration</th>
+                    </tr>
+                    <tr>
+                        <td>ATP</td>
+                        <td>1.2 mM</td>
+                    </tr>
+                    <tr>
+                        <td>GTP, UTP, CTP</td>
+                        <td>0.85 mM each</td>
+                    </tr>
+                    <tr>
+                        <td>L-5-formyl-5,6,7,8-tetrahydrofolic acid (folinic acid)</td>
+                        <td>34.0 μg/mL</td>
+                    </tr>
+                    <tr>
+                        <td>E. coli tRNA mixture</td>
+                        <td>170.0 μg/mL</td>
+                    </tr>
+                    <tr>
+                        <td>Potassium glutamate</td>
+                        <td>130 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Ammonium glutamate</td>
+                        <td>10 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Magnesium glutamate</td>
+                        <td>12 mM</td>
+                    </tr>
+                    <tr>
+                        <td>20 amino acids</td>
+                        <td>2 mM each</td>
+                    </tr>
+                    <tr>
+                        <td>L-[14C(U)]-leucine</td>
+                        <td>10 μM</td>
+                    </tr>
+                    <tr>
+                        <td>Nicotinamide adenine dinucleotide (NAD)</td>
+                        <td>0.33 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Coenzyme-A (CoA)</td>
+                        <td>0.27 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Spermidine</td>
+                        <td>1.5 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Putrescine</td>
+                        <td>1 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Sodium oxalate</td>
+                        <td>4 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Phosphoenolpyruvate (PEP)</td>
+                        <td>33 mM</td>
+                    </tr>
+                    <tr>
+                        <td>Plasmid</td>
+                        <td>13.3 μg/mL</td>
+                    </tr>
+                    <tr>
+                        <td>T7 RNA polymerase</td>
+                        <td>100 μg/mL</td>
+                    </tr>
+                    <tr>
+                        <td>Cell extract</td>
+                        <td>27% v/v</td>
+                    </tr>
+                    <tr>
+                        <td>iodoacetamide (IAM)</td>
+                        <td>50 μM</td>
+                    </tr>
+                    <tr>
+                        <td>disulfide isomerase DsbC</td>
+                        <td>10 μM</td>
+                    </tr>
+                    <tr>
+                        <td>GSSG (Oxidized Glutathione Disulfide)</td>
+                        <td>4 mM</td>
+                    </tr>
+                    <tr>
+                        <td>GSH (Reduced Glutathione)</td>
+                        <td>1 mM</td>
+                    </tr>
+                </table>
+                <p>To promote the correct folding of disulfide bonds and control the REDOX potential, we added the last four additions in the table above. GSSG and GSH were used to artificially adjust the REDOX potential of the culture system. IAM is used to inactivate the bacteria's own glutathione reductase(Gor)[5]. Since IAM also reacts with G-3PDH, a glycolytic enzyme containing cysteine residues, glucose cannot be used as an energy source in this cell-free protein synthesis. Instead, we use PEP as an energy substance.</p>
+                <p>The CFPS reactions were carried out in a microplate or 1.5ml centrifuge tube at 37°C for 4~6 hours.</p>                
+            </section>
+                
+            <section id="isolation"  class="content-section">
+                <h1>Isolation and purification of AbTac[4]</h1>
+                <p>AbTac was purified from the cell-free reaction via a three column procedure. After dilution with 0.5 volumes of PBS, clarification via centrifugation and filtration on a 1.2μM PES membrane, the material was loaded onto a Protein A HP (GE Healthcare Life Sciences,  Piscataway, NJ) column with 5 min residence time. Elution was performed using a step to 0.1 M glycine-HCl, pH 3.0, followed by immediate neutralization with 0.15 mL of 1 M TRIS-HCl, pH 8.5 per 1 mL of eluate. Removal of soluble aggregates from the Protein A HP pool was accomplished by HIC chromatography on Phenyl (high sub) Sepharose FF (GE Healthcare Life Sciences, Piscataway, NJ), after adjustment of the pooled material to a concentration of 0.75 M (NH4)2SO4. Precipitates formed upon (NH4)2SO4 addition were removed by centrifugation. HIC chromatography was performed in 50 mM NaH2PO4-NaOH, pH 7.3 with a linear gradient from 0.75 M to 0 M (NH4)2SO4. AbTac eluted from the column was pooled and subsequently concentrated 36-fold on a 10 kD ultrafilter for injection on a Superdex 200 10/300 GL (GE Healthcare Life Sciences, Piscataway, NJ) size exclusion column. As the final purification step SEC was performed in 50 mM L-histidine, 300 mM NaCl, 4% (w/v) trehalose dehydrate, pH 6.0. The correct intact mass of AbTac was confirmed by mass spec analysis.</p>
+
+                <h3>Detailed operation for Ni-NTA separation of recombinant proteins with His tag:</h3>
+                <p> 1. Set up the Ni-NTA column with dimensions of 1.6 cm × 20 cm, and the column bed volume is 10 mL.</p>
+                <p> 2. Balance the column bed with buffer solution 1 for 2 to 5 times the volume, with a flow rate of 2 mL/min.</p>
+                <p> 3. Filter 20 mL of cell disruption solution (50 mM PBS, pH 7.4, 0.5 M NaCl) through a 0.45 µm filter membrane, add sample, and flow at a rate of 1 mL/min.</p>
+                <p> 4. Wash the column bed with buffer solution 1 for 2 to 5 times the volume, with a flow rate of 2 mL/min.</p>
+                <p> 5. Elute the proteins at different concentrations of imidazole (10, 50, 100, 200, 300, 400 mM) in buffer solution 3, with a flow rate of 2 mL/min, collect the elution peaks at each stage, and detect the molecular weight and purity of the fusion protein using SDS-PAGE.</p>
+                <p> 6. Wash the column bed with pure water for 5 times the volume, and then wash with 20% ethanol for 3 times the volume, with a flow rate of 2 mL/min. Place the column in a low-temperature environment for storage.</p>                
+
+                <h3>Composition of several buffer solutions:</h3>
+                <p><strong>Buffer solution 1:</strong> 50 mM PBS buffer at pH 7.4. Preparation: 19 mL of 0.5 M NaH2PO4, 81 mL of 0.5 M Na2HPO4, 29.3 g of NaCl, dissolve with an appropriate amount of water and adjust to a final volume of 1000 mL.</p>
+
+                <p><strong>Buffer solution 2:</strong> 50 mM phosphate buffer at pH 7.4, i.e., pH 7.4 PBS solution. Preparation: 19 mL of 0.5 M NaH2PO4, 81 mL of 0.5 M Na2HPO4, 29.3 g of NaCl and 34 g of imidazole, dissolve with an appropriate amount of water, adjust the pH, and adjust to a final volume of 1000 mL.</p>
+                
+                <p><strong>Buffer solution 3:</strong> Buffer solutions with different imidazole concentrations are prepared as follows:</p>
+
+                
+                <p>The contents of the 1st, 2nd and 3rd columns are respectively: concentration of imidazole, volume of buffer solution 1 (mL), volume of buffer solution 2 (mL). </p>
+                <p><strong>KGF  Amino acid sequence: </strong></p>
+                <p>MHKWILTWILPTLLYRSCFHIICLVGTISLACNDMTPEQMATNVNCSSPERHTRSYDYMEGGDIRVRRLFCRTQWYLRIDKRGKVKGTQEMKNNYNIMEIRTVAVGIVAIKGVESEFYLAMNKEGKLYAKKECNEDCNFKELILENHYNTYASAKWTHNGGEMFVALNQKGIPVRGKKTKKEQKTAHFLPMAIT</p>
+
+                <p><strong>SB sequence: RKRLQVQLSIRT</strong></p>
+                <p>The actual sequence added in the experiment: ——AGSGGS RKRLQVQLSIRT (The nucleotide sequence was prepared based on the codon preference of E. coli)</p>
+
+                <p><strong>KGF-SB  amino acid sequence:</strong></p>
+                <p>MHKWILTWILPTLLYRSCFHIICLVGTISLACNDMTPEQMATNVNCSSPERHTRSYDYMEGGDIRVRRLFCRTQWYLRIDKRGKVKGTQEMKNNYNIMEIRTVAVGIVAIKGVESEFYLAMNKEGKLYAKKECNEDCNFKELILENHYNTYASAKWTHNGGEMFVALNQKGIPVRGKKTKKEQKTAHFLPMAIT——AGSGGS RKRLQVQLSIRT</p>
+
+                <section id="human">
+                    <h2>I.Human Embryo Lung Fibroblast Cell Culture</h2>
+                    <p style="padding-left: 30px;"><strong>①</strong> Human embryonic lung fibroblasts were cultured in 12-well plates from a cell bank.</p>
+                    <p style="padding-left: 30px;"><strong>②</strong> Culture was performed in DMEM medium containing 10% heat-inactivated fetal bovine serum (FBS), 100 u/mL penicillin, and 100 μg/mL streptomycin in a humidified environment at 37°C, 5% CO2, and 95% air.</p>
+                    <p style="padding-left: 30px;"><strong>③</strong> After 6 days of differentiation, human embryonic lung fibroblasts grew in monolayers until they reached a fusion degree of 70-80%.</p>                    
+                </section>
+
+                <section id="mRNA">
+                    <h2>mRNA Extraction</h2>
+                    <h5>RNA Extraction - Trizol Method</h5>
+                    <p style="padding-left: 30px;"><strong>①</strong> Grind the tissue into powder in liquid N, then add 1 mL Trizol solution to 50-100 mg tissue. The total volume of the sample should not exceed 10% of the volume of Trizol used.</p>
+                    <p style="padding-left: 30px;"><strong>②</strong> The slurry was left at room temperature for 5 minutes, then chloroform was added at a rate of 0.2 mL per 1 mL of Trizol solution. The centrifuge tube was tightly closed, and the centrifuge tube was vigorously shaken by hand for 15 seconds.</p>
+                    <p style="padding-left: 30px;"><strong>③</strong> In a new centrifuge tube, add 0.5 mL of isopropanol to each mL of Trizol solution. Let stand at room temperature for 10 minutes and centrifuge at 12,000g for 10 minutes.</p>
+                    <p style="padding-left: 30px;"><strong>④</strong> The supernatant was discarded, and 75% ethanol was added at a rate of at least 1 mL per mL of Trizol, vortexed, and centrifuged at 7,500g for 5 minutes at 4°C.</p>
+                    <p style="padding-left: 30px;"><strong>⑤</strong> Carefully discard the supernatant and then dry at room temperature or in vacuum for 5-10 minutes, taking care not to over-dry, as this will reduce the solubility of the RNA. The RNA was then dissolved in water, at 55°C-60°C for 10 minutes if necessary. RNA can be isolated for mRNA or stored in 70% ethanol at -70°C.</p>
+                    
+                    <h5>mRNA Extraction</h5>
+                    <p>Because the mRNA contains poly (a) + at the end, when the total RNA flows through oligo (DT) cellulose, the mRNA is specifically adsorbed on the oligo (DT) cellulose column under the action of high salt buffer, and the mRNA can be washed down in low salt concentration or distilled water, after twice oligo (dT) cellulose columns, relatively pure mRNA was obtained.</p>
+                    <p style="padding-left: 30px;"><strong>①</strong> Suspend 0.5 - 1.0 g of oligo(dT) cellulose in 0.1 mol/L NaOH.</p>
+                    <p style="padding-left: 30px;"><strong>②</strong> Load the suspension into a sterilized disposable chromatography column or into a Pasteur pipette filled with glass wool treated with DEPC and sterilized under high pressure. The column bed volume should be 0.5 - 1.0 mL. Rinse the column bed with 3 times the column bed volume of sterilized water.</p>
+                    <p style="padding-left: 30px;"><strong>③</strong> Rinse the column bed with 1× column elution buffer until the pH value of the effluent is less than 8.0.</p>
+                    <p style="padding-left: 30px;"><strong>④</strong> After incubating the extracted RNA solution at 65℃ for 5 minutes, quickly cool it to room temperature, add an equal volume of 2× column elution buffer, load the sample, and immediately collect the eluate using a sterilized test tube. When all the RNA solution has entered the column bed, add 1-fold volume of 1× column elution buffer.</p>
+                    <p style="padding-left: 30px;"><strong>⑤</strong> Measure the OD260 of each tube. When the OD in the eluate is 0, add 2-3 times the volume of sterilized elution buffer. Collect the eluate in 1/3 to 1/2 of the column bed volume in each tube.</p>
+                    <p style="padding-left: 30px;"><strong>⑥</strong> Measure the OD260, and combine the eluate fractions containing RNA.</p>
+                    <p style="padding-left: 30px;"><strong>⑦</strong> Add 1/10 volume of 3M NaAc (pH 5.2), 2.5 times the volume of cold ethanol, mix well, and incubate at -20℃ for 30 minutes.</p>
+                    <p style="padding-left: 30px;"><strong>⑧</strong> Centrifuge at 4℃ at 12,000g for 15 minutes, carefully discard the supernatant, wash the precipitate with 70% ethanol, and centrifuge again at 4℃ at 12,000g for 5 minutes.</p>
+                    <p style="padding-left: 30px;"><strong>⑨</strong> Carefully discard the supernatant, air-dry the precipitate for 10 minutes, or vacuum-dry it for 10 minutes.</p>
+                    <p style="padding-left: 30px;"><strong>⑩</strong> Dissolve the RNA solution in a small amount of water and use it for cDNA synthesis (or store it in 70% ethanol at -70℃).</p>
+                    
+                </section>
+
+                <section id="cDNA">
+                    <h2>cDNA Synthesis - Riboclone M-MLV(H-) cDNA Synthesis Technology</h2>
+                    <p>This system uses M-MLV reverse transcriptase for the first strand synthesis, and the second strand synthesis employs the displacement synthesis method, using RNaseH and DNA polymerase I for displacement synthesis. Finally, T4 DNA polymerase is used to remove the single-stranded ends. This method is simple and feasible. The reagents for this system include:</p>
+                    <p style="padding-left: 30px;"><strong>①</strong> Take a sterilized, RNA-free Eppendorf tube, add RNA template and appropriate primers. For each μg of RNA, use 0.5 μg of primer (if using NotⅠ primer junctions, use 0.3 μg), adjust the volume to 15 μL with H2O, incubate at 70°C for 5 minutes, cool to room temperature, and centrifuge to concentrate the solution at the bottom of the tube.</p>
+
+                    <p style="padding-left: 30px;"><strong>②</strong> Then add successively: </p>
+                    <p style="padding-left: 30px;">5× first strand buffer 5 μL</p>
+                    <p style="padding-left: 30px;">rRNasin RNA inhibitor 25 U</p>
+                    <p style="padding-left: 30px;">M-MLV(H-) reverse transcriptase 200 U</p>
+                    <p style="padding-left: 30px;">H2O to adjust the total volume to 25 μL</p>
+
+                    <p style="padding-left: 30px;"><strong>③</strong> Gently tap the tube wall with fingers, transfer 5 μL to another Eppendorf tube, add 2-5 μCi [α-32 P] dCTP (>400 Ci/mmol) for the first strand isotope incorporation for radioactivity activity determination.</p>
+
+                    <p style="padding-left: 30px;"><strong>④</strong> Incubate at 37°C (random primers) or 42°C (other primers) for 1 hour.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑤</strong> Remove and place on ice.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑥</strong> Add the determined Eppendorf tube with 95 μL 50 mM EDTA to terminate the reaction and make the total volume 100 μL. Take 90 μL for electrophoresis analysis (first use phenol extraction), and 10 μL for radioactivity activity determination of isotope incorporation.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑦</strong> The Eppendorf tube for first strand synthesis can be directly used for second strand synthesis.</p>
+
+
+                    <h3>First Strand Synthesis</h3>
+                    <p>Reagents: [α-32 P] dCTP (>400 Ci/mmol), EDTA (50 mM and 200 mM), TE-buffered phenol-chloroform (1:1), 7.5 M NH4Ac, ethanol (100% and 70%), TE buffer.</p>
+                    <p style="padding-left: 30px;"><strong>①</strong> Take 20 μL of the reaction solution of the first strand, then add successively: 20 μL of 10× second strand buffer, 23 μL of DNA polymerase I, 0.8 μL of RNase H, and make up to a final volume of 100 μL with H2O.</p>
+
+                    <p style="padding-left: 30px;"><strong>②</strong> Mix gently. If the second strand incorporation radioactivity measurement is required, take 10 μL and transfer it to another Eppendorf tube, and add 2-5 μCi of [α-32 P] dCTP.</p>
+
+                    <p style="padding-left: 30px;"><strong>③</strong> Incubate at 14°C for 2 hours (if the cDNA is to be synthesized for a length of 3 kb or more, the incubation time should be extended to 3-4 hours).</p>
+
+                    <p style="padding-left: 30px;"><strong>④</strong> Add 90 μL of 50 mM EDTA to the Eppendorf tube containing the incorporation measurement, take 10 μL for radioactivity measurement of incorporation, and the remaining can be subjected to electrophoresis analysis.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑤</strong> Centrifuge the reaction tube of the second strand synthesis of cDNA at 70°C for 10 minutes, centrifuge at low speed, and place it on ice.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑥</strong> Add 2 μL of T4 DNA polymerase, incubate at 37°C for 10 minutes.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑦</strong> Add 10 μL of 200 mmol/L EDTA to terminate the reaction.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑧</strong> Extract the cDNA reaction solution with an equal volume of phenol:chloroform, centrifuge for 2 minutes.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑨</strong> Transfer the aqueous phase to another Eppendorf tube, add 0.5 times the volume of 7.5 M acetate ammonium (or 0.1 times the volume of 1.5 M sodium acetate, pH 5.2), mix well, then add 2.5 times the volume of cold ethanol (-20°C), centrifuge for 5 minutes after -20°C storage for 30 minutes.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑩</strong> Carefully discard the supernatant, add 0.5 mL of cold 70% ethanol, centrifuge for 2 minutes.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑪</strong> Carefully remove the supernatant, dry the precipitate.</p>
+
+                    <p style="padding-left: 30px;"><strong>⑫</strong> Dissolve the precipitate in 10-20 μL of TE buffer.</p>
+                </section>
+
+                <section id="KGF">
+                    <h2>Amplification of KGF gene and splicing of SB sequence</h2>
+                    <p style="padding-left: 30px;"><strong>①</strong> Use SOR PCR (gene splicing by overlap extension PCR) to splice the KGF gene and the SB sequence. Four primers:</p>
+                    <p style="padding-left: 30px;">P1 (5’-GAGCTCATGCACAAATGGATAC-3’)</p>
+                    <p style="padding-left: 30px;">P2 (5’-GCAATAACTGCGGGCAG-3’)</p>
+                    <p style="padding-left: 30px;">P3 (5’-CTGCCCGCAGTTATTGC-3’)</p>
+                    <p style="padding-left: 30px;">P4 (5’-CAAGCTTCGGGTGCG-3’)</p>
+                    
+                    <p style="padding-left: 30px;"><strong>②</strong> The obtained PCR fragments were digested by T4 DNA polymerase, phosphorylated by T4 polynucleotide ligase, and ligated to the ScaI-digested and phosphorylated pMD18-T Vector using T4 DNA ligase.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>③</strong> The obtained recombinant plasmid was mixed with E. coli DH5α cells (1:19) and incubated on ice for 30 minutes, then at 42°C for 2 minutes, followed by adding 2 mL LB, incubation on ice for 2 minutes, and incubation at 37°C for 80 minutes. Then, 40 μL of X-gal and 20 μL of IPTG were added and incubated at 37°C overnight.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>④</strong> The transformed cells were spread on LB agar plates for blue-white screening. Positive clones were selected from the transfected E. coli DH5α cells, and blue colonies on the LB agar plates due to the production of indigo were selected as candidate cells carrying the hKGF gene in E. coli DH5α.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>⑤</strong> The recombinant plasmid was isolated from E. coli DH5α cells using a plasmid extraction kit. The inserted fragment was digested and sequenced to ensure the correct construct was obtained.</p>
+                    
+                </section>
+
+                <section id="construction">
+                    <h2>Construction of an Expression Vector</h2>
+                    <p style="padding-left: 30px;"><strong>①</strong> The amplified recombinant plasmid was digested with endonucleases Eco53kI and HindⅢ.</p>
+
+                    <p style="padding-left: 30px;"><strong>②</strong> The PCR fragments were recovered using the PCR fragment recovery kit according to the manufacturer's instructions.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>③</strong> The recovered KGF cDNA was ligated to the digested pBad/His A plasmid with Eco53kI and HindⅢ.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>④</strong> Mix 1 μL of pBad/His A, 1 μL of the cDNA fragment and 5 μL of universal buffer at 4°C for overnight incubation.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>⑤</strong> The pBad/His A plasmid with the correct KGF gene was simultaneously introduced into Escherichia coli DH5α cells.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>⑥</strong> The recombinant plasmid was isolated, digested and sequenced to obtain the correct pBad/His A-KGF construct plasmid.</p>
+                    
+                    <div class="img-container">
+                        <img src="../assets/img/protocol_1.png" alt="example picture">
+                    </div>
+                </section>
+
+                <section id="protein">
+                    <h2>Purification of Labeling Protein</h2>
+                    <p>Detailed operation for Ni-NTA separation of recombinant proteins with His tag:</p>
+                    <p style="padding-left: 30px;"><strong>①</strong> Set up the Ni-NTA column with dimensions of 1.6 cm × 20 cm, and the column bed volume is 10 mL.</p>
+
+                    <p style="padding-left: 30px;"><strong>②</strong> Balance the column bed with buffer solution 1 for 2 to 5 times the volume, with a flow rate of 2 mL/min.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>③</strong> Filter 20 mL of cell disruption solution (50 mM PBS, pH 7.4, 0.5 M NaCl) through a 0.45 µm filter membrane, add sample, and flow at a rate of 1 mL/min.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>④</strong> Wash the column bed with buffer solution 1 for 2 to 5 times the volume, with a flow rate of 2 mL/min.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>⑤</strong> Elute the proteins at different concentrations of imidazole (10, 50, 100, 200, 300, 400 mM) in buffer solution 3, with a flow rate of 2 mL/min, collect the elution peaks at each stage, and detect the molecular weight and purity of the fusion protein using SDS-PAGE.</p>
+                    
+                    <p style="padding-left: 30px;"><strong>⑥</strong> Wash the column bed with pure water for 5 times the volume, and then wash with 20% ethanol for 3 times the volume, with a flow rate of 2 mL/min. Place the column in a low-temperature environment for storage.</p>
+                    
+
+                    <p>Composition of several buffer solutions:</p>
+                    <p><strong>Buffer solution 1:</strong> 50 mM PBS buffer at pH 7.4. Preparation: 19 mL of 0.5 M NaH2PO4, 81 mL of 0.5 M Na2HPO4, 29.3 g of NaCl, dissolve with an appropriate amount of water and adjust to a final volume of 1000 mL.</p>
+
+                    <p><strong>Buffer solution 2:</strong> 50 mM phosphate buffer at pH 7.4, i.e., pH 7.4 PBS solution. Preparation: 19 mL of 0.5 M NaH2PO4, 81 mL of 0.5 M Na2HPO4, 29.3 g of NaCl and 34 g of imidazole, dissolve with an appropriate amount of water, adjust the pH, and adjust to a final volume of 1000 mL.</p>
+                    
+                    <p><strong>Buffer solution 3:</strong> Buffer solutions with different imidazole concentrations are prepared as follows:</p>
+                    
+                    <p>The contents of the 1st, 2nd and 3rd columns are respectively: concentration of imidazole, volume of buffer solution 1 (mL), volume of buffer solution 2 (mL). </p>
+                
+                    <div class="img-container">
+                        <img src="../assets/img/protocol_2.png" alt="example picture">
+                    </div>
+                </section>
+
+                <section id="culture">
+                    <h2>Culture Conditions for Escherichia coli</h2>
+                    <h3>By changing the types and contents of nitrogen sources, inorganic salts and the carbon-to-nitrogen ratio in the culture medium, the most suitable medium was determined to be (g/L): </h3>
+                    <table border="1" style="margin-top: 30px; margin-left: auto; margin-right: auto; background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                        <tr>
+                            <td>Yeast extract</td>
+                            <td>10 g</td>
+                            </tr>
+                            <tr>
+                            <td>NH4Cl</td>
+                            <td>1.3 g</td>
+                            </tr>
+                            <tr>
+                            <td>NaH2PO4</td>
+                            <td>2 g</td>
+                            </tr>
+                            <tr>
+                            <td>Na2HPO4</td>
+                            <td>5 g</td>
+                            </tr>
+                            <tr>
+                            <td>MgSO4·7H2O</td>
+                            <td>1 g</td>
+                            </tr>
+                            <tr>
+                            <td>Glucose</td>
+                            <td>6 g</td>
+                            </tr>
+                        </table>
+                      
+                    <h3>The optimized fermentation conditions for the recombinant strain are as follows: </h3>
+                    <table border="1" style="margin-top: 30px; margin-left: auto; margin-right: auto; background-color: #ffffff; border-color: #333; border-style: solid; border-collapse: collapse; text-align: center; font-family: 'Montserrat', sans-serif;">
+                            <tr>
+                            <td>Temperature</td>
+                            <td>35℃</td>
+                            </tr>
+                            <tr>
+                            <td>pH</td>
+                            <td>7.0</td>
+                            </tr>
+                            <tr>
+                            <td>Inoculation amount</td>
+                            <td>8%</td>
+                            </tr>
+                            <tr>
+                            <td>Shaker speed</td>
+                            <td>260 r/min</td>
+                            </tr>
+                            <tr>
+                            <td>Inducer concentration</td>
+                            <td>0.8 mmol/L</td>
+                            </tr>
+                            <tr>
+                            <td>Induction timing</td>
+                            <td>OD 6000 at the indicated time</td>
+                            </tr>
+                            <tr>
+                            <td>Induction duration</td>
+                            <td>6 hours</td>
+                            </tr>
+                      </table>
+                      
+
+                    <h3>Purification of GST - Tagged Proteins and Tag Cleavage</h3>
+                    <p>Set the system to a low flow rate. Remove the plug at the top of the chromatography column and connect the column to the connector of the ÄKTA purification instrument. Pay attention to connect drop-by-drop to prevent the introduction of air bubbles.</p>
+
+                    <p>Remove the plug at the bottom of the column and connect it to the purification instrument.</p>
+
+                    <p>Equilibrate the chromatography column with 5 column volumes of binding buffer.</p>
+
+                    <p>Add the pre-treated sample using a sample loop or superloop (the sample needs to be centrifuged and filtered before loading onto the column). It is recommended to set the flow rate at 0.2 - 1 ml/min for a 1-ml column and 1 - 5 ml/min for a 5-ml column during sample loading.</p>
+
+                    <p>Wash the column with 5 to 10 column volumes of binding buffer until the absorption peak reaches a stable baseline or there is no substance flowing out in the effluent. During the washing process, it is recommended to set the flow rate at 1 - 2 ml/min for a 1-ml column and 5 - 10 ml/min for a 5-ml column.</p>
+
+                    <p>Flush the column with 10 column volumes of PreScission cleavage buffer.</p>
+
+
+
+                    <h3>Prepare the PreScission protease mixture:</h3>
+                    <p>For a 1 - ml GSTrap prepacked column (which can bind 8 mg of GST - tagged protein):</p>
+                    <p>Mix 80 μl (160 units) of PreScission protease with 920 μl of PreScission cleavage buffer at 4°C.
+                        Load the PreScission protease mixture onto the column. Plug both the upper and lower ends of the column and incubate at 4°C for 4 h.</p>
+                    <p>Remove the column plugs. Flush the column with 3 ml (for a 1 - ml prepacked column) or 15 ml (for a 5 - ml prepacked column) of PreScission cleavage buffer and collect the effluent (0.5 - 1 ml per tube). At this time, the effluent only contains the target protein after tag cleavage, while the GST tag and PreScission protease remain bound to the column.</p>
+                    <p>Wash the GST tag and protease remaining on the column with 5 to 10 column volumes of elution buffer.</p>
+                    <p>Flush the column with 5 column volumes of binding buffer and fill it with 20% ethanol for storage.</p>
+
+                    <h3>Purification of His - Tagged Proteins</h3>
+                    <p>Pack a Ni - NTA column with dimensions of 1.6 cm × 20 cm and a column bed volume of 10 mL.
+                        Equilibrate the column with 2 - 5 column bed volumes of buffer 1 at a flow rate of 2 mL/min.
+                        Filter 20 mL of cell lysate (50 mM PBS, pH 7.4, 0.5 M NaCl) through a 0.45 - µm filter membrane and load it onto the column at a flow rate of 1 mL/min.</p>
+                    <p>Wash the column with another 2 - 5 column bed volumes of buffer 1 at a flow rate of 2 mL/min.
+                        Perform step - elution with buffer 3 containing 10, 50, 100, 200, 300, and 400 mM imidazole respectively at a flow rate of 2 mL/min. Collect the elution peaks at each step and detect the molecular weight and purity of the fusion protein by SDS - PAGE.</p>
+                    <p>Wash the column with 5 column bed volumes of pure water, then with 3 column bed volumes of 20% ethanol at a flow rate of 2 mL/min. Store the column in a low - temperature environment.
+                        Composition of Several Buffers</p>
+                    <p><strong>Buffer 1</strong></p>
+                    <p>50 mM PBS buffer at pH 7.4. Preparation: Mix 19 mL of 0.5 M NaH₂PO₄, 81 mL of 0.5 M Na₂HPO₄, and 29.3 g of NaCl. Dissolve in an appropriate amount of water and adjust the volume to 1000 mL.</p>
+                    <p><strong>Buffer 2</strong></p>
+                    <p>50 mM phosphate buffer at pH 7.4, which is a PBS solution at pH 7.4. Preparation: Mix 19 mL of 0.5 M NaH₂PO₄, 81 mL of 0.5 M Na₂HPO₄, 29.3 g of NaCl, and 34 g of imidazole. Add an appropriate amount of water, adjust the pH, and then adjust the volume to 1000 mL.</p>
+                    <p><strong>Buffer 3</strong></p>
+                    <p>Preparation of buffer 3 with different imidazole concentrations.</p>
+                </section>
+            </section>
+        </div?>
+        </div>
+        
+        <!-- 背景图 -->
+        <div id="img-modal" class="medusa-container">
+            <img src="../assets/img/medusa_1.png" alt="medusa_1" class="medusa-img" id="medusa-img">
+            <!-- 箭头图片 -->
+            <img src="../assets/img/arrow.png" alt="arrow" id="arrow-img">
+            <!-- <img src="../assets/img/medusa_2.png" alt="medusa_2" class="medusa-img">
+            <img src="../assets/img/medusa_3.png" alt="medusa_3" class="medusa-img"> -->
+        </div>
+
+        </div>
     </main>
 
     <!-- 页脚 -->
     <footer>
-        <div class="container">
-            <p>© 2023 - iGEM ZJU-China</p>
+        <div class="foot-container">
+            <div class="foot-content">
+                <p>© 2025 - iGEM ZJU-China</p>
+            </div>
         </div>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            var nav = $('.content-nav');
+            var navTop = nav.offset().top;  // 获取目录原始位置
+            var headerHeight = 60;  // 导航栏高度
+
+            // 添加调试信息
+            console.log('Initial nav top position:', navTop);
+            console.log('Header height:', headerHeight);
+
+            // 页面加载时先检查一次位置
+            checkPosition();
+
+            // 滚动时检查位置
+            $(window).scroll(function() {
+                checkPosition();
+                checkActiveSection();
+            });
+
+            // 检查位置的函数
+            function checkPosition() {
+                var scrollTop = $(window).scrollTop();
+                console.log('Scroll position:', scrollTop); // 调试用
+                
+                if (scrollTop + headerHeight + 75 > navTop) {
+                    console.log('Adding fixed class'); // 调试用
+                    nav.addClass('fixed');
+                } else {
+                    console.log('Removing fixed class'); // 调试用
+                    nav.removeClass('fixed');
+                }
+            }
+
+            // 检查激活章节的函数
+            function checkActiveSection() {
+                let scrollPosition = $(window).scrollTop();
+                
+                // 检查主要章节位置
+                $('.content-section').each(function() {
+                    let sectionTop = $(this).offset().top - 100;
+                    let sectionBottom = sectionTop + $(this).outerHeight();
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                        let id = $(this).attr('id');
+                        // 移除所有激活状态
+                        $('.content-nav li').removeClass('active');
+                        $('.submenu li').removeClass('active');
+                        
+                        // 激活当前主菜单项
+                        let currentMainItem = $('.content-nav a[href="#' + id + '"]').parent();
+                        currentMainItem.addClass('active');
+                    }
+                });
+                
+                // 检查子章节位置
+                $('section[id] h2').each(function() {
+                    let subSectionTop = $(this).offset().top - 100;
+                    let subSectionBottom = subSectionTop + $(this).parent().outerHeight();
+                    
+                    if (scrollPosition >= subSectionTop && scrollPosition <= subSectionBottom) {
+                        let id = $(this).parent().attr('id');
+                        // 移除所有子菜单项的激活状态
+                        $('.submenu li').removeClass('active');
+                        // 激活当前子菜单项
+                        $('.submenu a[href="#' + id + '"]').parent().addClass('active');
+                        // 确保父菜单保持激活状态
+                        $('.submenu a[href="#' + id + '"]').parents('.has-submenu').addClass('active');
+                    }
+                });
+            }
+            
+            // 点击目录链接时平滑滚动
+            $('.content-nav a').click(function(e) {
+                e.preventDefault();
+                let target = $($(this).attr('href'));
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            });
+
+            // Toggle the collapse content when clicking on the title
+        $(".collapse-title").click(function() {
+            var content = $(this).next(".collapse-content");
+            // Slide toggle the content
+            content.slideToggle();
+            // Optionally, collapse other sections when one is opened (accordion behavior)
+            $(".collapse-content").not(content).slideUp();
+            });
+
+            const arrowImg = $("#arrow-img");
+
+            // 点击箭头图片返回顶部
+            arrowImg.click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+        });
+
+        // 定义图片路径数组
+    const images = [
+        "../assets/img/medusa_1.png", 
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_3.png",
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_1.png",
+    ];
+
+    // 初始化当前图片索引
+    let currentImageIndex = 0;
+
+    // 获取图片元素
+    const imgElement = document.getElementById('medusa-img');
+    
+    // 监听滚动事件
+    $(window).scroll(function() {
+        // 获取当前的滚动位置
+        var scrollTop = $(window).scrollTop();
+        console.log('Scroll position:', scrollTop); // 打印当前的滚动位置
+
+        // 每1000px滚动时切换一次图片
+        if (scrollTop >= 1000) {
+            // 计算应该切换的图片索引
+            currentImageIndex = Math.floor(scrollTop / 1000) % 5;
+
+            // 根据当前图片索引切换图片
+            imgElement.src = images[currentImageIndex];
+
+            // 可选：重置滚动位置，避免频繁触发
+            // $(window).scrollTop(0); // 可选：如果你希望在达到1000px时重置滚动位置，可以取消注释此行
+        }
+    });
+
+        
+        // 模拟加载延迟
+        window.onload = function() {
+                document.getElementById('mainContainer').style.display = 'none';
+                setTimeout(function() {
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                }, 2000); // 设置3秒钟后隐藏加载器
+            };
+
+        function changeIcon(element, newSrc) {
+        element.src = newSrc;
+        }
+
+        window.onscroll = function() {
+            // 获取文档的总高度和当前滚动的高度
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrollPosition = window.scrollY;
+
+            // 计算滚动进度百分比
+            var scrollPercentage = (scrollPosition / docHeight) * 100;
+
+            // 更新进度条的宽度
+            document.getElementById("progress-bar").style.width = scrollPercentage + "%";
+        }
+    </script>
 </body>
 </html>

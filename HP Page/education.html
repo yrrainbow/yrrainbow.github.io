@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education & Communication | iGEM 2025 Project</title>
+    <!-- 添加 Kirang Haerang 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
+    <!-- 添加 Ranga 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ranga:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 添加 Montserrat 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 添加 Do Hyeon 字体 -->
+    <link href="https://fonts.font.im/css?family=Do+Hyeon" rel="stylesheet">
+    <!-- 引入 Playfair Display 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!-- 添加 Shadows Into Light 字体 -->
+    <link href="https://fonts.font.im/css?family=Shadows+Into+Light" rel="stylesheet">
+    <!-- 确保 jQuery 在其他脚本之前加载 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- 添加新的样式 -->
+    <style>
+        /* page-name 容器样式 */
+        .page-name {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;  /* 为导航栏留出空间 */
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;  /* 防止气泡超出容器 */
+        }
+
+        .page-name h1 {
+            margin-top: 5%;
+            font-family: 'Ranga', cursive;
+            font-size: 5em;
+            font-weight: 700;
+            color: #333;
+            z-index: 2; /* 确保 h1 在图片上方 */
+            position: relative; /* 让 h1 作为相对定位，图片可以在其下方 */
+            -webkit-text-stroke: 2px #c0b4e2; /* 黑色的 1px 描边 */
+        }
+
+        .page-name h2 {
+            margin-top: 5px;
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            z-index: 99;
+            /* -webkit-text-stroke: 0.1px #ffd58d; */
+        }
+
+        .page-name img {
+            position: absolute;  /* 绝对定位 */
+            top: 30%;  /* 使图片位于 h1 的下方 */
+            left: 50%;  /* 居中图片 */
+            transform: translate(-50%, -30%);  /* 水平居中，同时微调上下位置 */
+            width: 39%;  /* 控制图片宽度 */
+            z-index: 100;  /* 确保图片在 h1 下面 */
+        }
+
+        /* 目录样式 */
+        .content-nav {
+            width: 200px;
+            position: absolute;  /* 初始状态为absolute */
+            left: 100px;
+            font-weight: bold;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            z-index: 100;  /* 保证目录始终在最上层 */
+        }
+        
+        /* 固定定位的样式 */
+        .content-nav.fixed {
+            position: fixed;
+            top: 125px;  /* 与导航栏高度相同 */
+            left: 100px;  /* 保持与初始位置相同的左偏移 */
+        }
+        
+        .content-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .content-nav li {
+            margin-bottom: 5px;
+        }
+        
+        /* 主菜单项样式 */
+        .has-submenu > a {
+            display: block;
+            padding: 5px 8px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* 主菜单项的悬浮和激活效果 */
+        .content-nav ul li.has-submenu > a:hover,
+        .content-nav ul li.has-submenu.active > a {
+            background: #9383e4;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        /* 子菜单默认隐藏 */
+        .submenu {
+            display: none;  /* 默认隐藏子菜单 */
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        /* 当父菜单激活或鼠标悬浮时显示子菜单 */
+        .has-submenu.active > .submenu,
+        .has-submenu:hover > .submenu {
+            display: block;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        /* 子菜单样式 */
+        .submenu {
+            display: none;  /* 默认隐藏 */
+            margin-left: 20px;  /* 缩进 */
+            padding-left: 10px;
+        }
+        
+        /* 子菜单项样式 */
+        .submenu a {
+            padding: 0px 0px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: Semi-Bold;
+            font-size: 0.9rem;
+        }
+
+        /* 子菜单项的悬浮和激活效果 */
+        .submenu a:hover {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+        
+        .submenu li.active a {
+            color: #ff8b71;
+            font-size: 1rem;
+        }
+
+        /* 当父菜单激活时显示子菜单 */
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        /* 内容区样式 */
+        .content-area {
+            width: 60%;
+            margin-left: 350px;
+            margin-bottom: 5%;
+            padding: 20px;
+            background-color: #fbf2f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0px #ffd58d; 
+        }
+
+        .content-area h1 {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 3rem;
+            color: whitesmoke;
+            -webkit-text-stroke: 0.5px #9383e4;  /* 给文字添加边框 */
+            text-shadow: #9383e4 1px 2px 2px;
+        }
+        .content-area h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:#ff8b71;
+            margin-top: 10px;
+        }
+        .content-area h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .content-area h4 {
+            font-family: 'Kirang Haerang', cursive;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .content-area p {   
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .saying {
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 95%;
+            margin: 0 auto;
+            border-left: 5px solid #c9c1f9;  /* 添加左侧竖线 */
+        }
+
+        .saying:hover {
+            transform: scale(1.01);  /* 放大图片 */
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+        }
+
+        .saying p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .content-section {
+            min-height: 50px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .img-container {
+            text-align: center;
+        }
+        
+
+        .content-section img {
+        display: inline-block;  /* 将图片设置为块级元素 */
+        margin: 20px auto;  /* 上下间距20px，左右自动居中 */
+        max-width: 80%;  /* 确保图片不会超出容器宽度 */
+        height: auto;  /* 保持图片比例 */
+        vertical-align: middle; /* 保持垂直对齐 */
+        margin-right: 10px; /* 设置两张图片之间的间距 */
+        border-radius: 20px;
+        }
+
+        .collapse-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .collapse-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .collapse-title {
+            padding: 10px;
+            background-color: #f8e7c8;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: semi-bold;
+            cursor: pointer;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            }
+            
+        .collapse-title:hover {
+            background-color: #f5d1a6;
+        }
+        .collapse-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            }
+        
+            /* 调整 SVG 图片样式 */
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 0px;
+            color: #000;
+            transition: all 0.3s ease; /* 加��过渡效果 */
+            margin-right: 10px; /* 添加右间距，使文本与图标之间有空隙 */
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            background-color: rgb(247, 241, 229);
+            border: 2px solid #ddd;
+            padding: 20px;
+            width: 45%;
+            height: 310px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .box:hover {
+            background-color: rgb(250, 235, 205);
+            width: 47%;
+            height: 320px;
+            transition: all 0.3s ease;  /* 添加过渡效果 */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .medusa-container {
+            position: fixed;
+            width: 200px;
+            height: auto;
+            left: 95%;           /* 调整位置，放到视口中央 */
+            top: 85%;            /* 调整位置 */
+            transform: translate(-50%, -50%);  /* 使容器在位置上完全居中 */
+            
+            z-index: 999;
+        }
+
+        .medusa-container img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+            transition: all 1s ease;  /* 添加过渡效果 */
+            opacity: 0.9;
+        }
+
+        /* 箭头图片样式（默认隐藏） */
+        #arrow-img {
+            position: absolute;
+            top: 66%;  /* 设置箭头位置 */
+            left: 35%;
+            transform: translate(-50%, -50%);
+            width: 25px; /* 设定箭头图片大小 */
+            height: auto;
+            opacity: 0; /* 默认隐藏 */
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        /* 当鼠标悬浮在图片上时显示箭头 */
+        .medusa-container:hover #arrow-img {
+            opacity: 0.8;
+        }
+
+        .circle-container {
+            display: flex;
+            gap: 20px;
+        }
+        .circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: #f3bc0d; /* 初始背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000; /* 初始标题颜色为黑色 */
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 初始阴影效果 */
+        }
+        .circle .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            font-weight: normal;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .circle:hover .content {
+            opacity: 1;
+        }
+        .circle:hover {
+            background-color: #fbf2f1; /* 鼠标悬浮时的背景色 */
+            border: 2px solid #fbf2f1; /* 鼠标悬浮时的边缘颜色 */
+            box-shadow: 0 0 20px 5px #f3bc0d; /* 发光效果 */
+        }
+        .circle:hover {
+            color: transparent; /* 鼠标悬浮时标题不可见 */
+        }
+
+        .image-text-container {
+            display: flex;
+            align-items: center; /* Vertically aligns the text with the image */
+            gap: 15px; /* Adds space between the image and the text */
+        }
+
+        .image {
+            width: 40%;
+            height: auto; /* Keeps the aspect ratio intact */
+        }
+
+        .text {
+            flex: 1; /* Allows the text to take up the remaining space */
+        }
+
+</style>
+</head>
+<body>
+    <!-- 进度条容器 -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="logo" style="width: 50px; height: auto; margin-top: 10px; margin-bottom: 0px;">
+                    M-E-D-U-S-A
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#">TEAM</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../Team Page/member.html">Members</a></li>
+                        <li><a href="../Team Page/attributions.html">Attributions</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">PROJECT</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../Project Page/description.html">Description</a></li>
+                        <li><a href="../Project Page/design.html">Design</a></li>
+                        <li><a href="../Project Page/safety.html">Biosafety</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">WET LAB</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../Wetlab Page/proof.html">Proof of Concept</a></li>
+                        <li><a href="../Wetlab Page/part.html">Parts</a></li>
+                        <li><a href="../Wetlab Page/protocol.html">Protocol</a></li>
+                        <li><a href="../Wetlab Page/engineering.html">Engineering</a></li>
+                        <li><a href="../Wetlab Page/measurement.html">Measurement</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">DRY LAB</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../Drylab Page/model.html">Model & Software</a></li>
+                        <li><a href="../Drylab Page/hardware.html">Hardware</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">HUMAN PRACTICE</a>
+                    <ul class="dropdown-content">
+                        <li><a href="overview.html"> Overview</a></li>
+                        <li><a href="ihp.html">Intergrated Human Practices</a></li>
+                        <li><a href="entrepreneurship.html">Entrepreneurship</a></li>
+                        <li><a href="education.html">Education & Communication</a></li>
+                        <li><a href="inclusivity.html">Inclusivity</a></li>
+                        <li><a href="elc.html">Ethnic & Lega Considerations</a></li>
+                        <li><a href="SDG.html">SDG</a></li>
+                        <li><a href="bp.html">Bigger Picture</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main>
+        <!-- 加载动画 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-content">
+                <img src="../assets/img/spinner.png" class="loading-spinner" alt="Loading" style="width: 30%; height: auto;">
+                <p style="font-family: 'Kirang Haerang', cursive; font-size: 3rem; color: #333;">Loading...</p>
+            </div>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="main-container" id="mainContainer">
+        <div class="page-name">
+            <!-- 左侧的气泡 -->
+            <div class="bubble bubble-left-1"></div>
+            <div class="bubble bubble-left-2"></div>
+
+            <img src="../assets/img/snake.png" alt="snake">
+            <!-- <img src="../assets/img/dp_0_0.png" alt="example picture" style="width: 650px; height: auto; margin-top: 10px; margin-bottom: 0px;"> -->
+            <h1>Unravel the Tresses of Hope</h1>
+            <h2>Hair, thou art the crown of our countenance, and now, with Medusa's art, regain thy former glory.</h2>
+
+            <!-- 右侧的气泡 -->
+            <div class="bubble bubble-right-1"></div>
+            <div class="bubble bubble-right-2"></div>
+        </div>
+
+        <div class="content-nav">
+            <ul>
+                <li class="has-submenu">
+                    <a href="#key">Key Principles</a>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#phenomena">Phenomena</a>
+                    <ul class="submenu">
+                        <li><a href="#nowadays">Synthetic Biology Nowadays</a></li>
+                        <li><a href="#china">Synthetic Biology in China</a></li>
+                        <li><a href="#biography">Public Biography</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#action">Action</a>
+                    <ul class="submenu">
+                        <li><a href="#students">Students</a></li>
+                        <li><a href="#adults">Adults</a></li>
+                        <li><a href="#public">Public</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="#evaluation">Evaluation</a>
+                    <ul class="submenu">
+                        <li><a href="#timed">Timed Follow - Ups</a></li>
+                        <li><a href="#surveys">Questionnaire Surveys</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="content-area" style="margin-top: 50px; margin-bottom: 0px;">
+            <section class="content-section" style="background-image: url('../assets/img/talk_1.png'); background-size: cover; background-position: center;">
+                <p style="font-family: Shadows Into Light; font-size: x-large;">Behold, mortals! I,MEDUSA, once known for my fearsome locks that turned men to stone, now emerge from the depths of myth to offer a new kind of transformation. In this realm of hair loss and despair, I bring the power of science and innovation to vanquish the scourge that plagues so many. Let us embark on this journey together, where the secrets of follicular rejuvenation shall be revealed.</p>
+            </section>
+            <img src="../assets/img/home_0.png" alt="example picture" style="margin-left: 62%; height: auto; width: 100px;">
+
+            <section id="key" class="content-section">
+                <h1>Key Principles</h1>
+                <h5><strong>Engagement</strong></h5>
+                <p>We nurture communication within the scientific community and with the general public and actively engage with various <strong>industry professionals</strong>, academic researchers, and students.</p>
+
+                <h5><strong>Sustainability</strong></h5>
+                <p>We will continue our actions beyond the end of our project and provide an extensive, freely available record of all our materials. We will provide <strong>reusable educational materials</strong>, such as open-source textbooks and online courses that can be updated regularly.</p>
+
+                <h5><strong>Diversity</strong></h5>
+                <p>Our educational programs offer a broad range of access points to science and synthetic biology by addressing multiple <strong>age groups</strong> with theoretical and practical activities, expanding unrestricted educational opportunities.</p>
+
+                <h5><strong>Rigor</strong></h5>
+                <p>Our actions are grounded in a robust scientific framework through collaborations with renowned institutions and educational experts from various fields. We adhere to strict <strong>quality control measures</strong> when developing course materials, ensuring that they are based on the latest research and industry standards.</p>
+
+                <h5><strong>Two-Way</strong></h5>
+                <p>We firmly believe that education is not a one-way street; it thrives on two-way interaction. Our initiatives are designed to foster a dynamic exchange of knowledge and ideas between educators and learners. Through science-themed <strong>competitions</strong>, we participate in and try to showcase and perfect our innovative projects.</p>
+            </section>
+
+
+            </section>
+            
+            <section id="phenomena" class="content-section">
+                <h1>Phenomena</h1>
+                <section id="nowadays">
+                    <h2>Synthetic Biology Nowadays</h2>
+                    <p>The revolutionary and disruptive innovation potential of synthetic biology has become a strategic highland of science and technology that countries around the world are vying for, and is triggering a new round of international competition in science, technology and industry.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ec_1.png" alt="example picture">
+                    </div>
+                    <p>Countries and regions such as the <strong>United States</strong>, the <strong>United Kingdom</strong>, <strong>Australia</strong> and the <strong>European Union</strong> have continuously updated and released relevant research and technology roadmaps, increased funding and continuously supported new research projects, and established synthetic biology/engineering biology research centers and platform facilities. Against the backdrop of huge <strong>R&D</strong> and industrial transformation efforts, the applications of synthetic biology are rapidly expanding to important socioeconomic fields such as materials and energy, as well as fields related to people's health such as medicine, agriculture and food, forming an emerging "industrial direction" and even possibly an emerging "investment ecosystem".</p>
+                </section>
+
+
+                <section id="china">
+                    <div class="image-text-container">
+                        <img src="../assets/img/ec_2.png" alt="example picture" class="image" >
+                        <p class="text">The <strong>2022 China Synthetic Biology Green Application and Industry Perception Research Report</strong> shows that 57.81% of the respondents are optimistic about the development of synthetic biology technology in the next 10 years.</p>
+                    </div>
+                    
+                    <p>This implies that there are also some factors <strong>affecting the public's acceptance of synthetic biology</strong>. For example, in terms of scientific understanding, as an emerging field, the scientific understanding of synthetic biology is still in the development stage. In contrast, although transgenic technology has undergone a lot of research, due to its long development history and complex issues involved, the public has different views on its safety and reliability. Some people are skeptical about technology, especially genetic technology, and worry that it may disrupt the natural balance and weaken the original quality of organisms. Media reports also have a certain influence on the public's perception. The reports of mass media on transgenic crops are mostly negative and warning, emphasizing potential risks and uncertainties, which may deepen the public's rejection and anxiety about related technologies.</p>
+                    <p>We have drafted a questionnaire regarding the trust level of synthetic biology, aiming to investigate the understanding and acceptance of synthetic biology among the people around us.
+                        Here is the content of the questionnaire（Abridged Version）:</p>
+                    <h5>Chinese Version</h5>
+                    <embed src="../assets/Questionnaire中文.pdf" width="100%" height="600px"/>
+                    <h5>English Version</h5>
+                    <embed src="../assets/Questionnaire English.pdf" width="100%" height="600px"/>
+                    <p>More languages coming soon</p>
+                </section>
+
+                <section id="biography">
+                    <h2>Public Biography</h2>
+                    <p>Once the questionnaire data is collected, the following steps can be taken to evaluate the understanding of synthetic biology among the population and plan further measures:</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ec_34.png" alt="bold_hair_loss_1">
+                    </div>
+                    <h5>Data Analysis</h5>
+                    <p>1. Calculate the percentages of different responses for each question. For example, in the question about <strong>age groups</strong>, determine the proportion of respondents in each category. This will help understand the <strong>demographic distribution</strong> of those participating in the survey.</p>
+                    <p>2. Analyze the responses regarding knowledge of <strong>synthetic biology</strong>. Look at the percentage of people who have heard of it and those who can accurately describe its applications. This will give an indication of the overall <strong>awareness level</strong>.</p>
+
+                    <h5>Interpretation</h5>
+                    <p>1. Based on the data analysis, identify areas where there is a lack of understanding. If a large number of respondents cannot name specific applications of <strong>synthetic biology</strong>, it indicates a knowledge gap in that area.</p>
+                    <p>2. Determine the main concerns and sources of worry among those who are <strong>skeptical</strong>. This will help in addressing these specific issues in future communication.</p>
+                    <p>3. Look for trends in the data. For example, if a particular <strong>age group</strong> or educational background shows a more positive or negative attitude, this can be further explored.</p>
+
+                    <h5>Communication and Education</h5>
+                    <p>1. Develop educational materials based on the identified <strong>knowledge gaps</strong>. Create brochures, online articles, or videos that explain synthetic biology in simple terms and address the common misconceptions.</p>
+                    <p>2. Organize public seminars or <strong>webinars</strong> to present the facts about synthetic biology and answer questions from the audience. Invite experts in the field to share their insights.</p>
+                    <p>3. Use <strong>social media platforms</strong> to disseminate accurate information and engage in discussions with the public. Respond to comments and queries to clarify any misunderstandings.</p>
+
+                    <h5>Policy and Regulation</h5>
+                    <p>Based on the public's concerns and attitudes, provide input to policymakers. Suggest measures to ensure the safe development and application of <strong>synthetic biology</strong>. Advocate for more research funding to further explore the potential benefits and risks of synthetic biology. This will help in making more informed <strong>decisions</strong>.</p>
+
+                </section>
+            </section>
+
+            <section id="action" class="content-section">
+                <h1>Action</h1>
+                <section id="students">
+                    <h2>Students</h2>
+
+                    <h5>Children 1-15</h5>
+                    <p>We will organize a series of workshops tailored for children aged <strong>1 - 15</strong>. These workshops will be filled with fun-filled activities such as <strong>game-based learning</strong> sessions. We plan to design a "Hair Health Scavenger Hunt" game, where children will search for pictures or objects related to <strong>healthy hair habits</strong>. This game will not only make learning about hair care an enjoyable experience but also help them remember key points about keeping their hair healthy, like the importance of regular washing and a balanced diet.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ec_4.png" alt="bold_hair_loss_1" style="max-width: 60%;">
+                        <img src="../assets/img/ec_5.png" alt="bold_hair_loss_2" style="max-width: 40%;">
+                    </div>
+                    <p style="color:#deac56; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 1: Example Version of Comics</p>
+                    <p>We'll also create a comic book series focused on <strong>hair health</strong>. These comics will feature <strong>colorful characters</strong> going on adventures related to <strong>hair care</strong>. Through the stories, children will learn about the basics of hair growth and how to prevent common hair problems. The comic books will be distributed in schools and community centers. This way, we can plant the seeds of hair health awareness in young minds at an early stage, setting a good foundation for their future hair care routines.</p>
+                
+                    <h5>Teens 15-18</h5>
+                    <p>For teenagers aged <strong>15 - 18</strong>, we'll launch a remote-teaching-based <strong>synthetic biology education program</strong>. We'll recruit college students majoring in relevant fields or professionals in the <strong>Biology</strong> or Medicine to be remote teachers. They will conduct online classes about the science behind hair loss and effective prevention methods. This not only provides teenagers with in-depth knowledge but also offers them a chance to interact with experts in the field, inspiring their interest in science and health-related subjects. Actually, we have already started the program in winter and decided to continue this adventure.</p>
+                    <p>We conducted a total of <strong>15-hour</strong> online teaching courses at Haixi Middle School in Haixi, Qinghai. The courses mainly explored the principles, applications, and real-world cases of <strong>synthetic biology</strong>, as well as the specific design mechanism of our winter project, <strong>MEDUSA</strong>.</p>
+                    <div class="img-container">
+                        <img src="../assets/img/ec_6.png" alt="bold_hair_loss_1">
+                    </div>
+                    <p>During the summer, we'll host <strong>laboratory summer camps</strong>. Teens will have the opportunity to visit professional laboratories and learn about the latest research on <strong>hair growth</strong> and anti-hair-loss technologies. They'll even get to participate in simple experiments under the guidance of scientists. This hands-on experience will not only deepen their understanding of hair-care science but also potentially spark their enthusiasm for <strong>scientific research</strong>.</p>
+                    
+                    <h5>Peers at College</h5>
+                    <div class="img-container">
+                        <img src="../assets/img/ec_7.png" alt="bold_hair_loss_1">
+                    </div>
+                    <p>We'll participate in prestigious competitions like the <strong>2025 China Synthetic Biology Competition</strong>, the <strong>2025 "Internet +" Innovation and Entrepreneurship Competition</strong>, and the Hangzhou Innovation and Entrepreneurship Competition. By taking part in these competitions, we can apply their academic knowledge to develop innovative <strong>anti-hair-loss solutions</strong>. Whether it's creating new products, business models, or marketing strategies, these competitions will serve as a platform for us to showcase our creativity and problem-solving abilities and perfect our projects.</p>
+                </section>
+
+                <section id="adults">
+                    <h2>Adults</h2>
+                        <h5>Take Care of Your Hair</h5>
+                        <p>We're set to roll out an in-depth educational initiative in the form of a <strong>handbook</strong>. This handbook will be distributed at <strong>clinics</strong> and <strong>beauty salons</strong>, aiming to inform the adult population about the crucial role hair plays in their overall appearance and self-confidence.</p>
+                        <p>In terms of practical hair care, the handbook will offer a wealth of useful <strong>tips</strong>. When it comes to choosing hair products, we'll guide adults on selecting the right <strong>shampoo</strong> and <strong>conditioner</strong> according to their specific hair types. For those with oily hair, a clarifying shampoo might be more suitable, while people with dry hair should opt for a moisturizing formula.</p>
+
+                        <h5>Protocal to Use Our Device</h5>
+                        <div class="img-container">
+                            <img src="../assets/img/ec_8.png" alt="bold_hair_loss_1">
+                        </div>
+                        <p style="color:#deac56; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 2: Example Version</p>
+                        <p>We'll develop a detailed and user-friendly <strong>instruction manual</strong> for our <strong>anti-hair-loss device</strong>. The manual will be available in multiple <strong>languages</strong> and will cover everything from the basic operation of the device to advanced usage techniques. We'll also create step-by-step <strong>video tutorials</strong> that can be accessed on our official website and social media platforms. These resources will ensure that adults can use our device safely and effectively, maximizing its <strong>anti-hair-loss benefits</strong>. Additionally, we'll offer <strong>customer support services</strong> to answer any questions or concerns users may have about the device's usage.</p>
+                </section>
+
+                <section id="public">
+                    <h2>Public</h2>
+                        <h5>Educational Videos</h5>
+                        <div class="img-container">
+                            <img src="../assets/img/ec_9.png" alt="bold_hair_loss_1">
+                        </div>
+                        <p style="color:#deac56; text-align: center; margin-bottom: 10px; font-size: 0.9rem;"> Figure 3: Example Version</p>
+                        <p>We'll produce a series of high-quality <strong>educational videos</strong> about <strong>hair loss</strong> and prevention. These videos will cover a wide range of topics, including the causes of hair loss, different types of hair loss, and the science behind our <strong>anti-hair-loss solutions</strong>. We'll use <strong>animations</strong>, real-life examples, and expert <strong>interviews</strong> to make the content engaging and easy to understand. The videos will be uploaded to popular <strong>video-sharing platforms</strong> like YouTube and Bilibili, as well as our own website. By reaching a large audience through these videos, we can raise public awareness about <strong>hair loss</strong> and promote our anti-hair-loss products and services.</p>
+
+                        <h5>Posters</h5>
+                        <p>We'll design eye-catching <strong>posters</strong> with clear and concise messages about <strong>hair health</strong> and our <strong>anti-hair-loss solutions</strong>. These posters will be displayed in various public places such as <strong>schools</strong>, <strong>universities</strong>, <strong>hospitals</strong>, <strong>community centers</strong>, and <strong>shopping malls</strong>. The posters will feature attractive visuals and important information, like the benefits of using our products, common <strong>hair-loss myths</strong> debunked, and tips for maintaining <strong>healthy hair</strong>. This visual form of communication will help us quickly convey our message to the public and increase <strong>brand awareness</strong>.</p>
+
+                        <h5>Communication Tools</h5>
+                        <div class="img-container">
+                            <img src="../assets/img/ec_10.png" alt="bold_hair_loss_1" style="width: 20%;">
+                            <img src="../assets/img/ec_11.png" alt="bold_hair_loss_1" style="width: 20%;">
+                            <img src="../assets/img/ec_12.png" alt="bold_hair_loss_1" style="width: 20%;">
+                            <img src="../assets/img/ec_13.png" alt="bold_hair_loss_1" style="width: 20%;">
+                        </div>
+                        <p>We'll utilize popular <strong>communication tools</strong> such as <strong>WeChat</strong>, <strong>Instagram</strong>, <strong>Twitter</strong>, official public accounts, and <strong>Xiaohongshu</strong> for our <strong>promotional efforts</strong>. On these platforms, we'll regularly post engaging content related to <strong>hair health</strong>, including <strong>tips</strong>, tricks, <strong>success stories</strong>, and the latest news about our <strong>anti-hair-loss products</strong>. We'll also interact with our <strong>followers</strong>, answering their questions and addressing their concerns. Through these <strong>social media channels</strong>, we can build a <strong>community</strong> of hair-conscious individuals, sharing knowledge and experiences, and promoting our brand as a trusted source of <strong>hair-care information</strong>.</p>
+
+                        <h5>News</h5>
+                        <p>We'll actively seek <strong>media coverage</strong> to promote our <strong>anti-hair-loss project</strong>. We'll issue <strong>press releases</strong> about our <strong>product launches</strong>, research breakthroughs, and <strong>educational initiatives</strong>. By collaborating with <strong>media outlets</strong>, we can reach a wider audience and gain <strong>credibility</strong> in the market. Media coverage can also help us address common public concerns about <strong>hair loss</strong> and our products, and provide accurate information to the public. This will enhance our <strong>brand image</strong> and increase public trust in our <strong>anti-hair-loss solutions</strong>.</p>
+                </section>
+            </section>
+            
+            <section id="evaluation" class="content-section">
+                <h1>Evaluation</h1>
+                <p>We aim to establish a long-term <strong>educational effectiveness</strong> evaluation mechanism to continuously assess the <strong>impact</strong> of our educational initiatives in the <strong>anti-hair-loss project</strong>. This mechanism will help us understand the extent to which our <strong>target audiences</strong>, including students, adults, and the general public, have benefited from our educational efforts and identify areas for <strong>improvement</strong>.</p>
+
+                <section id="timed">
+                    <h2>Timed Follow - Ups</h2>
+                    <p>We will conduct regular and systematic follow-up <strong>surveys</strong> with the participants of our educational activities. For students who attended our <strong>workshops</strong>, summer camps, or engaged in <strong>competition-related projects</strong>, we'll set specific intervals for follow-up. For example, we'll reach out to them one month, three months, and six months after the activities. During these follow-ups, we'll inquire about whether they have applied the hair-care knowledge they learned in their daily lives. Have they changed their <strong>hair-washing habits</strong>? Are they more conscious of their diet in relation to hair health?</p>
+                    <p>For adults who received our hair-care <strong>handbook</strong> at clinics or beauty salons, we'll also implement a follow-up plan. We'll contact them via <strong>email</strong> or phone at regular intervals to find out if the information in the handbook has been helpful. Did they start using different hair-care products based on the recommendations? Have they noticed any improvements in their hair condition? These follow-up efforts will provide us with valuable insights into the long-term impact of our educational content on their behavior and attitudes towards <strong>hair care</strong>.</p>                    
+                </section>
+
+                <section id="surveys">
+                    <h2>Questionnaire Surveys</h2>
+                    <p>We'll design comprehensive <strong>questionnaire surveys</strong> to gather feedback from our <strong>target groups</strong>. The questionnaires will be distributed both <strong>online</strong> and offline. For the public who accessed our educational videos, posters, or social media content, we'll create an online survey accessible through platforms like <strong>WeChat</strong>, Instagram, and our official website. The survey will cover various aspects, such as the level of understanding of the educational content, whether it has influenced their perception of hair loss and prevention, and what additional information they would like to see.</p>
+                    <p>For those who participated in more in-depth <strong>educational activities</strong> like the online teaching courses or the in-person interactions at <strong>clinics</strong> and beauty salons, we'll use more detailed questionnaires. These questionnaires will delve into their satisfaction with the teaching methods, the practicality of the knowledge and tips provided, and any suggestions for improving future educational offerings. By analyzing the data collected from these questionnaires, we can measure the <strong>effectiveness</strong> of our educational strategies, identify areas that need enhancement, and make data-driven decisions to optimize our future educational initiatives.</p>
+                </section>
+            </section>
+        </div?>
+        </div>
+        
+        <!-- 背景图 -->
+        <div id="img-modal" class="medusa-container">
+            <img src="../assets/img/medusa_1.png" alt="medusa_1" class="medusa-img" id="medusa-img">
+            <!-- 箭头图片 -->
+            <img src="../assets/img/arrow.png" alt="arrow" id="arrow-img">
+            <!-- <img src="../assets/img/medusa_2.png" alt="medusa_2" class="medusa-img">
+            <img src="../assets/img/medusa_3.png" alt="medusa_3" class="medusa-img"> -->
+        </div>
+
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="foot-container">
+            <div class="foot-content">
+                <p>© 2025 - iGEM ZJU-China</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            var nav = $('.content-nav');
+            var navTop = nav.offset().top;  // 获取目录原始位置
+            var headerHeight = 60;  // 导航栏高度
+
+            // 添加调试信息
+            console.log('Initial nav top position:', navTop);
+            console.log('Header height:', headerHeight);
+
+            // 页面加载时先检查一次位置
+            checkPosition();
+
+            // 滚动时检查位置
+            $(window).scroll(function() {
+                checkPosition();
+                checkActiveSection();
+            });
+
+            // 检查位置的函数
+            function checkPosition() {
+                var scrollTop = $(window).scrollTop();
+                console.log('Scroll position:', scrollTop); // 调试用
+                
+                if (scrollTop + headerHeight + 75 > navTop) {
+                    console.log('Adding fixed class'); // 调试用
+                    nav.addClass('fixed');
+                } else {
+                    console.log('Removing fixed class'); // 调试用
+                    nav.removeClass('fixed');
+                }
+            }
+
+            // 检查激活章节的函数
+            function checkActiveSection() {
+                let scrollPosition = $(window).scrollTop();
+                
+                // 检查主要章节位置
+                $('.content-section').each(function() {
+                    let sectionTop = $(this).offset().top - 100;
+                    let sectionBottom = sectionTop + $(this).outerHeight();
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                        let id = $(this).attr('id');
+                        // 移除所有激活状态
+                        $('.content-nav li').removeClass('active');
+                        $('.submenu li').removeClass('active');
+                        
+                        // 激活当前主菜单项
+                        let currentMainItem = $('.content-nav a[href="#' + id + '"]').parent();
+                        currentMainItem.addClass('active');
+                    }
+                });
+                
+                // 检查子章节位置
+                $('section[id] h2').each(function() {
+                    let subSectionTop = $(this).offset().top - 100;
+                    let subSectionBottom = subSectionTop + $(this).parent().outerHeight();
+                    
+                    if (scrollPosition >= subSectionTop && scrollPosition <= subSectionBottom) {
+                        let id = $(this).parent().attr('id');
+                        // 移除所有子菜单项的激活状态
+                        $('.submenu li').removeClass('active');
+                        // 激活当前子菜单项
+                        $('.submenu a[href="#' + id + '"]').parent().addClass('active');
+                        // 确保父菜单保持激活状态
+                        $('.submenu a[href="#' + id + '"]').parents('.has-submenu').addClass('active');
+                    }
+                });
+            }
+            
+            // 点击目录链接时平滑滚动
+            $('.content-nav a').click(function(e) {
+                e.preventDefault();
+                let target = $($(this).attr('href'));
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            });
+
+            // Toggle the collapse content when clicking on the title
+        $(".collapse-title").click(function() {
+            var content = $(this).next(".collapse-content");
+            // Slide toggle the content
+            content.slideToggle();
+            // Optionally, collapse other sections when one is opened (accordion behavior)
+            $(".collapse-content").not(content).slideUp();
+            });
+
+            const arrowImg = $("#arrow-img");
+
+            // 点击箭头图片返回顶部
+            arrowImg.click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+        });
+
+        // 定义图片路径数组
+    const images = [
+        "../assets/img/medusa_1.png", 
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_3.png",
+        "../assets/img/medusa_2.png", 
+        "../assets/img/medusa_1.png",
+    ];
+
+    // 初始化当前图片索引
+    let currentImageIndex = 0;
+
+    // 获取图片元素
+    const imgElement = document.getElementById('medusa-img');
+    
+    // 监听滚动事件
+    $(window).scroll(function() {
+        // 获取当前的滚动位置
+        var scrollTop = $(window).scrollTop();
+        console.log('Scroll position:', scrollTop); // 打印当前的滚动位置
+
+        // 每1000px滚动时切换一次图片
+        if (scrollTop >= 1000) {
+            // 计算应该切换的图片索引
+            currentImageIndex = Math.floor(scrollTop / 1000) % 5;
+
+            // 根据当前图片索引切换图片
+            imgElement.src = images[currentImageIndex];
+
+            // 可选：重置滚动位置，避免频繁触发
+            // $(window).scrollTop(0); // 可选：如果你希望在达到1000px时重置滚动位置，可以取消注释此行
+        }
+    });
+
+        
+        // 模拟加载延迟
+        window.onload = function() {
+                document.getElementById('mainContainer').style.display = 'none';
+                setTimeout(function() {
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                }, 2000); // 设置3秒钟后隐藏加载器
+            };
+
+        function changeIcon(element, newSrc) {
+        element.src = newSrc;
+        }
+
+        window.onscroll = function() {
+            // 获取文档的总高度和当前滚动的高度
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrollPosition = window.scrollY;
+
+            // 计算滚动进度百分比
+            var scrollPercentage = (scrollPosition / docHeight) * 100;
+
+            // 更新进度条的宽度
+            document.getElementById("progress-bar").style.width = scrollPercentage + "%";
+        }
+    </script>
+</body>
+</html>

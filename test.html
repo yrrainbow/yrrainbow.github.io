@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Display</title>
+    <style>
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        code {
+            display: block;
+        }
+        .highlight {
+            color: #f92672; /* Pink color for keywords */
+        }
+        .comment {
+            color: #75715e; /* Grey color for comments */
+        }
+        .variable {
+            color: #f8f8f2; /* White for general text */
+        }
+    </style>
+</head>
+<body>
+
+<h2>Embedded Code Example</h2>
+<pre><code>
+<span class="comment">// Code for controlling a motor and light system</span>
+<span class="highlight">#include</span> <span class="variable">&lt;reg52.h&gt;</span>  
+<span class="highlight">sbit</span> Motor_IN1 = P1^0;  
+<span class="highlight">sbit</span> Motor_IN2 = P1^1;  
+<span class="highlight">sbit</span> Motor_PWM = P2^0;  
+<span class="highlight">sbit</span> Light = P2^1;      
+<span class="highlight">sbit</span> Speed_Switch = P3^0;  
+<span class="highlight">sbit</span> Light_Switch = P3^1;  
+<span class="variable">unsigned</span> <span class="variable">char</span> speed_level = 0;  
+<span class="variable">bit</span> light_state = 0;          
+
+<span class="comment">// Time-lapse function</span>
+<span class="highlight">void</span> Delay(<span class="variable">unsigned</span> <span class="variable">int</span> t) {
+    <span class="highlight">while</span> (t--) {
+        <span class="variable">unsigned</span> <span class="variable">char</span> i;
+        <span class="highlight">for</span> (i = 0; i < 1275; i++);
+    }
+}
+
+<span class="comment">// Main function</span>
+<span class="highlight">void</span> main() {
+    Motor_IN1 = 1;  <span class="comment">// Set the motor to turn forward</span>
+    Motor_IN2 = 0;
+
+    <span class="highlight">while</span> (1) {
+        <span class="comment">// Read the motor speed control switch status</span>
+        <span class="highlight">if</span> (Speed_Switch == 0) {  
+            Delay(20);  
+            <span class="highlight">if</span> (Speed_Switch == 0) {  
+                speed_level++;  
+                <span class="highlight">while</span> (Speed_Switch == 0);  
+                Delay(20);  
+            }
+        }
+
+        <span class="comment">// Set the motor speed according to the speed level</span>
+        <span class="highlight">switch</span> (speed_level) {
+            <span class="highlight">case</span> 0:
+                Motor_PWM = 0; 
+                <span class="highlight">break</span>;
+            <span class="highlight">case</span> 1:
+                Motor_PWM = 50;  
+                <span class="highlight">break</span>;
+            <span class="highlight">case</span> 2:
+                Motor_PWM = 100;  
+                <span class="highlight">break</span>;
+            <span class="highlight">case</span> 3:
+                Motor_PWM = 200;  
+                <span class="highlight">break</span>;
+            <span class="highlight">default</span>:
+                speed_level = 0;  
+                <span class="highlight">break</span>;
+        }
+
+        <span class="comment">// Read the red light control switch status</span>
+        <span class="highlight">if</span> (Light_Switch == 0) {  
+            Delay(20);  
+            <span class="highlight">if</span> (Light_Switch == 0) {  
+                light_state = !light_state;  
+                <span class="highlight">while</span> (Light_Switch == 0);  
+                Delay(20);  
+            }
+        }
+
+        <span class="comment">// Control the red light according to the red light status</span>
+        Light = light_state;
+        Delay(100);  
+    }
+}
+</code></pre>
+
+</body>
+</html>
