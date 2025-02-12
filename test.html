@@ -3,105 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Display</title>
+    <title>湿队成员</title>
     <style>
-        pre {
-            background-color: #2d2d2d;
-            color: #f8f8f2;
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .content-area {
+            width: 200px;
+            text-align: center;
+            margin-bottom: 20px;
             padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-size: 16px;
-            line-height: 1.6;
+            background-color: #fbf2f1;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0px #ffd58d;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
-        code {
-            display: block;
+
+        .content-area img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
         }
-        .highlight {
-            color: #f92672; /* Pink color for keywords */
+
+        .content-area p {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
         }
-        .comment {
-            color: #75715e; /* Grey color for comments */
+
+        .content-area:hover .description {
+            visibility: visible;
+            opacity: 1;
         }
-        .variable {
-            color: #f8f8f2; /* White for general text */
+
+        .description {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 213, 141, 0.3);
+            color: #ffd58d;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            font-weight: normal;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
         }
     </style>
 </head>
 <body>
 
-<h2>Embedded Code Example</h2>
-<pre><code>
-<span class="comment">// Code for controlling a motor and light system</span>
-<span class="highlight">#include</span> <span class="variable">&lt;reg52.h&gt;</span>  
-<span class="highlight">sbit</span> Motor_IN1 = P1^0;  
-<span class="highlight">sbit</span> Motor_IN2 = P1^1;  
-<span class="highlight">sbit</span> Motor_PWM = P2^0;  
-<span class="highlight">sbit</span> Light = P2^1;      
-<span class="highlight">sbit</span> Speed_Switch = P3^0;  
-<span class="highlight">sbit</span> Light_Switch = P3^1;  
-<span class="variable">unsigned</span> <span class="variable">char</span> speed_level = 0;  
-<span class="variable">bit</span> light_state = 0;          
+    <div class="main-container">
+        <!-- Wet Team Member 1 -->
+        <div class="content-area">
+            <img src="https://alifile.sojump.cn/301111334_1_q1_202502102155403773ZE0PG.jpg?Expires=1747050704&OSSAccessKeyId=LTAI5t5yGPC18zF31HzHsQKG&Signature=CKj7sHUkQ2gdJWYT82%2FyinNTtso%3D&response-content-disposition=attachment%3Bfilename%3D1_1_zwt.jpg" alt="Zhu Wentao">
+            <p>Zhu Wentao</p>
+            <div class="description">
+                Hello, I'm Zhu Wentao from Zhejiang University. My major is horticulture and I have been exposed to many experimental operations related to biology. The idea of building new engineering organisms from scratch in synthetic biology and the teamwork of students from different majors in the iGEM competition are very attractive to me, so I join the iGEM WP team, hoping to create new products together with our team members.
+            </div>
+        </div>
 
-<span class="comment">// Time-lapse function</span>
-<span class="highlight">void</span> Delay(<span class="variable">unsigned</span> <span class="variable">int</span> t) {
-    <span class="highlight">while</span> (t--) {
-        <span class="variable">unsigned</span> <span class="variable">char</span> i;
-        <span class="highlight">for</span> (i = 0; i < 1275; i++);
-    }
-}
+        <!-- Wet Team Member 2 -->
+        <div class="content-area">
+            <img src="https://alifile.sojump.cn/301111334_3_q1_2025021110083893995JPZP.jpg?Expires=1747050704&OSSAccessKeyId=LTAI5t5yGPC18zF31HzHsQKG&Signature=vUmMhYxG9QUQjjj8JhTycplB0CQ%3D&response-content-disposition=attachment%3Bfilename%3D3_1_mmexport1731910145379_edit_656183708911331.jpg" alt="Gao Haoran">
+            <p>Gao Haoran</p>
+            <div class="description">
+                My name is Gao Haoran, INFJ-a. I am passionate about natural sciences, especially the continuous overturning and innovation within them. I am a person who is crazy about folk music, with a touch of the artistic style.
+            </div>
+        </div>
 
-<span class="comment">// Main function</span>
-<span class="highlight">void</span> main() {
-    Motor_IN1 = 1;  <span class="comment">// Set the motor to turn forward</span>
-    Motor_IN2 = 0;
+        <!-- Wet Team Member 3 -->
+        <div class="content-area">
+            <img src="https://alifile.sojump.cn/301111334_5_q1_20250211103736136VG8J7U.jpeg?Expires=1747050704&OSSAccessKeyId=LTAI5t5yGPC18zF31HzHsQKG&Signature=Oil73zWpYMFzcNej1fOoiVvaFeE%3D&response-content-disposition=attachment%3Bfilename%3D5_1_1476ac9ac6c9735c1850b8b970b0512a.jpeg" alt="Wang Yiyue">
+            <p>Wang Yiyue</p>
+            <div class="description">
+                My name is Wang Yiyue, I am a sophomore majoring in basic medicine. After entering the university I systematically grasp the basic theoretical knowledge and behave well in academic. And I entered Professor Hongwei Ouyang's laboratory for relevant scientific research training during the winter holiday of my freshman year, which not only endowed me with proficient experimental operation ability, but also cultivated my independent thinking and problem solving ability. During this learning process, I accumulated rich research experience and learned how to read English article efficiently.
+            </div>
+        </div>
 
-    <span class="highlight">while</span> (1) {
-        <span class="comment">// Read the motor speed control switch status</span>
-        <span class="highlight">if</span> (Speed_Switch == 0) {  
-            Delay(20);  
-            <span class="highlight">if</span> (Speed_Switch == 0) {  
-                speed_level++;  
-                <span class="highlight">while</span> (Speed_Switch == 0);  
-                Delay(20);  
-            }
-        }
+        <!-- Wet Team Member 4 -->
+        <div class="content-area">
+            <img src="https://alifile.sojump.cn/301111334_6_q1_20250211113314803TZ0W8G.jpg?Expires=1747050704&OSSAccessKeyId=LTAI5t5yGPC18zF31HzHsQKG&Signature=uFbeOIJ2%2FR%2BFVG5G3j23bqwPs4I%3D&response-content-disposition=attachment%3Bfilename%3D6_1_IMG_20240615_091816.jpg" alt="Shi Ke">
+            <p>Shi Ke</p>
+            <div class="description">
+                Hello everyone! I'm from the 24th batch of the Strong Foundation Program, majoring in Biological Sciences. It's a great honor to work with all of you outstanding students. I attach great importance to the completeness of logic and the practicality of ideas, and I'm always looking forward to uncovering the mysteries of biomolecules. Reading ten thousand books and traveling ten thousand miles, when I'm not in the laboratory, I'm either on the hunt for delicious food or enjoying the beautiful scenery (˃ ⌑ ˂ഃ )
+            </div>
+        </div>
 
-        <span class="comment">// Set the motor speed according to the speed level</span>
-        <span class="highlight">switch</span> (speed_level) {
-            <span class="highlight">case</span> 0:
-                Motor_PWM = 0; 
-                <span class="highlight">break</span>;
-            <span class="highlight">case</span> 1:
-                Motor_PWM = 50;  
-                <span class="highlight">break</span>;
-            <span class="highlight">case</span> 2:
-                Motor_PWM = 100;  
-                <span class="highlight">break</span>;
-            <span class="highlight">case</span> 3:
-                Motor_PWM = 200;  
-                <span class="highlight">break</span>;
-            <span class="highlight">default</span>:
-                speed_level = 0;  
-                <span class="highlight">break</span>;
-        }
+        <!-- Wet Team Member 5 -->
+        <div class="content-area">
+            <img src="https://alifile.sojump.cn/301111334_8_q1_20250211131137132QL5B4T.jpeg?Expires=1747050704&OSSAccessKeyId=LTAI5t5yGPC18zF31HzHsQKG&Signature=DrsGZyvdkVzJpKW6%2FnbxQ4LF8WQ%3D&response-content-disposition=attachment%3Bfilename%3D9_1_0c34f1f8ccdceacf064d20171ad8c548.jpeg" alt="Zhao Yiyang">
+            <p>Zhao Yiyang</p>
+            <div class="description">
+                Hi～I'm Zhao Yiyang and I'm currently majoring in ecology in the college of life sciences. Good to meet my partners in WP and hope our project works fine as imagined.
+            </div>
+        </div>
 
-        <span class="comment">// Read the red light control switch status</span>
-        <span class="highlight">if</span> (Light_Switch == 0) {  
-            Delay(20);  
-            <span class="highlight">if</span> (Light_Switch == 0) {  
-                light_state = !light_state;  
-                <span class="highlight">while</span> (Light_Switch == 0);  
-                Delay(20);  
-            }
-        }
+        <!-- Wet Team Member 6 -->
+        <div class="content-area">
+            <img src="https://alifile.sojump.cn/301111334_10_q1_20250211151613057RBE7WS.jpg?Expires=1747050704&OSSAccessKeyId=LTAI5t5yGPC18zF31HzHsQKG&Signature=J%2Ba2SfZrC6UFfg98PMweupFBJzs%3D&response-content-disposition=attachment%3Bfilename%3D10_1_1.jpg" alt="Wang Kaizheng">
+            <p>Wang Kaizheng</p>
+            <div class="description">
+                Hello, everyone! I'm Wang Kaizheng. I come from Dongying, the beautiful estuary of the Yellow River in Shandong Province. My major is Plant Protection in the Agricultural College. My dream is that the bacteria would always be cooperative during experiments.
+            </div>
+        </div>
 
-        <span class="comment">// Control the red light according to the red light status</span>
-        Light = light_state;
-        Delay(100);  
-    }
-}
-</code></pre>
+        <!-- Wet Team Member 7 -->
+        <div class="content-area">
+            <img src="https://alifile.sojump.cn/301111334_11_q1_20250211165310597PFHZU7.jpg?Expires=1747050704&OSSAccessKeyId=LTAI5t5yGPC18zF31HzHsQKG&Signature=dfD3IeaVQUpVn7FhOqcZaGIFxGY%3D&response-content-disposition=attachment%3Bfilename%3D11_1_image.jpg" alt="Wang Zihan">
+            <p>Wang Zihan</p>
+            <div class="description">
+                Hello, I'm Wang Zihan, majoring in Biological Sciences. I'm very excited to participate in this project. I am eager to explore biology, solve problems, and build new models.
+            </div>
+        </div>
+
+    </div>
 
 </body>
 </html>
