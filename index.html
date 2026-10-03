@@ -27,8 +27,20 @@
             min-height: 300px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
             overflow: hidden;
+        }
+
+        .avatar {
+            width: 148px;
+            height: 148px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center 18%;
+            border: 4px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            margin-bottom: 1.25rem;
         }
 
         /* 可选动画效果 */
@@ -114,8 +126,9 @@
 </head>
 <body>
     <header>
+        <img class="avatar" src="me.jpg" alt="Rui Yang 的照片">
         <h1>Rui Yang</h1>
-        <p>Software Engineering Undergraduate,School of Computer Science and Technology,Zhejiang University</p>
+        <p>Master's student at Zhejiang University, working on generative audio, audio-centric agents, and multimodal understanding.</p>
     </header>
 
     <div class="container">
