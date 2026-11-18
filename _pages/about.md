@@ -80,12 +80,6 @@ Changhao Pan#, <strong>Rui Yang</strong>#, Han Wang#, et al.</p>
 
 - `NeurIPS 2025` [MRSAudio: A Large-Scale Multimodal Recorded Spatial Audio Dataset with Refined Annotations](https://arxiv.org/abs/2510.10396), Wenxiang Guo#, Changhao Pan#, Zhiyuan Zhu#, Xintong Hu#, Yu Zhang#, Li Tang, **Rui Yang**, et al. \| [**Hugging Face**](https://huggingface.co/datasets/MRSAudio/MRSAudio) \| [**Demo**](https://mrsaudio.github.io/)
 
-# 📬 Contact
-
-- Email: [yangruiii@zju.edu.cn](mailto:yangruiii@zju.edu.cn)
-- Address: 浙江省杭州市西湖区浙江大学（玉泉校区）
-- GitHub: [yrrainbow](https://github.com/yrrainbow)
-
 <span class='anchor' id='honors-awards'></span>
 
 # 🎖 Honors and Awards
