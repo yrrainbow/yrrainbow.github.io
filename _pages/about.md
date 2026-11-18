@@ -8,51 +8,84 @@ redirect_from:
   - /about.html
 ---
 
-{% if site.google_scholar_stats_use_cdn %}
-{% assign gsDataBaseUrl = "https://cdn.jsdelivr.net/gh/" | append: site.repository | append: "@" %}
-{% else %}
-{% assign gsDataBaseUrl = "https://raw.githubusercontent.com/" | append: site.repository | append: "/" %}
-{% endif %}
-{% assign url = gsDataBaseUrl | append: "google-scholar-stats/gs_data_shieldsio.json" %}
-
 <span class='anchor' id='about-me'></span>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. Suspendisse condimentum, libero vel tempus mattis, risus risus vulputate libero, elementum fermentum mi neque vel nisl. Maecenas facilisis maximus dignissim. Curabitur mattis vulputate dui, tincidunt varius libero luctus eu. Mauris mauris nulla, scelerisque eget massa id, tincidunt congue felis. Sed convallis tempor ipsum rhoncus viverra. Pellentesque nulla orci, accumsan volutpat fringilla vitae, maximus sit amet tortor. Aliquam ultricies odio ut volutpat scelerisque. Donec nisl nisl, porttitor vitae pharetra quis, fringilla sed mi. Fusce pretium dolor ut aliquam consequat. Cras volutpat, tellus accumsan mattis molestie, nisl lacus tempus massa, nec malesuada tortor leo vel quam. Aliquam vel ex consectetur, vehicula leo nec, efficitur eros. Donec convallis non urna quis feugiat.
+I am a master's student at the Polytechnic Institute of Zhejiang University, majoring in Artificial Intelligence.
 
-My research interest includes neural machine translation and computer vision. I have published more than 100 papers at the top international AI conferences with total <a href='https://scholar.google.com/citations?user=DhtAFkwAAAAJ'>google scholar citations <strong><span id='total_cit'>260000+</span></strong></a> (You can also use google scholar badge <a href='https://scholar.google.com/citations?user=DhtAFkwAAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>).
+Currently, I am a member of the Audio Research Team at Zhejiang University, under the supervision of [Prof. Zhou Zhao](https://person.zju.edu.cn/zhaozhou). I received my bachelor's degree in Software Engineering from the College of Computer Science and Technology at Zhejiang University in 2022.
 
+My research interests primarily focus on multimodal artificial intelligence, particularly **speech generation and multimodal interaction**. I have published multiple papers at top-tier international AI conferences, including ACL. Currently, I am working on **fine-grained speech generation and multimodal interaction**.
+
+I am actively seeking academic collaborations. Please feel free to contact me via email at [yangruiii@zju.edu.cn](mailto:yangruiii@zju.edu.cn).
+
+<span class='anchor' id='news'></span>
 
 # 🔥 News
-- *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
 
-# 📝 Publications 
+- 2026.09 🎉 PetTalk is accepted by NeurIPS 2026 Workshop!
+- 2026.04 🎉 SwanBench-Speech is accepted by ACL!
+- 2025.09 🎉 MRSAudio is accepted by NeurIPS 2025!
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
+<span class='anchor' id='publications'></span>
 
-[Deep Residual Learning for Image Recognition](https://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf)
+# 📝 Publications
 
-**Kaiming He**, Xiangyu Zhang, Shaoqing Ren, Jian Sun
+*#* denotes co-first authors
 
-[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+## 🗣 Text-to-Speech
+
+<div class="paper-box">
+<div class="paper-box-image">
+<div>
+<div class="badge">ACL 2026</div>
+<img src="{{ '/images/SwanBench-Speech.png' | relative_url }}" alt="SwanBench-Speech" width="100%">
+</div>
+</div>
+<div class="paper-box-text">
+
+<p><a href="https://arxiv.org/abs/2605.28618">Comprehensive Benchmarking of Long-Form Speech Generation in Diverse Scenarios</a> <br>
+Changhao Pan#, <strong>Rui Yang</strong>#, Han Wang#, et al.</p>
+
+<p><a href="https://swanaigc.github.io/#bench"><strong>Project</strong></a> | <a href="https://github.com/MM-Speech/SwanBench-Speech"><img src="https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white" alt="GitHub"></a></p>
+
+<ul>
+<li>SwanBench-Speech evaluates long-form speech generation across scenario coverage, automatic metrics, and model behavior analysis.</li>
+</ul>
+
 </div>
 </div>
 
-- [Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet](https://github.com), A, B, C, **CVPR 2020**
+## 🤝 Multimodal Interaction
 
-# 🎖 Honors and Awards
-- *2021.10* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.09* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+<div class="paper-box">
+<div class="paper-box-image">
+<div>
+<div class="badge">NeurIPS 2026 Workshop</div>
+<img src="{{ '/images/PetTalk.png' | relative_url }}" alt="PetTalk" width="100%">
+</div>
+</div>
+<div class="paper-box-text">
+
+<p><a href="https://neurips.cc/virtual/2026/162442"><strong>PetTalk: A Latency-Aware Edge–Cloud System for Real-Time Affective Interaction</strong></a> <br>
+<strong>Rui Yang</strong>, Ziqiao Zhu, Xiaohan Gong, et al.</p>
+
+<ul>
+<li>PetTalk is a deployed latency-aware edge–cloud system that turns companion-animal vocalizations into real-time spoken affective interaction through selective edge gating, affective-vocalization classification, LLM response generation, and streaming speech synthesis.</li>
+</ul>
+
+</div>
+</div>
+
+## 👂 Spatial Audio
+
+- `NeurIPS 2025` [MRSAudio: A Large-Scale Multimodal Recorded Spatial Audio Dataset with Refined Annotations](https://arxiv.org/abs/2510.10396), Wenxiang Guo#, Changhao Pan#, Zhiyuan Zhu#, Xintong Hu#, Yu Zhang#, Li Tang, **Rui Yang**, et al. \| [**Hugging Face**](https://huggingface.co/datasets/MRSAudio/MRSAudio) \| [**Demo**](https://mrsaudio.github.io/)
+
+# 📬 Contact
+
+- Email: [yangruiii@zju.edu.cn](mailto:yangruiii@zju.edu.cn)
+- Address: 浙江省杭州市西湖区浙江大学（玉泉校区）
+- GitHub: [yrrainbow](https://github.com/yrrainbow)
 
 # 📖 Educations
-- *2019.06 - 2022.04 (now)*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2015.09 - 2019.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
 
-# 💬 Invited Talks
-- *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/)
-
-# 💻 Internships
-- *2019.05 - 2020.02*, [Lorem](https://github.com/), China.
+- Master's student, Zhejiang University, Hangzhou.
