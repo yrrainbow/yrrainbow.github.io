@@ -89,3 +89,9 @@ Changhao Pan#, <strong>Rui Yang</strong>#, Han Wang#, et al.</p>
 # 📖 Educations
 
 - Master's student, Zhejiang University, Hangzhou.
+
+<span class='anchor' id='research-internships'></span>
+
+# 💻 Research & Internships
+
+- **2025.08–Present**, AI Algorithm Intern at Hangzhou Piipivo Technology. I currently serve as a mentor and lead the development of a large-scale animal behavior and health dataset, along with associated evaluation standards.
