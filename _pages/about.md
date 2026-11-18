@@ -12,7 +12,7 @@ redirect_from:
 
 I am a master's student at the Polytechnic Institute of Zhejiang University, majoring in Artificial Intelligence.
 
-Currently, I am a member of the Audio Research Team at Zhejiang University, under the supervision of [Prof. Zhou Zhao](https://person.zju.edu.cn/zhaozhou). I received my bachelor's degree in Software Engineering from the College of Computer Science and Technology at Zhejiang University in 2022.
+Currently, I am a member of the Audio Research Team at Zhejiang University, under the supervision of [Prof. Zhou Zhao](https://person.zju.edu.cn/zhaozhou). I received my bachelor's degree in Software Engineering from the College of Computer Science and Technology at Zhejiang University in 2025.
 
 My research interests primarily focus on multimodal artificial intelligence, particularly **speech generation and multimodal interaction**. I have published multiple papers at top-tier international AI conferences, including ACL. Currently, I am working on **fine-grained speech generation and multimodal interaction**.
 
@@ -86,9 +86,20 @@ Changhao Pan#, <strong>Rui Yang</strong>#, Han Wang#, et al.</p>
 - Address: 浙江省杭州市西湖区浙江大学（玉泉校区）
 - GitHub: [yrrainbow](https://github.com/yrrainbow)
 
+<span class='anchor' id='honors-awards'></span>
+
+# 🎖 Honors and Awards
+
+- Second-Class Scholarship, Zhejiang University, 2025–2026
+- Outstanding Engineer Scholarship, 2026
+- Outstanding Graduate of Zhejiang University, 2026
+
 # 📖 Educations
 
-- Master's student, Zhejiang University, Hangzhou.
+- **2026.09–2029.06 (Expected)**, Master's Degree, Polytechnic Institute, Zhejiang University, Hangzhou, Zhejiang
+  - **Major:** Artificial Intelligence
+- **2021.09–2025.06**, Bachelor's Degree, College of Computer Science and Technology, Zhejiang University, Hangzhou, Zhejiang
+  - **Major:** Software Engineering
 
 <span class='anchor' id='research-internships'></span>
 
