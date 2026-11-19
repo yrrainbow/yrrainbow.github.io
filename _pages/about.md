@@ -99,4 +99,4 @@ Changhao Pan#, <strong>Rui Yang</strong>#, Han Wang#, et al.</p>
 
 # 💻 Research & Internships
 
-- **2025.08–Present**, AI Algorithm Intern at Hangzhou Piipivo Technology. I currently serve as a mentor and lead the development of a large-scale animal behavior and health dataset, along with associated evaluation standards.
+- **2026.03–Present**, AI Algorithm Intern at Hangzhou Piipivo Technology. I currently serve as a mentor and lead the development of a large-scale animal behavior and health dataset, along with associated evaluation standards.
